@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 14:12:39 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/13 13:24:53 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/05/21 17:04:31 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static int	change_env(int i, int braces, char **str, t_data *param)
 	len = (ft_strlen_char(*str + i + 1, ':') < ft_strlen_env(*str + i + 1)) ?
 	ft_strlen_char(*str + i + 1, ':') + 1 :
 	ft_strlen_env(*str + i + 1) + 1 + braces;
-	bef = ft_strldup(*str, i);
-	aux = ft_strldup(*str + i + 1 + braces, len - 1 - braces * 2);
+	bef = ft_strndup(*str, i);
+	aux = ft_strndup(*str + i + 1 + braces, len - 1 - braces * 2);
 	env = (!ft_memcmp(aux, "?", 2)) ? ft_itoa(param->ret) : 0;
 	aft = ft_strdup(*str + i + len);
 	env = (!env) ? ft_strdup(get_env(param->envp, aux)) : env;
@@ -99,25 +99,25 @@ static int	check_semicolon(t_data *param)
 	return (0);
 }
 
-void	parser(t_data *param)
+void	parser(t_data *src)
 {
 	int	i;
 
-	if (check_semicolon(param))//!ft_check_wrong_pipe(param) && check_semicolon(param))
+	if (check_semicolon(src))//!ft_check_wrong_pipe(src) && check_semicolon(src))
 		return ;
-	param->cmds = ft_split_case(param->str, ';');
+	src->cmds = ft_split(src->str, ';');
 	i = 0;
-	while (param->cmds[i])
+	while (src->cmds[i])
 	{
-		check_env(&(param->cmds[i]), param);
-		param->argc = count_args(param->cmds[i]);
-		param->argv = (char **)ft_calloc(sizeof(char *), (param->argc + 1));
-		set_args(param->argv, param->cmds[i], param->argc);
-		command_or_pipe(param, i);
+		check_env(&(src->cmds[i]), src);
+		src->argc = count_args(src->cmds[i]);
+		src->argv = (char **)ft_calloc(sizeof(char *), (src->argc + 1));
+		set_args(src->argv, src->cmds[i], src->argc);
+		command_or_pipe(src, i);
 		i++;
-		free_matrix(param->argv);
+		ft_splfree(src->argv);
 	}
-	free(param->str);
-	param->str = 0;
-	free_matrix(param->cmds);
+	free(src->str);
+	src->str = 0;
+	ft_splfree(src->cmds);
 }

@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2021/11/10 13:39:25 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/20 17:36:00 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/20 17:40:32 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *destination, const void *src, size_t n)
+char	*ft_strndup(char *str, int n)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
+	int		i;
+	int		len;
+	char	*ptr;
 
-	if (!destination && !src)
+	len = 0;
+	while (str[len])
+		len++;
+	if (len > n)
+		len = n;
+	ptr = (char *)calloc(sizeof(char), len + 1);
+	if (!ptr)
 		return (NULL);
-	d = destination;
-	s = src;
-	while (n-- > 0)
-		*d++ = *s++;
-	return (destination);
+	i = 0;
+	while (i < len)
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	return (ptr);
 }

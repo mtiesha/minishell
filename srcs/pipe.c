@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 16:11:27 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/15 11:32:00 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/05/23 12:46:24 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	pipe_son(int *flag, int *fds, t_data *param, int pos)
 		argv = param->argv;
 		set_pipe_args(param, pos);
 		check_command(param->str, param);
-		free_matrix(param->argv);
+		ft_splfree(param->argv);
 		param->argc = argc;
 		param->argv = argv;
 		exit(param->ret);
@@ -94,27 +94,39 @@ static int	check_pipe(int *fds, t_data *param)
 	return (sons);
 }
 
-void		command_or_pipe(t_data *param, int j)
+void	command_or_pipe(t_data *src, int j)
 {
-	int fds[4];
-	int std_out;
-	int sons;
-	int i;
+	int	fds[4];
+	int	std_out;
+	int	sons;
+	int	i;
 
 	std_out = dup(0);
 	i = 0;
-	while (param->argv[i] && ft_memcmp(param->argv[i], "|", 2))
+	printf("--------------------\n");
+	printf("SYSTEM INFO [COMANDORPIPE]\n");
+	printf("ARGV - ");
+	while (src->argv[i])
+	{
+		printf("%d:%s | ", i, src->argv[i]);
 		i++;
-	if (!param->argv[i])
-		param->envp = check_command(param->cmds[j], param);//do nothing
-	else if (param->cmds[j])
+	}
+	i = 0;
+	printf("\n");
+	printf("ARGC - %d \n", src->argc);
+	printf("--------------------\n\n");
+	while (src->argv[i] && ft_memcmp(src->argv[i], "|", 2))
+		i++;
+	if (!src->argv[i])
+		src->envp = check_command(src->cmds[j], src);//do nothing
+	else if (src->cmds[j])
 	{
 		pipe(fds);
 		pipe(fds + 2);
-		sons = check_pipe(fds, param);
+		sons = check_pipe(fds, src);
 		while (sons-- > 0)
-			wait(&param->ret);
-		param->ret /= 256;
+			wait(&src->ret);
+		src->ret /= 256;
 		i = -1;
 		while (++i < 4)
 			close(fds[i]);

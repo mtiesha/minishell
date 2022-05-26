@@ -6,63 +6,62 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 11:13:42 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/15 11:33:41 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/05/18 16:17:25 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	change_dir(char *path, t_data *param)
+static void	ft_print_error(t_data *src)
 {
-	char		cwd[4097];
-	char		oldpwd[4097];
-
-	getcwd(oldpwd, 4096);
-	if (chdir(path) == 0)
-	{
-		param->argc = 4;
-		free_matrix(param->argv);
-		param->argv = (char **)ft_calloc(sizeof(char *), 4);
-		param->argv[0] = ft_strdup("export");
-		param->argv[1] = ft_strdup("OLDPWD=");
-		param->argv[2] = ft_strdup(oldpwd);
-		//param->envp = export_command(param, 1); del
-		free_matrix(param->argv);
-		param->argv = (char **)ft_calloc(sizeof(char *), 4);
-		param->argv[0] = ft_strdup("export");
-		param->argv[1] = ft_strdup("PWD=");
-		param->argv[2] = ft_strdup(getcwd(cwd, 4096));
-		//param->envp = export_command(param, 1); del
-	}
+	ft_putstr_fd("bash: cd: ", 2);
+	if (2 != src->argc && 1 != src->argc)
+		ft_putstr_fd("too many arguments\n", 2);
 	else
-		ft_putstrs_fd("bash: cd: ", param->argv[1], ": ", 2);
+	{
+		ft_putstr_fd(src->argv[1], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
+		src->ret = 1;
+		errno = 0;
+	}
 }
 
-void	ft_binary_cd(t_data *param)
+static void	ft_change_envp(t_data *src, char *path)
 {
-	char	*path;
+	char	cwd[4097];
+	char	oldpwd[4097];
+	char	**env_ptr;
+	int		i;
 
-	errno = 0;
-	if (param->argc <= 2)
+	i = 0;
+	getcwd(oldpwd, 4096);// get current working dirrectory
+	if ((2 == src->argc || 1 == src->argc) && !chdir(path))// change working directory
 	{
-		if (!param->argv[1] || !ft_strncmp(param->argv[1], "--", 3) ||
-			!ft_strncmp(param->argv[1], "~", 2))
-			path = get_env(param->envp, "HOME");
-		else if (!ft_strncmp(param->argv[1], "-", 2))
-			path = get_env(param->envp, "OLDPWD");
-		else
-			path = param->argv[1];
-		change_dir(path, param);
-		if (errno > 0)
-		{
-			ft_putstrs_fd(strerror(errno), "\n", 0, 2);
-			param->ret = 1;
-		}
+		getcwd(cwd, 4096);// get actual working directory, after change
+		env_ptr = src->envp;
+		while (env_ptr[i] && ft_memcmp(env_ptr[i], "OLDPWD", 6))
+			i++;
+		free(env_ptr[i]);
+		env_ptr[i] = ft_strjoin("OLDPWD=", oldpwd);
+		i = 0;
+		while (env_ptr[i] && ft_memcmp(env_ptr[i], "PWD", 3))
+			i++;
+		free(env_ptr[i]);
+		env_ptr[i] = ft_strjoin("PWD=", cwd);
 	}
 	else
-	{
-		ft_putstr_fd("bash: cd: too many arguments\n", 2);
-		param->ret = 1;
-	}
-	errno = 0;
+		ft_print_error(src);
+}
+
+void	ft_exec_cd(t_data *src)
+{// argc = [1] || [2] argv = [cd] || [cd] || [cd] [libft]
+	char	*path;
+
+	if (1 == src->argc)
+		path = get_env(src->envp, "HOME");
+	else
+		path = src->argv[1];
+	ft_change_envp(src, path);
 }

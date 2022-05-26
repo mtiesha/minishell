@@ -5,49 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/17 19:50:12 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/15 11:32:00 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/16 10:38:25 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/20 18:32:11 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	check_errno(t_data *param, char *str)
+static int	check_errno(t_data *src, char *str)
 {
 	if (errno == ENOENT || errno == EACCES)
 	{
-		ft_putstrs_fd("bash: ", str, ": ", 2);
-		ft_putstrs_fd(strerror(errno), "\n", 0, 2);
-		param->ret = (errno == ENOENT) ? 127 : 126;
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		if (errno == ENOENT)
+			src->ret = 127;
+		else
+			src->ret = 126;
 		return (1);
 	}
 	return (0);
 }
 
-static void	check_type(t_data *param, char *str, char *path)
+static void	check_type(t_data *src, char *str, char *path)
 {
 	DIR			*dir;
 	int			fd;
 	char		**cmds;
 
-	if (check_errno(param, str))
+	if (check_errno(src, str))
 		return ;
 	else if (!(dir = opendir(path)))
 	{
 		fd = open(path, O_RDONLY, 0666);
-		free(param->str);
-		while (get_next_line(fd, &(param->str)))
+		free(src->str);
+		while (ft_gnl_sh(&(src->str), 10000, fd))
 		{
-			cmds = param->cmds;
-			parser(param);
-			param->cmds = cmds;
+			cmds = src->cmds;
+			parser(src);
+			src->cmds = cmds;
 		}
 		close(fd);
 	}
 	else
 	{
-		ft_putstrs_fd("-bash: ", str, ": Is a directory\n", 2);
-		param->ret = 126;
+		ft_putstr_fd("-bash: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": Is a directory", 2);
+		src->ret = 126;
 		closedir(dir);
 	}
 }
@@ -69,7 +76,7 @@ static void	set_filename(int len, char **new, char *str)
 			len--;
 		len--;
 	}
-	aux = ft_strldup(*new, len);
+	aux = ft_strndup(*new, len);
 	free(*new);
 	*new = ft_strjoin(aux, "/");
 	free(aux);
@@ -97,27 +104,27 @@ static void	set_path(char *str, char **path)
 	free(new);
 }
 
-void		bash_command(t_data *param)
+void	bash_command(t_data *src)
 {
 	char	buff[4097];
 	char	*path;
 	char	*start;
 
-	start = param->argv[0];
-	if (ft_memcmp(param->argv[0], "/", 1))
-		param->argv[0] += (!ft_memcmp(param->argv[0], "./", 2)) ? 2 : 0;
+	start = src->argv[0];
+	if (ft_memcmp(src->argv[0], "/", 1))
+		src->argv[0] += (!ft_memcmp(src->argv[0], "./", 2)) ? 2 : 0;
 	path = getcwd(buff, 4096);
-	set_path(param->argv[0], &path);
+	set_path(src->argv[0], &path);
 	if (!fork())
 	{
 		signal(SIGINT, child_sig_handler_bash);
-		if (execve(path, param->argv, param->envp))
-			check_type(param, start, path);
-		exit(param->ret);
+		if (execve(path, src->argv, src->envp))
+			check_type(src, start, path);
+		exit(src->ret);
 	}
 	else
-		wait(&param->ret);
-	param->ret /= 256;
+		wait(&src->ret);
+	src->ret /= 256;
 	free(path);
-	param->argv[0] = start;
+	src->argv[0] = start;
 }

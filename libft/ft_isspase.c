@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_isspase.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2021/11/10 13:39:26 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/20 17:43:09 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/20 17:43:34 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+int	ft_isspace(int c)
 {
-	unsigned long	i;
-
-	i = ft_strlen(s) + 1;
-	while (i-- != 0)
-		if (s[i] == (char)(c))
-			return ((char *)(s + i));
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
 	return (0);
 }

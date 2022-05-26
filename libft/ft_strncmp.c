@@ -3,29 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 09:04:14 by jserrano          #+#    #+#             */
-/*   Updated: 2020/07/10 10:09:21 by marvin           ###   ########.fr       */
+/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/03/03 08:12:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include "libft.h"
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *string1, const char *string2, size_t num)
 {
-	unsigned char *c1;
-	unsigned char *c2;
+	size_t	i;
 
-	c1 = (unsigned char *)s1;
-	c2 = (unsigned char *)s2;
-	while (0 < n--)
-	{
-		if (*(c1++) != *(c2++))
-			return (*(--c1) - *(--c2));
-		else if (!(*c1) || !(*c2))
-			return (*(c1) - *(c2));
-	}
-	return (0);
+	i = 0;
+	if (num == 0 || !string1 || !string2)
+		return (0);
+	while (string1[i] != 0 && string1[i] == string2[i]
+		&& i < num - 1 && string2[i] != 0)
+		i++;
+	return ((unsigned char)(string1[i]) - (unsigned char)(string2[i]));
 }

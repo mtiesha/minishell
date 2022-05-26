@@ -7,21 +7,23 @@ SRCS =	srcs/main.c\
 		srcs/command.c\
 		srcs/args.c\
 		srcs/bin.c\
-		srcs/builtins.c\
 		srcs/bash.c\
-		srcs/export.c\
-		srcs/unset.c\
 		srcs/utils.c\
 		srcs/lens.c\
 		srcs/remove.c\
-		srcs/exit.c\
-		srcs/binary/cd.c
+		srcs/binary/binary.c\
+		srcs/binary/exit.c\
+		srcs/binary/cd.c\
+		srcs/binary/echo.c\
+		srcs/binary/export_unset/sorting_export.c\
+		srcs/binary/export_unset/export.c\
+		srcs/binary/export_unset/unset.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS += -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS += -Wall -Werror -Wextra -ggdb -fsanitize=address -fno-omit-frame-pointer
 
 #CFLAGS += -g3 -fsanitize=address
 
@@ -56,7 +58,7 @@ fclean: clean echoFCLEAN
 re:		fclean all
 
 leaks:
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
 
 git:
 	@make fclean

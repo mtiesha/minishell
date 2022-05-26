@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 15:16:49 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/15 11:34:45 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/25 22:58:15 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,30 @@ typedef struct s_data{
 int		ft_check_wrong_pipe(t_data *src);
 
 /* /src/binary */
-void	ft_binary_cd(t_data *param);
+int		ft_gate_command(t_data *param, int fd);
+void	ft_exec_cd(t_data *param);
+void	ft_exec_echo(t_data *src, int fd);
+void	ft_exec_exit(t_data *param);
+void	ft_exec_pwd(int fd);
+/* /src/binary/export_unset */
+void	ft_sort_env(char **envp);
+void	ft_export_add(t_data *src);
+void	ft_unset(t_data *src);
+void	ft_count_include_av(char **split, char **argv, int *argc);
 
 void	free_matrix(char **matrix);
 void	set_args(char **argv, char *str, int argc);
 void	child_sig_handler(int sig);
 void	child_sig_handler_bash(int sig);
-void	bash_command(t_data *param);
-void	pwd_command(int fd);
-void	exit_command(t_data *param);
+void	bash_command(t_data *param);// find this in git and
 void	parser(t_data *param);
 void	export_value(t_data *param, int *i);
-void	sort_envp(char **envp, int fd, char c);
 void	rm_char(char **str, int j);
 void	rm_token(char **arg);
 void	command_or_pipe(t_data *param, int j);
 char	*get_env(char **envp, char *env);
-char	**copy_env(char **envp, int add);
-char	**export_command(t_data *param, int i);
-char	**unset_command(t_data *param, int i);
 char	**copy_args(t_data *param);
 char	**check_command(char *str, t_data *param);
-int		check_builtins(int fd, t_data *param);
 int		check_bin(int fd, t_data *param);
 int		count_args(char *str);
 int		ft_strlen_token(char *str);
@@ -71,7 +73,6 @@ int		ft_strlen_env(char *str);
 int		ft_strlen_pipe(char *str);
 int		ft_strlen_char(char *str, char c);
 int		ft_strlen_arg_token(char *str, char c);
-int		check_export_error(char **argv, int *i);
 int		is_token(char c);
 
 #endif

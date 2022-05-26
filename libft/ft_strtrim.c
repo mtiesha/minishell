@@ -3,64 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 13:27:02 by jserrano          #+#    #+#             */
-/*   Updated: 2020/07/09 22:57:18 by marvin           ###   ########.fr       */
+/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
+/*   Updated: 2021/11/10 13:39:26 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 #include "libft.h"
 
-static int	ef_check_set(char c, char *set)
+static int	ft_is_in_set(const char *set, int c)
 {
-	size_t	set_length;
-	size_t	i;
-
-	set_length = ft_strlen(set);
-	i = 0;
-	while (i <= set_length)
+	while (*set)
 	{
-		if (c == set[i])
+		if (c == *set)
 			return (1);
-		i++;
+		set++;
 	}
 	return (0);
 }
 
-static int	check_same_set(char const *s1, char *set)
+char	*ft_strtrim(char const *s1, const char *set)
 {
-	int		i;
+	size_t	start;
+	size_t	end;
 
-	i = -1;
-	while (s1[++i])
-		if (ef_check_set(s1[i], set) == 0)
-			return (0);
-	return (1);
-}
-
-char		*ft_strtrim(char const *s1, char const *set)
-{
-	int		start;
-	int		end;
-	char	*ptr;
-
-	if (!s1 || !set)
+	if (!s1)
 		return (NULL);
-	if (check_same_set(s1, (char *)set) == 1)
-		return (ft_strdup(""));
+	if (!set)
+		return (ft_strdup(s1));
 	start = 0;
 	end = ft_strlen(s1);
-	while (ef_check_set(s1[start], (char *)set))
+	while (ft_is_in_set(set, s1[start]))
 		start++;
-	while (ef_check_set(s1[end], (char *)set) && end >= 0)
-		end--;
-	if (end < start)
+	if (start >= end)
 		return (ft_strdup(""));
-	if (!(ptr = (char *)malloc(end - start + 2)))
-		return (NULL);
-	ft_strlcpy(ptr, s1 + start, end - start + 2);
-	return (ptr);
+	while (ft_is_in_set(set, s1[end - 1]))
+		end--;
+	return (ft_substr(s1, start, end - start));
 }

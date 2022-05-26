@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 22:36:37 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/15 07:43:24 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/05/20 18:40:04 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	set_in(char **argv)
 		fd = open(argv[i + 1], O_RDONLY, 0666);
 		if (fd < 0)
 		{
-			ft_putstr_fd("Couldn't read from file.\n", 2);
+			ft_putendl_fd("Couldn't read from file.", 2);
 			return ;
 		}
 		dup2(fd, 0);
@@ -33,55 +33,60 @@ static void	set_in(char **argv)
 	}
 }
 
-static void	exec_bin(int fd, char *path, t_data *param)
+static void	exec_bin(int fd, char *path, t_data *src)
 {
 	char	**args;
 
-	args = copy_args(param);
+	args = copy_args(src);
 	signal(SIGINT, child_sig_handler);
 	if (!fork())
 	{
-		set_in(param->argv);
+		set_in(src->argv);
 		if (fd > 1)
 			dup2(fd, 1);
-		if ((execve(path, args, param->envp)) && errno == EACCES)
+		if ((execve(path, args, src->envp)) && errno == EACCES)
 		{
-			param->ret = 126;
-			ft_putstrs_fd("bash: ", param->argv[0], ": ", 2);
-			ft_putstrs_fd(strerror(errno), "\n", 0, 2);
+			src->ret = 126;
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(src->argv[0], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(strerror(errno), 2);
 		}
-		exit(param->ret);
+		exit(src->ret);
 	}
-	wait(&param->ret);
-	param->ret /= 256;
+	wait(&src->ret);
+	src->ret /= 256;
 	free(path);
-	free_matrix(args);
+	ft_splfree(args);
 }
 
-static char	**split_path(t_data *param, char *str)
+static char	**split_path(t_data *src, char *str)
 {
-	char *path;
-	char **paths;
+	char	*path;
+	char	**paths;
 
-	path = get_env(param->envp, "PATH");
+	path = get_env(src->envp, "PATH");
 	if (path)
-		paths = ft_split_case(path, ':');
+		paths = ft_split(path, ':');
 	else
 	{
-		ft_putstrs_fd("bash: ", str, ": No such file or directory\n", 2);
-		param->ret = 127;
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+		src->ret = 127;
 		return (NULL);
 	}
 	return (paths);
 }
 
-static char	*search_bin(char *str, DIR **dir, struct dirent **d, t_data *param)
+static char	*search_bin(char *str, DIR **dir, struct dirent **d, t_data *src)
 {
 	char		**paths;
 	char		*path;
 	int			i;
 
-	if (!(paths = split_path(param, str)))
+	paths = split_path(src, str);
+	if (!paths)
 		return (NULL);
 	i = -1;
 	while (paths[++i])
@@ -92,31 +97,31 @@ static char	*search_bin(char *str, DIR **dir, struct dirent **d, t_data *param)
 			if (!ft_memcmp(str, (*d)->d_name, ft_strlen(str) + 1))
 			{
 				path = ft_strjoin(paths[i], "/");
-				free_matrix(paths);
+				ft_splfree(paths);
 				return (path);
 			}
 		}
 		closedir(*dir);
 	}
-	free_matrix(paths);
+	ft_splfree(paths);
 	return (NULL);
 }
 
-int	check_bin(int fd, t_data *param)
+int	check_bin(int fd, t_data *src)
 {
 	DIR				*dir;
 	struct dirent	*d;
 	char			*pre_path;
 	char			*path;
 
-	param->ret = 127;
-	pre_path = search_bin(param->argv[0], &dir, &d, param);
+	src->ret = 127;
+	pre_path = search_bin(src->argv[0], &dir, &d, src);
 	if (pre_path)
 	{
 		path = ft_strjoin(pre_path, d->d_name);
-		exec_bin(fd, path, param);
+		exec_bin(fd, path, src);
 		closedir(dir);
 	}
 	free(pre_path);
-	return (param->ret);
+	return (src->ret);
 }

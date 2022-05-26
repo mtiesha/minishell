@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,13 +12,17 @@
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	unsigned long	i;
+	unsigned int	i;
 
-	i = ft_strlen(s) + 1;
-	while (i-- != 0)
-		if (s[i] == (char)(c))
-			return ((char *)(s + i));
-	return (0);
+	i = 0;
+	if (s)
+	{
+		while (s[i] != '\0')
+		{
+			(*f)(i, &s[i]);
+			i++;
+		}
+	}
 }

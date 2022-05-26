@@ -1,101 +1,67 @@
-NAME = 	libft.a
+# ************************************************************************** #
+#                                                                            #
+#                                                        :::      ::::::::   #
+#   Makefile                                           :+:      :+:    :+:   #
+#                                                    +:+ +:+         +:+     #
+#   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        #
+#                                                +#+#+#+#+#+   +#+           #
+#   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             #
+#   Updated: 2021/11/10 13:39:24 by mtiesha          ###   ########.fr       #
+#                                                                            #
+# ************************************************************************** #
 
-SRCS =	ft_memset.c \
-		ft_bzero.c \
-		ft_memcpy.c \
-		ft_memccpy.c \
-		ft_memmove.c \
-		ft_memchr.c \
-		ft_memcmp.c \
-		ft_strlen.c \
-		ft_strlcpy.c\
-		ft_strlcat.c \
-		ft_strchr.c \
-		ft_strchr.c \
-		ft_strrchr.c \
-		ft_strnstr.c \
-		ft_strncpy.c \
-		ft_strncmp.c \
-		ft_atoi.c \
-		ft_isspace.c \
-		ft_isalpha.c \
-		ft_isdigit.c \
-		ft_isalnum.c \
-		ft_isascii.c \
-		ft_isprint.c \
-		ft_toupper.c \
-		ft_tolower.c \
-		ft_calloc.c \
-		ft_strdup.c\
-		ft_itoa.c\
-		ft_putchar_fd.c\
-		ft_putendl_fd.c\
-		ft_putnbr_fd.c\
-		ft_putstr_fd.c\
-		ft_putstrlen_fd.c\
-		ft_putstrs_fd.c\
-		ft_split.c\
-		ft_split_case.c\
-		ft_strjoin.c\
-		ft_strmapi.c\
-		ft_strtrim.c\
-		ft_substr.c\
-		ft_strldup.c\
-		ft_addchr.c\
-		ft_skip_spaces.c\
-		ft_free_matrix.c\
-		get_next_line.c\
-		ft_lstnew.c\
-		ft_lstadd_front.c\
-		ft_lstnew.c\
-		ft_lstsize.c\
-		ft_lstlast.c\
-		ft_lstlast.c\
-		ft_lstadd_back.c\
-		ft_lstdelone.c\
-		ft_lstclear.c\
-		ft_lstiter.c\
-		ft_lstmap.c\
+NAME = libft.a
 
-OBJS =		${SRCS:.c=.o}
+SRCS = 	ft_atoi.c		ft_bzero.c		ft_calloc.c \
+		ft_isalnum.c	ft_isalpha.c	ft_isascii.c \
+		ft_isdigit.c	ft_isprint.c	ft_isspase.c \
+		ft_memchr.c		ft_memcmp.c		ft_memcpy.c \
+		ft_memmove.c	ft_memset.c		ft_putchar_fd.c \
+		ft_putendl_fd.c	ft_putnbr_fd.c	ft_putstr_fd.c \
+		ft_split.c		ft_strchr.c		ft_strdup.c \
+		ft_striteri.c	ft_strjoin.c	ft_strlcat.c \
+		ft_strlcpy.c	ft_strlen.c		ft_strmapi.c \
+		ft_strncmp.c	ft_strnstr.c	ft_strrchr.c \
+		ft_strtrim.c	ft_substr.c		ft_tolower.c \
+		ft_toupper.c	ft_splitutils.c	ft_isutils.c \
+		ft_swap.c		ft_strndup.c	ft_itoa.c \
+		ft_get_next_line.c
 
-CC =		gcc
+SRCS_B = ft_lstnew_bonus.c	ft_lstadd_front_bonus.c \
+		ft_lstsize_bonus.c	ft_lstlast_bonus.c
 
-CFLAGS =	-Wall -Wextra -Werror
+RM = rm -f
 
-RM = 		rm -rf
+CFLAGS = -Wall -Wextra -Werror
 
-all:		$(NAME)
+LIB = ar rcs
 
-$(NAME):	echoCL ${OBJS} echoOK
-			ar rc	$(NAME) ${OBJS}
-			ranlib	$(NAME)
+OBJ = ${SRCS:.c=.o}
 
-.c.o:
-			${CC} -c ${CFLAGS} -I. -o $@ $<
-			printf "$(GREEN)█"
+OBJ_B = ${SRCS_B:.c=.o}
 
-clean:
-			${RM} $(OBJS)
+CC = gcc
 
-fclean:		clean
-			${RM} $(NAME)
+all : ${NAME}
 
-re:			fclean all
+${NAME} : ${OBJ} Makefile libft.h
+	${LIB} ${NAME} ${OBJ}
 
-.SILENT:
+${OBJ} : ${SRCS} Makefile libft.h
+	${CC} ${CFLAGS} ${SRCS} -c -I.
 
-##############______________Colors______________##############
+bonus : ${OBJ_B} Makefile libft.h
+	${LIB} ${NAME} ${OBJ_B}
 
-BLUE = \033[1;34m
-GREEN = \033[1;32m
-YELLOW = \033[1;33m
-CYAN = \033[1;36m
-END = \033[0m
+${OBJ_B} : ${SRCS_B} Makefile libft.h
+	${CC} ${CFLAGS} ${SRCS_B} -c -I.
 
-##############______________MESSAGES______________##############
+clean :
+	${RM} ${OBJ} ${OBJ_B}
 
-echoCL:
-	echo "\n$(YELLOW)===> Compiling $(BLUE)Libft$(END)\n"
-echoOK:
-	echo "$(GREEN) OK ===> Compilation Success$(END)\n"
+fclean : clean
+	${RM} ${NAME}
+
+re : fclean all
+
+.PHONY : clean fclean all re bonus

@@ -3,41 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 08:34:36 by jserrano          #+#    #+#             */
-/*   Updated: 2020/07/11 10:50:22 by marvin           ###   ########.fr       */
+/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/20 17:44:53 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-**	result_neg_i
-*/
-
-int		ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	long long int	var[3];
+	unsigned int			i;
+	int						s;
+	long long				res;
 
-	var[0] = 0;
-	var[1] = 1;
-	var[2] = 0;
-	while (str[var[2]] == 32 || (9 <= str[var[2]] && str[var[2]] <= 13))
-		var[2]++;
-	if (str[var[2]] == '-' || str[var[2]] == '+')
-		var[1] = (str[var[2]++] == '-') ? -1 : 1;
-	while (str[var[2]])
+	i = 0;
+	s = 1;
+	res = 0;
+	while (str[i] != '\0' && (str[i] == 32 || str[i] == ' ' || str[i] == '\t'
+			|| str[i] == '\n' || str[i] == '\r'
+			|| str[i] == '\v' || str[i] == '\f'))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (str[var[2]] < 48 || 57 < str[var[2]])
-			return (var[0] * var[1]);
-		else
-			var[0] = (var[0] * 10) + (long long int)(str[var[2]] - '0');
-		if (var[0] < -2147483648)
-			return (1);
-		else if (2147483648 < var[0])
-			return (0);
-		var[2]++;
+		if (str[i++] == '-')
+			s = -1;
 	}
-	return ((long int)(var[0] * var[1]));
+	while (ft_isdigit(str[i]))
+	{
+		if (res >= 214748364 && str[i] > 7 && s == 1)
+			return (-1);
+		if (res >= 214748364 && str[i] > 8 && s == -1)
+			return (0);
+		res = res * 10 + (str[i++] - '0');
+	}
+	return ((int)(res * s));
 }

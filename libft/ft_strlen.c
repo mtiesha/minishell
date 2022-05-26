@@ -3,24 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 09:03:12 by jserrano          #+#    #+#             */
-/*   Updated: 2020/12/09 20:08:37 by marvin           ###   ########.fr       */
+/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/23 06:44:57 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include "libft.h"
 
-size_t		ft_strlen(const char *s)
+size_t	ft_strlen(const char *string)
 {
-	size_t len;
+	int	i;
 
-	if (!s)
-		return (0);
+	i = 0;
+	while (string[i] != '\0')
+		i++;
+	return (i);
+}
+
+size_t	ft_strnlen(const char *str, char c)
+{
+	int	len;
+
 	len = 0;
-	while (s[len] != 0)
+	while (str[len] && str[len] != c)
 		len++;
 	return (len);
 }

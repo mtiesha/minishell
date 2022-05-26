@@ -3,48 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 12:22:12 by jserrano          #+#    #+#             */
-/*   Updated: 2020/08/11 19:56:53 by marvin           ###   ########.fr       */
+/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
+/*   Updated: 2021/11/10 13:39:25 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-static	void	itoa_isnegative(long long int *n, int *negative)
+static char	*ft_revstr(char *str)
 {
-	if (*n < 0)
+	char			temp;
+	unsigned long	i;
+	unsigned long	end;
+
+	i = 0;
+	end = ft_strlen(str) - 1;
+	while (i < end)
 	{
-		*n *= -1;
-		*negative = 1;
+		temp = str[i];
+		str[i] = str[end];
+		str[end] = temp;
+		i++;
+		end--;
 	}
+	return (str);
 }
 
-char			*ft_itoa(long long int n)
+static size_t	ft_count_dig(int n)
 {
-	long long int		tmpn;
-	int					len;
-	int					negative;
-	char				*str;
+	size_t	count;
 
-	tmpn = n;
-	len = 2;
-	negative = 0;
-	itoa_isnegative(&n, &negative);
-	while (tmpn /= 10)
-		len++;
-	len += negative;
-	if ((str = (char*)malloc(sizeof(char) * len)) == NULL)
-		return (NULL);
-	str[--len] = '\0';
-	while (len--)
+	count = 1;
+	while (n / 10)
 	{
-		str[len] = n % 10 + '0';
+		count++;
 		n = n / 10;
 	}
-	if (negative)
+	return (count);
+}
+
+static char	*ft_array_write(int nbr, char *s, size_t sign)
+{
+	long	cn;
+	size_t	i;
+
+	cn = nbr;
+	i = 0;
+	if (sign)
+		cn = cn * -1;
+	ft_memset(s, '0', ft_strlen(s) + sign);
+	while (cn)
+	{
+		s[i++] = (cn % 10) + '0';
+		cn = cn / 10;
+	}
+	if (sign)
+		s[i] = '-';
+	return (s);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*str;
+	size_t	nlen;
+	size_t	flag;
+
+	flag = 0;
+	if (n < 0)
+		flag = 1;
+	nlen = ft_count_dig(n);
+	str = ft_calloc(nlen + flag + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	if (nlen == 1 && flag == 0)
+	{
+		str[0] = n + '0';
+		return (str);
+	}
+	if (nlen == 1 && flag == 1)
+	{
 		str[0] = '-';
-	return (str);
+		n = n * -1;
+		str[1] = n + '0';
+		return (str);
+	}
+	str = ft_array_write(n, str, flag);
+	return (ft_revstr(str));
 }

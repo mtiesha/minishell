@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2021/11/10 13:39:26 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/20 14:19:05 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/20 14:19:49 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
-{
-	unsigned long	i;
+/*
+    ft_swap_ptr - take &ptr
+*/
 
-	i = ft_strlen(s) + 1;
-	while (i-- != 0)
-		if (s[i] == (char)(c))
-			return ((char *)(s + i));
-	return (0);
+void	ft_swap_ptr(char **p1, char **p2)
+{
+	char	*tmp;
+
+	tmp = (*p1);
+	(*p1) = (*p2);
+	(*p2) = tmp;
 }

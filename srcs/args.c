@@ -5,12 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 17:29:24 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/11 19:01:46 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/21 12:08:33 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/21 17:06:19 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	skip_spaces(char **str)
+{
+	while ((*str) && ft_isspace(*(*str)))
+		(*str)++;
+}
 
 char		**copy_args(t_data *param)
 {
@@ -32,15 +38,19 @@ char		**copy_args(t_data *param)
 
 static int	ft_strlen_arg(char *str)
 {
-	int i;
+	int i;//it count argv in str
 
 	i = 0;
-	if (str[i] == '<' || str[i] == '>' || str[i] == '=' || str[i] == '|')
-		i = (str[i] == '>' && str[i + 1] == '>') ? 2 : 1;
+	if (str[i] == '<' || str[i] == '>' || str[i] == '|')//  str[i] == '=' ||
+	{
+		if (str[i] == '>' && str[i + 1] == '>')
+			i++;
+		i++;
+	}
 	else
 	{
-		while (str[i] && !ft_isspace(str[i]) && str[i] != '<' &&
-		str[i] != '>' && str[i] != '=' && str[i] != '|')
+		while (str[i] && !ft_isspace(str[i]) && str[i] != '<' \
+			&& str[i] != '>' && str[i] != '|')// && str[i] != '='
 		{
 			if (str[i] == '\'' || str[i] == '"')
 			{
@@ -51,13 +61,13 @@ static int	ft_strlen_arg(char *str)
 			}
 			i++;
 		}
-		if (str[i] == '=')
-			i++;
+		//if (str[i] == '=')
+		//	i++;
 	}
 	return (i);
 }
 
-int			count_args(char *str)
+int	count_args(char *str)
 {
 	int		n;
 
@@ -73,8 +83,8 @@ int			count_args(char *str)
 	return (n);
 }
 
-void		set_args(char **argv, char *str, int argc)
-{
+void	set_args(char **argv, char *str, int argc)
+{//convert str(from readline) to -> argc and argv
 	int		i;
 	int		len;
 
@@ -84,7 +94,7 @@ void		set_args(char **argv, char *str, int argc)
 	{
 		skip_spaces(&str);
 		len = ft_strlen_arg(str);
-		argv[i] = ft_strldup(str, len);
+		argv[i] = ft_strndup(str, len);
 		rm_token(&(argv[i]));
 		i++;
 		str += len;

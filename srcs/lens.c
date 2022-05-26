@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 19:09:39 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/11 19:02:33 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/05/20 18:33:23 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		ft_strlen_env(char *str)
 
 	len = 0;
 	while (*str &&
-	(ft_isalnum(*str) || *str == '{' || *str == '?' || *str == '_'))
+		(ft_isalnum(*str) || *str == '{' || *str == '?' || *str == '_'))
 	{
 		len++;
 		str++;

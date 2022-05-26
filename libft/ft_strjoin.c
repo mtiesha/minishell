@@ -3,40 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/06 08:54:38 by jserrano          #+#    #+#             */
-/*   Updated: 2020/12/05 10:02:27 by parmarti         ###   ########.fr       */
+/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
+/*   Updated: 2021/11/10 13:39:26 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *str1, char const *str2)
 {
-	int		i;
-	int		len;
-	char	*str;
+	size_t			str1_len;
+	size_t			str2_len;
+	size_t			str1str2_len;
+	unsigned char	*ret;
 
-	if (s1 && s2)
+	if (!str1 && !str2)
+		return (ft_strdup(""));
+	if (!str1)
+		return (ft_strdup(str2));
+	if (!str2)
+		return (ft_strdup(str1));
+	str1_len = ft_strlen(str1);
+	str2_len = ft_strlen(str2);
+	str1str2_len = str1_len + str2_len;
+	ret = malloc((str1str2_len + 1) * sizeof(char));
+	if (ret != NULL)
 	{
-		len = ft_strlen(s1);
-		if (!(str = (char*)malloc(1 * (len + ft_strlen(s2) + 1))))
-			return (NULL);
-		i = -1;
-		while (s1[++i])
-			str[i] = s1[i];
-		i = -1;
-		while (s2[++i])
-		{
-			str[len] = s2[i];
-			len++;
-		}
-		str[len] = '\0';
-		return (str);
+		ft_memcpy(ret, str1, str1_len);
+		ft_memcpy(ret + str1_len, str2, str2_len);
+		ret[str1str2_len] = 0;
+		return ((char *)(ret));
 	}
-	else if (s1)
-		return (ft_strdup(s1));
 	return (NULL);
 }

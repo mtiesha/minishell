@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:22:40 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/11 19:02:19 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/05/21 13:12:57 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,27 @@ static void	copy_args1(t_data *param)
 		else
 			args[j++] = ft_strdup(param->argv[i++]);
 	}
-	free_matrix(param->argv);
+	ft_splfree(param->argv);
 	param->argv = args;
 }
 
-char		**check_command(char *str, t_data *param)
+char	**check_command(char *str, t_data *src)
 {
 	int		fd;
 
-	if (param->argv[0] && *(param->argv[0]))
+	if (src->argv[0] && *(src->argv[0]))
 	{
-		fd = set_fd(param);
-		copy_args1(param);
-		param->ret = check_builtins(fd, param);
-		if (param->ret == 127 && (param->ret = check_bin(fd, param)) == 127)
+		fd = set_fd(src);
+		copy_args1(src);
+		src->ret = ft_gate_command(src, fd);
+		if (src->ret == 127 && (src->ret = check_bin(fd, src)) == 127)
 		{
-			ft_putstrs_fd(0, str, ": command not found.\n", 2);
-			param->ret = 127;
+			ft_putstr_fd(str, 1);
+			ft_putendl_fd(": command not found.", 1);
+			src->ret = 127;
 		}
 		if (fd != 1)
 			close(fd);
 	}
-	return (param->envp);
+	return (src->envp);
 }

@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_isutils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtiesha <mtiesha@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2021/11/10 13:39:26 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/20 13:58:10 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/20 13:59:32 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+int	ft_get_minmax(int a, int b, char *min_or_max)
 {
-	unsigned long	i;
-
-	i = ft_strlen(s) + 1;
-	while (i-- != 0)
-		if (s[i] == (char)(c))
-			return ((char *)(s + i));
-	return (0);
+	if ('i' == min_or_max[1])
+	{
+		if (a > b)
+			return (b);
+		return (a);
+	}
+	if (a < b)
+		return (b);
+	else if (a > b)
+		return (a);
+	if (a == b)
+		return (0);
+	return (-1);
 }

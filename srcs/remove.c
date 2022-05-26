@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 13:13:02 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/11 19:02:56 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/05/21 13:20:11 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		rm_char(char **str, int j)
 	char *bef;
 	char *aux;
 
-	bef = ft_strldup(*str, j);
+	bef = ft_strndup(*str, j);
 	aux = ft_strdup(*str + j + 1);
 	free(*str);
 	*str = ft_strjoin(bef, aux);

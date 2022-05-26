@@ -1,40 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/23 06:47:30 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/20 18:18:29 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/20 18:28:45 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putstr_fd(char *s, int fd)
+/*
+	memory - mem cell to malloc
+	fd - read from
+*/
+
+int	ft_gnl_sh(char **line, int memory, int fd)
 {
-	int	i;
+	char	*buffer;
+	char	ch;
+	int		i;
+	int		rb;
 
 	i = 0;
-	if (s != NULL && fd != -1)
-		i += write(fd, s, ft_strlen(s));
-	return (i);
-}
-
-int	ft_putnstr_fd(char *str, int n, int fd)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	if (!str || !fd)
-		return (0);
-	while (str[i] && i <= n)
+	rb = 0;
+	buffer = (char *)malloc(memory * sizeof(char));
+	if (!buffer)
+		return (-1);
+	rb = read(fd, &ch, 1);
+	while (rb && ch && ch != '\n')
 	{
-		len += write(fd, &str[i], 1);
+		if (ch && ch != '\n')
+			buffer[i] = ch;
+		rb = read(fd, &ch, 1);
 		i++;
 	}
-	return (len);
+	buffer[i] = '\n';
+	buffer[++i] = '\0';
+	*line = ft_strdup(buffer);
+	free(buffer);
+	return (rb);
 }

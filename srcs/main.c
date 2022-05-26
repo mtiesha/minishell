@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 15:16:03 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/13 13:07:26 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/05/21 17:05:13 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,16 @@ static void	ft_sig_handler(int sig)
 	}
 }
 
-static void	init_param(t_data **param, char **argv, char **envp, int *ret_len)
-{
-	(*param) = (t_data *)malloc(sizeof(t_data));
-	(*param)->envp = copy_env(envp, 0);
-	(*param)->export = (char **)ft_calloc(sizeof(char *), 1);
-	(*param)->argv = argv;
-	(*param)->ret = 0;
-	(*param)->str = 0;
-	(*param)->child = 0;
+static void	init_param(t_data **src, char **argv, char **envp, int *ret_len)
+{// add if (!dup)
+	(*src) = (t_data *)malloc(sizeof(t_data));
+	(*src)->envp = ft_spldup(envp);
+	(*src)->argv = argv;
+	(*src)->export = NULL;
+	(*src)->export = ft_spldup(envp);
+	(*src)->ret = 0;
+	(*src)->str = 0;
+	(*src)->child = 0;
 	ret_len[0] = 0;
 }
 
@@ -77,29 +78,29 @@ static int	ft_is_here_doc(char *str)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	*param;
+	t_data	*src;
 	int		ret_len[2];
 	char	*promt;
 
 	(void)(argc);
-	init_param(&param, argv, envp, ret_len);
+	init_param(&src, argv, envp, ret_len);
 	while (1)
 	{
 		signal(SIGQUIT, ft_sig_handler);
 		signal(SIGINT, ft_sig_handler);
 		promt = ft_get_prompt(envp);
-		param->str = readline(promt);
+		src->str = readline(promt);
 		free(promt);
-		if (NULL != param->str)
+		if (NULL != src->str)
 		{
-			if (!ft_is_here_doc(param->str))
-				add_history(param->str);
-			parser(param);
+			if (!ft_is_here_doc(src->str))
+				add_history(src->str);
+			parser(src);
 		}
-		else if (NULL == param->str)
+		else if (NULL == src->str)
 		{
 			ft_putstr_fd("exit\n", 2);
-			exit(param->ret);
+			exit(src->ret);
 		}
 	}
 	return (0);
