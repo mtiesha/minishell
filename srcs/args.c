@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 12:08:33 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/21 17:06:19 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/02 17:06:44 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ void	skip_spaces(char **str)
 		(*str)++;
 }
 
-char		**copy_args(t_data *param)
+char		**copy_args(t_src *src)
 {
 	int		i;
 	char	**args;
 
 	i = 0;
-	while (param->argv[i] && ft_memcmp(param->argv[i], "<", 2))
+	while (src->argv[i] && ft_memcmp(src->argv[i], "<", 2))
 		i++;
 	args = ft_calloc(sizeof(char *), i + 1);
 	i = 0;
-	while (param->argv[i] && ft_memcmp(param->argv[i], "<", 2))
+	while (src->argv[i] && ft_memcmp(src->argv[i], "<", 2))
 	{
-		args[i] = ft_strdup(param->argv[i]);
+		args[i] = ft_strdup(src->argv[i]);
 		i++;
 	}
 	return (args);

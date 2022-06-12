@@ -6,20 +6,21 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 16:11:27 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/23 12:46:24 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/10 08:08:59 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	set_pipe_args(t_data *param, int i)
+static void	set_pipe_args(t_src *param, int i)
 {
 	char	**aux;
 	int		j;
 	int		k;
 
 	j = 0;
-	while (param->argv[i + j] && ft_memcmp(param->argv[i + j], "|", 2))
+	while (param->argv[i + j] && \
+		ft_memcmp(param->argv[i + j], "|", 2))
 		j++;
 	aux = (char **)ft_calloc(sizeof(char *), j + 1);
 	k = -1;
@@ -29,14 +30,14 @@ static void	set_pipe_args(t_data *param, int i)
 	param->argc = j;
 }
 
-static void	pipe_son(int *flag, int *fds, t_data *param, int pos)
+static void	pipe_son(int *flag, int *fds, t_src *param, int pos)
 {
 	int		i;
 	int		argc;
 	char	**argv;
 
 	signal(SIGINT, child_sig_handler);
-	if (!fork())
+	if (!fork())//child
 	{
 		if (!flag[0])
 			dup2(fds[0], 0);
@@ -58,14 +59,14 @@ static void	pipe_son(int *flag, int *fds, t_data *param, int pos)
 
 static void	switch_pipes(int *fds)
 {
-	close(fds[0]);
+	close(fds[0]);//parent
 	close(fds[1]);
 	fds[0] = fds[2];
 	fds[1] = fds[3];
 	pipe(fds + 2);
 }
 
-static int	check_pipe(int *fds, t_data *param)
+static int	check_pipe(int *fds, t_src *param)
 {
 	int		sons;
 	int		*flag;
@@ -94,7 +95,7 @@ static int	check_pipe(int *fds, t_data *param)
 	return (sons);
 }
 
-void	command_or_pipe(t_data *src, int j)
+void	command_or_pipe(t_src *src, int j)
 {
 	int	fds[4];
 	int	std_out;
@@ -115,10 +116,10 @@ void	command_or_pipe(t_data *src, int j)
 	printf("\n");
 	printf("ARGC - %d \n", src->argc);
 	printf("--------------------\n\n");
-	while (src->argv[i] && ft_memcmp(src->argv[i], "|", 2))
-		i++;
+	// while (src->argv[i] && ft_memcmp(src->argv[i], "|", 2))
+	// 	i++; maybe delete
 	if (!src->argv[i])
-		src->envp = check_command(src->cmds[j], src);//do nothing
+		src->envp = check_command(src->cmds[j], src);
 	else if (src->cmds[j])
 	{
 		pipe(fds);

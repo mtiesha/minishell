@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:24:24 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/23 12:27:34 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/04 19:53:51 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_isinside(char **export, char *str)
 	return (0);
 }
 
-static void	ft_norm_export(t_data *src, char **ret)
+static void	ft_norm_export(t_src *s, char **ret)
 {
 	int	i;
 	int	j;
@@ -34,40 +34,40 @@ static void	ft_norm_export(t_data *src, char **ret)
 
 	i = 0;
 	j = 1;
-	arg_count = src->argc - 1;
-	while (src->export[i])
+	arg_count = s->argc - 1;
+	while (s->export[i])
 	{
-		ret[i] = ft_strdup(src->export[i]);
+		ret[i] = ft_strdup(s->export[i]);
 		i++;
 	}
 	while (arg_count)
 	{
-		if (!ft_isinside(src->export, src->argv[j]))
+		if (!ft_isinside(s->export, s->argv[j]))
 		{
-			ret[i] = ft_strdup(src->argv[j]);
+			ret[i] = ft_strdup(s->argv[j]);
 			i++;
 		}
 		j++;
 		arg_count--;
 	}
-	ft_splfree(src->export);
-	src->export = ret;
+	ft_splfree(s->export);
+	s->export = ret;
 }
 
-void	ft_export_add(t_data *src)
+void	ft_export_add(t_src *s)
 {// need add check if is include
 	char	**ret;
 	int		i;
 	int		arg_count;
 
 	i = 1;// 0[export] 1[word1] 2[word2] 3[\0]
-	arg_count = (src->argc - 1);// -1 need to cut this -> 1[export] <- 2[Ti ochen krasivaya] 3[another word]
+	arg_count = (s->argc - 1);// -1 need to cut this -> 1[export] <- 2[Ti ochen krasivaya] 3[another word]
 	while (arg_count)
 	{
-		if (!ft_isalpha(src->argv[i][0]))// if argv == [987SLOVO]
+		if (!ft_isalpha(s->argv[i][0]))// if argv == [987SLOVO]
 		{
 			ft_putstr_fd("bash: export: `", 1);
-			ft_putstr_fd(src->argv[i], 1);
+			ft_putstr_fd(s->argv[i], 1);
 			ft_putstr_fd("': not a valid identifier\n", 1);
 			return ;
 		}
@@ -75,8 +75,8 @@ void	ft_export_add(t_data *src)
 		i++;
 	}
 	arg_count = 0;
-	ft_count_include_av(src->export, src->argv, &arg_count);
-	i = (src->argc - 1 - arg_count) + ft_spllen(src->export); //new strings + all_export_string
+	ft_count_include_av(s->export, s->argv, &arg_count);
+	i = (s->argc - 1 - arg_count) + ft_spllen(s->export); //new strings + all_export_string
 	ret = (char **)ft_calloc(sizeof(char *), i + 1);
-	ft_norm_export(src, &(*ret));
+	ft_norm_export(s, &(*ret));
 }

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 15:41:14 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/11 19:03:05 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/02 17:09:18 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_env(char **envp, char *env)
 	if (envp[i])
 		tmp = envp[i] + len;
 	else
-		tmp = 0;
+		tmp = NULL;
 	free(env);
 	return (tmp);
 }

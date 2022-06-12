@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:40:58 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/21 17:05:32 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/07 11:54:35 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 	ft_spldup - calloc and copy char **array
 	ft_spllen - count strings
 	ft_splfree - free array an arrays
+	ft_splarrfree - free arrays an arrays
 */
 
 void	ft_splfree(char **split)
@@ -35,6 +36,20 @@ void	ft_splfree(char **split)
 	}
 	free(split);
 	split = NULL;
+}
+
+void	ft_splarrfree(char ***a_spl)
+{
+	int	i;
+
+	i = 0;
+	while (a_spl[i])
+	{
+		ft_splfree(a_spl[i]);
+		i++;
+	}
+	free (a_spl);
+	a_spl = NULL;
 }
 
 int	ft_spllen(char **split)

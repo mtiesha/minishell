@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/01 19:09:39 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/20 18:33:23 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/06/02 15:57:22 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/06/02 15:57:24 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		ft_strlen_pipe(char *str)
+int	ft_strlen_pipe(char *str)
 {
 	int		i;
 	char	c;
@@ -41,7 +41,7 @@ int		ft_strlen_pipe(char *str)
 	return (i);
 }
 
-int		ft_strlen_arg_token(char *str, char c)
+int	ft_strlen_arg_token(char *str, char c)
 {
 	int i;
 
@@ -55,7 +55,7 @@ int		ft_strlen_arg_token(char *str, char c)
 	return (i);
 }
 
-int		ft_strlen_char(char *str, char c)
+int	ft_strlen_char(char *str, char c)
 {
 	int i;
 
@@ -65,7 +65,7 @@ int		ft_strlen_char(char *str, char c)
 	return (i);
 }
 
-int		ft_strlen_token(char *str)
+int	ft_strlen_token(char *str)
 {
 	int		len;
 
@@ -81,7 +81,7 @@ int		ft_strlen_token(char *str)
 	return (len);
 }
 
-int		ft_strlen_env(char *str)
+int	ft_strlen_env(char *str)
 {
 	int		len;
 

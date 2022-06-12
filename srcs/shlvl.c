@@ -1,43 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isutils.c                                       :+:      :+:    :+:   */
+/*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/20 13:58:10 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 11:55:09 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/06/04 19:09:49 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/06/07 12:57:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-int	ft_get_minmax(int a, int b, char *min_or_max)
+char	**ft_add_mshlvl(char **envp)
 {
-	if ('i' == min_or_max[1])
-	{
-		if (a > b)
-			return (b);
-		return (a);
-	}
-	if (a < b)
-		return (b);
-	else if (a > b)
-		return (a);
-	if (a == b)
-		return (0);
-	return (-1);
-}
-
-int	ft_iscinstr(const char *str, char c)
-{
-	int	i;
+	char	**tmp;
+	int		i;
 
 	i = 0;
-	while (str[i])
+	tmp = (char **)ft_calloc(2 + ft_spllen(envp), sizeof(char *));
+	while (envp[i])
 	{
-		if (c == str[i])
-			return (1);
+		tmp[i] = ft_strdup(envp[i]);
+		i++;
 	}
-	return (0);
+	tmp[i] = ft_strdup("MSHLVL=0");
+	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:26:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/25 13:33:39 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/07 13:17:08 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	ft_deleter_unset(char **av, char **split, char **ret)
 	ft_splfree(split);
 }
 
-static void	ft_gate_unset(t_data *src)
+static void	ft_gate_unset(t_src *s)
 {
 	int		len_array;
 	int		real_len;
@@ -66,41 +66,41 @@ static void	ft_gate_unset(t_data *src)
 	char	**ret;
 
 	minus_strs = 0;
-	len_array = ft_spllen(src->export);
-	ft_count_include_av(src->export, src->argv, &minus_strs);
+	len_array = ft_spllen(s->export);
+	ft_count_include_av(s->export, s->argv, &minus_strs);
 	real_len = len_array - minus_strs; //new strings - all_unset_string
 	ret = (char **)ft_calloc(sizeof(char *), real_len + 1);
-	ft_deleter_unset(src->argv, src->export, &(*ret));
-	src->export = ret;
+	ft_deleter_unset(s->argv, s->export, &(*ret));
+	s->export = ret;
 	minus_strs = 0;
-	len_array = ft_spllen(src->envp);
-	ft_count_include_av(src->envp, src->argv, &minus_strs);
+	len_array = ft_spllen(s->envp);
+	ft_count_include_av(s->envp, s->argv, &minus_strs);
 	real_len = len_array - minus_strs; //new strings - all_unset_string
 	ret = (char **)ft_calloc(sizeof(char *), real_len + 1);
-	ft_deleter_unset(src->argv, src->envp, &(*ret));
-	src->envp = ret;
+	ft_deleter_unset(s->argv, s->envp, &(*ret));
+	s->envp = ret;
 }
 
-void	ft_unset(t_data *src)
+void	ft_unset(t_src *s)
 {// copy envp and export, without argv[i]
 	int		i;
 	int		arg_count;
 
-	if (1 == src->argc)
+	if (1 == s->argc)
 		return ;
 	i = 1;// 0[export] 1[word1] 2[word2] 3[\0]
-	arg_count = (src->argc - 1);// -1 need to cut this ->1[export]<- 2[Ti ochen krasivaya] 3[another word]
+	arg_count = (s->argc - 1);// -1 need to cut this ->1[export]<- 2[Ti ochen krasivaya] 3[another word]
 	while (arg_count)
 	{
-		if (!ft_isalpha(src->argv[i][0]))// if argv == [987SLOVO]
+		if (!ft_isalpha(s->argv[i][0]))// if argv == [987SLOVO]
 		{
 			ft_putstr_fd("bash: unset: `", 2);
-			ft_putstr_fd(src->argv[i], 2);
+			ft_putstr_fd(s->argv[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			return ;
 		}
 		arg_count--;
 		i++;
 	}
-	ft_gate_unset(src);
+	ft_gate_unset(s);
 }

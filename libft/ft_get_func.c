@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isutils.c                                       :+:      :+:    :+:   */
+/*   ft_get_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/20 13:58:10 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 11:55:09 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/06/04 19:56:14 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/06/07 12:33:48 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+/*
+*	ft_get_strnspl - find str in arrays an array, to full search put \0 to last arg
+*/
 
-int	ft_get_minmax(int a, int b, char *min_or_max)
-{
-	if ('i' == min_or_max[1])
-	{
-		if (a > b)
-			return (b);
-		return (a);
-	}
-	if (a < b)
-		return (b);
-	else if (a > b)
-		return (a);
-	if (a == b)
-		return (0);
-	return (-1);
-}
-
-int	ft_iscinstr(const char *str, char c)
+char	*ft_get_strnspl(char **spl, char *str, char c)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (spl[i])
 	{
-		if (c == str[i])
-			return (1);
+		if (!ft_memcmp(spl[i], str, ft_strnlen(spl[i], c)))
+			return (spl[i]);
+		i++;
 	}
-	return (0);
+	return (NULL);
 }

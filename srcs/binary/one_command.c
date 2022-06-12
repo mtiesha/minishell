@@ -1,43 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isutils.c                                       :+:      :+:    :+:   */
+/*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/20 13:58:10 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 11:55:09 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/06/12 14:35:17 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/06/12 14:53:39 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_get_minmax(int a, int b, char *min_or_max)
+int ft_one_command_run(t_src *s)
 {
-	if ('i' == min_or_max[1])
-	{
-		if (a > b)
-			return (b);
-		return (a);
-	}
-	if (a < b)
-		return (b);
-	else if (a > b)
-		return (a);
-	if (a == b)
-		return (0);
-	return (-1);
-}
 
-int	ft_iscinstr(const char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (c == str[i])
-			return (1);
-	}
-	return (0);
 }

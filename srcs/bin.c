@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 22:36:37 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/20 18:40:04 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/02 17:07:22 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	set_in(char **argv)
 	}
 }
 
-static void	exec_bin(int fd, char *path, t_data *src)
+static void	exec_bin(int fd, char *path, t_src *src)
 {
 	char	**args;
 
@@ -60,7 +60,7 @@ static void	exec_bin(int fd, char *path, t_data *src)
 	ft_splfree(args);
 }
 
-static char	**split_path(t_data *src, char *str)
+static char	**split_path(t_src *src, char *str)
 {
 	char	*path;
 	char	**paths;
@@ -79,7 +79,7 @@ static char	**split_path(t_data *src, char *str)
 	return (paths);
 }
 
-static char	*search_bin(char *str, DIR **dir, struct dirent **d, t_data *src)
+static char	*search_bin(char *str, DIR **dir, struct dirent **d, t_src *src)
 {
 	char		**paths;
 	char		*path;
@@ -107,7 +107,7 @@ static char	*search_bin(char *str, DIR **dir, struct dirent **d, t_data *src)
 	return (NULL);
 }
 
-int	check_bin(int fd, t_data *src)
+int	check_bin(int fd, t_src *src)
 {
 	DIR				*dir;
 	struct dirent	*d;

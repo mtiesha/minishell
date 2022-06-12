@@ -6,12 +6,11 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/21 17:05:13 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/11 13:25:52 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 static char	*ft_get_prompt(char **envp)
 {
@@ -20,7 +19,8 @@ static char	*ft_get_prompt(char **envp)
 	char	*c_path;
 	char	cwd[4097];
 
-	home = get_env(envp, "HOME");
+	home = ft_get_strnspl(envp, "HOME", '=');
+	home += 5;
 	getcwd(cwd, 4096);
 	if (ft_memcmp(cwd, home, ft_strlen(home)))
 		path = ft_strdup(cwd);
@@ -47,6 +47,7 @@ static void	ft_sig_handler(int sig)
 		home = getenv("HOME");
 		current = ft_strdup(cwd + ft_strlen(home));
 		write(2, "\n", 1);
+		rl_replace_line("", 0);
 		ft_putstr_fd("\033[32mGlina@minishell:\033[1;34m~", 2);
 		ft_putstr_fd(current, 2);
 		ft_putstr_fd("\033[0;0m$ ", 2);
@@ -54,46 +55,65 @@ static void	ft_sig_handler(int sig)
 	}
 }
 
-static void	init_param(t_data **src, char **argv, char **envp, int *ret_len)
-{// add if (!dup)
-	(*src) = (t_data *)malloc(sizeof(t_data));
-	(*src)->envp = ft_spldup(envp);
+static void	ft_init(t_src **src, char **argv, char **envp)
+{
+	(*src) = (t_src *)malloc(sizeof(t_src));
+	(*src)->envp = NULL;
+	(*src)->envp = ft_add_mshlvl(envp);
+	//if (!(*src)->envp)
+	//	ft_oshibochka_s_exitom();
 	(*src)->argv = argv;
 	(*src)->export = NULL;
-	(*src)->export = ft_spldup(envp);
+	(*src)->export = ft_spldup((*src)->envp);
+	//if (!(*src)->export)
+	//	ft_oshibochka_s_exitom();
+	(*src)->str = NULL;
 	(*src)->ret = 0;
-	(*src)->str = 0;
-	(*src)->child = 0;
-	ret_len[0] = 0;
-}
-
-static int	ft_is_here_doc(char *str)
-{
-	while (*str != '<' && *str)
-		str++;
-	if (*str == '<' && *(str + 1) == '<')
-		return (1);
-	return (0);
+	(*src)->child = 0;// maybe not use
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	*src;
-	int		ret_len[2];
+	t_src	*src;
 	char	*promt;
 
 	(void)(argc);
-	init_param(&src, argv, envp, ret_len);
+	ft_init(&src, argv, envp);
 	while (1)
 	{
-		signal(SIGQUIT, ft_sig_handler);
 		signal(SIGINT, ft_sig_handler);
+		signal(SIGQUIT, ft_sig_handler);
 		promt = ft_get_prompt(envp);
 		src->str = readline(promt);
 		free(promt);
 		if (NULL != src->str)
 		{
-			if (!ft_is_here_doc(src->str))
+			if (0 == ft_strncmp("d5", src->str, 3))
+			{
+				free(src->str);
+				src->str = ft_strdup("    cat << STOP      | ls -l   -a | wc   -l |  cat >> f2   ");
+			}
+			else if (0 == ft_strncmp("d4", src->str, 3))
+			{
+				free(src->str);
+				src->str = ft_strdup("    cat < Makefile    |  cat | wc   -l |  wc >> f2   ");
+			}
+			else if (0 == ft_strncmp("d3", src->str, 3))
+			{
+				free(src->str);
+				src->str = ft_strdup("    cat < Makefile    |  cat | wc   -l |  wc > f2   ");
+			}
+			else if (0 == ft_strncmp("d2", src->str, 3))
+			{
+				free(src->str);
+				src->str = ft_strdup("    cat < Makefile    |  cat | wc   -l    ");
+			}
+			else if (0 == ft_strncmp("d1", src->str, 3))
+			{
+				free(src->str);
+				src->str = ft_strdup("    ls -l    -a   |  cat | wc   -l    ");
+			}
+			if (!ft_strnstr(src->str, "<<", ft_strlen(src->str)))
 				add_history(src->str);
 			parser(src);
 		}

@@ -1,43 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isutils.c                                       :+:      :+:    :+:   */
+/*   erroer_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/20 13:58:10 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 11:55:09 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/03/04 11:10:31 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/06/03 15:10:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_get_minmax(int a, int b, char *min_or_max)
+void	ft_freesher(t_pipex **s)
 {
-	if ('i' == min_or_max[1])
+	if (*s)
 	{
-		if (a > b)
-			return (b);
-		return (a);
+		if ((*s)->path)
+			ft_splfree((*s)->path);
+		if ((*s)->cmd)
+			ft_splarrfree((*s)->cmd);
+		free(*s);
+		*s = NULL;
 	}
-	if (a < b)
-		return (b);
-	else if (a > b)
-		return (a);
-	if (a == b)
-		return (0);
-	return (-1);
 }
 
-int	ft_iscinstr(const char *str, char c)
+void	ft_errorer(t_pipex **s)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (c == str[i])
-			return (1);
-	}
-	return (0);
+	perror("Error");
+	ft_freesher(&(*s));
+	exit(1);
 }

@@ -1,16 +1,14 @@
 NAME =	minishell
 
 SRCS =	srcs/main.c\
+		srcs/shlvl.c\
 		srcs/parser/checks.c\
-		srcs/parser.c\
-		srcs/pipe.c\
-		srcs/command.c\
-		srcs/args.c\
-		srcs/bin.c\
-		srcs/bash.c\
-		srcs/utils.c\
-		srcs/lens.c\
-		srcs/remove.c\
+		srcs/parser/source_parser.c\
+		srcs/parser/parser.c\
+		srcs/executor/check_arg_bonus.c\
+		srcs/executor/check_env_bonus.c\
+		srcs/executor/erroer_bonus.c\
+		srcs/executor/pipex_bonus.c\
 		srcs/binary/binary.c\
 		srcs/binary/exit.c\
 		srcs/binary/cd.c\
@@ -60,16 +58,10 @@ re:		fclean all
 leaks:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
 
-git:
-	@make fclean
-	@git add .
-	@git commit -m "make done"
-	git push
-
 norm:
 	norminette ./srcs/* ./libft/*
 
-.PHONY:		all clean fclean re leaks git norm
+.PHONY:		all clean fclean re leaks norm
 .SILENT:
 
 ##############______________Colors______________##############

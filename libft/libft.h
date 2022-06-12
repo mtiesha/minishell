@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/23 12:59:50 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:53:45 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,24 @@
 
 /* get_next_line */
 int		ft_gnl_sh(char **line, int memory, int fd);
-/* choose func */
+/* get "min" or "max" value */
 int		ft_get_minmax(int a, int b, char *min_or_max);
+/* find str in spl before c */
+char	*ft_get_strnspl(char **spl, char *str, char c);
 /* array an arrays function */
 char	**ft_split(char const *s, char c);
 char	**ft_spldup(char **split);
 int		ft_spllen(char **split);
 void	ft_splfree(char **split);
-/* swap function */
+void	ft_splarrfree(char ***a_spl);
+/* swap 2 ptr */
 void	ft_swap_ptr(char **p1, char **p2);
+/* delete all double char, after c */
+char	*ft_deldoublec(char **str, char c);
 /* is function */
 int		ft_isalnum(int c);
+/* find char in string */
+int		ft_iscinstr(const char *str, char c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
@@ -38,19 +45,27 @@ int		ft_putchar_fd(char c, int fd);
 int		ft_putendl_fd(char *s, int fd);
 int		ft_putnbr_fd(int n, int fd);
 int		ft_putstr_fd(char *s, int fd);
+/* put str to fd, before (int)n character */
 int		ft_putnstr_fd(char *str, int n, int fd);
 size_t	ft_putspl_fd(char **split, int fd);
 /* malloc/calloc functions */
 void	*ft_calloc(size_t number, size_t size);
 char	*ft_strdup(const char *str);
+/* return copy of string, before (int)n character */
 char	*ft_strndup(char *str, int n);
 char	*ft_strjoin(char const *str1, char const *str2);
+/* free_flag to free str afterjoin: 0-str1 1-str2 2-both */
+char	*ft_strjoinfree(char **str1, char **str2, int free_flag);
 size_t	ft_strlcat(char *dest, const char *src, size_t dest_size);
 /* find function */
 void	*ft_memchr(const void *s, int c, size_t n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t n);
+/* add char to string on index */
+char	*ft_charadd(char **str, int index, char c);
+/* delete char from string at index */
+char	*ft_chardel(char **str, int index);
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
