@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 19:53:45 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/13 06:36:38 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*ft_strdup(const char *str);
 /* return copy of string, before (int)n character */
 char	*ft_strndup(char *str, int n);
 char	*ft_strjoin(char const *str1, char const *str2);
-/* free_flag to free str afterjoin: 0-str1 1-str2 2-both */
-char	*ft_strjoinfree(char **str1, char **str2, int free_flag);
+/* add char, after str1 */
+char	*ft_strjoinchar(char const *str1, char const *str2, char c);
 size_t	ft_strlcat(char *dest, const char *src, size_t dest_size);
 /* find function */
 void	*ft_memchr(const void *s, int c, size_t n);

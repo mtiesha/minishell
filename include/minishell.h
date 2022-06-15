@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/12 15:59:26 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:14:09 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ typedef struct s_pipex {
 	int		gnr;
 }	t_pipex;
 
+/* /src/parser/cleaner */
+char	*ft_cleaner(char **cmd);
 /* /src/parser */
+void	parser(t_src *s);
 int		ft_check_wrong_pipe(t_src *s);
 char	*ft_delete_pipes(t_src *s, int k);
 int		ft_count_ac(const char **spl);
@@ -55,6 +58,7 @@ char	**ft_union_cmd_flg(char ***av);
 char	**ft_union_cmd_file(char ***av);
 /* MSHLVL */
 char	**ft_add_mshlvl(char **envp);
+void	ft_sig_handler_b(int sig);
 /* /src/binary */
 int		ft_gate_binary(t_src *s);
 void	ft_exec_cd(t_src *s);
@@ -70,29 +74,10 @@ void	ft_count_include_av(char **split, char **argv, int *argc);
 int		ft_pipex(int gnr, char **argv, char **envp);
 int		ft_check_arg_b(t_pipex **s, char **envp, char **argv);
 char	*ft_get_env_cmd(char **envp, char *command);
+int		ft_isfile(char *file);
 char	*ft_get_absolute_pth(char *file);
 void	ft_freesher(t_pipex **s);
-void	ft_errorer(t_pipex **s);
+void	ft_errorer(t_pipex **s, char *code);
 void	ft_heredoc(t_pipex **s, char *stop);
-
-void	set_args(char **argv, char *str, int argc);
-void	child_sig_handler(int sig);
-void	child_sig_handler_bash(int sig);
-void	bash_command(t_src *s);
-void	parser(t_src *s);
-void	export_value(t_src *s, int *i);
-void	rm_char(char **str, int j);
-void	rm_token(char **arg);
-void	command_or_pipe(t_src *s, int j);
-char	*get_env(char **envp, char *env);
-char	**copy_args(t_src *s);
-char	**check_command(char *str, t_src *s);
-int		count_args(char *str);
-int		ft_strlen_token(char *str);
-int		ft_strlen_env(char *str);
-int		ft_strlen_pipe(char *str);
-int		ft_strlen_char(char *str, char c);
-int		ft_strlen_arg_token(char *str, char c);
-int		is_token(char c);
 
 #endif

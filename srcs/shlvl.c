@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:09:49 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 12:57:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 12:15:46 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,9 @@ char	**ft_add_mshlvl(char **envp)
 	}
 	tmp[i] = ft_strdup("MSHLVL=0");
 	return (tmp);
+}
+
+void	ft_sig_handler_b(int sig)
+{
+	(void)(sig);
 }

@@ -4,8 +4,10 @@ SRCS =	srcs/main.c\
 		srcs/shlvl.c\
 		srcs/parser/checks.c\
 		srcs/parser/source_parser.c\
+		srcs/parser/cleaner.c\
 		srcs/parser/parser.c\
 		srcs/executor/check_arg_bonus.c\
+		srcs/executor/source_executor.c\
 		srcs/executor/check_env_bonus.c\
 		srcs/executor/erroer_bonus.c\
 		srcs/executor/pipex_bonus.c\

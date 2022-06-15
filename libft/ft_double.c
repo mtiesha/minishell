@@ -6,12 +6,11 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 13:36:31 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/09 06:46:57 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:51:16 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 char	*ft_deldoublec(char **str, char c)
 {
@@ -24,7 +23,6 @@ char	*ft_deldoublec(char **str, char c)
 	i = 0;
 	j = 0;
 	ptr = (*str);
-	printf("------------DELETEDOUBLE-----------\n");
 	ret = (char *)malloc(sizeof(char) * (1 + ft_strlen((*str))));
 	if (ret == NULL)
 		return (NULL);
@@ -38,6 +36,5 @@ char	*ft_deldoublec(char **str, char c)
 	free(ptr);
 	tmp = ft_strdup(ret);
 	free(ret);
-	printf("after del double:+%s+\n", tmp);
 	return (tmp);
 }

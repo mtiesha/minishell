@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:10:31 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/03 15:10:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:46:15 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ void	ft_freesher(t_pipex **s)
 	}
 }
 
-void	ft_errorer(t_pipex **s)
+void	ft_errorer(t_pipex **s, char *code)
 {
-	perror("Error");
+	if (NULL == code)
+		perror("Error:");
+	else
+		ft_putendl_fd(code, 2);
 	ft_freesher(&(*s));
-	exit(1);
+	//exit(1);
 }

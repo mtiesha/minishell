@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/11 13:25:52 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 14:48:19 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,32 +37,23 @@ static char	*ft_get_prompt(char **envp)
 
 static void	ft_sig_handler(int sig)
 {
-	char	cwd[4097];
-	char	*home;
-	char	*current;
-
 	if (sig == SIGINT)
 	{
-		getcwd(cwd, 4096);
-		home = getenv("HOME");
-		current = ft_strdup(cwd + ft_strlen(home));
-		write(2, "\n", 1);
+		rl_on_new_line();
+		ft_putstr_fd("\n", 1);
 		rl_replace_line("", 0);
-		ft_putstr_fd("\033[32mGlina@minishell:\033[1;34m~", 2);
-		ft_putstr_fd(current, 2);
-		ft_putstr_fd("\033[0;0m$ ", 2);
-		free(current);
+		rl_redisplay();
 	}
 }
 
-static void	ft_init(t_src **src, char **argv, char **envp)
+static void	ft_init(t_src **src, char **envp)
 {
 	(*src) = (t_src *)malloc(sizeof(t_src));
 	(*src)->envp = NULL;
 	(*src)->envp = ft_add_mshlvl(envp);
 	//if (!(*src)->envp)
 	//	ft_oshibochka_s_exitom();
-	(*src)->argv = argv;
+	(*src)->argv = NULL;
 	(*src)->export = NULL;
 	(*src)->export = ft_spldup((*src)->envp);
 	//if (!(*src)->export)
@@ -78,7 +69,8 @@ int	main(int argc, char **argv, char **envp)
 	char	*promt;
 
 	(void)(argc);
-	ft_init(&src, argv, envp);
+	(void)(argv);
+	ft_init(&src, envp);
 	while (1)
 	{
 		signal(SIGINT, ft_sig_handler);

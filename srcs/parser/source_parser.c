@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:58:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/12 17:28:34 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 16:23:44 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,21 @@ int	ft_isbuildin(char *str)
 	char	*ptr;
 	int		buildin;
 
-	ptr = ft_strchr(str, '|');// maybe strlen need change to int env == 4;
+	ptr = ft_strchr(str, '|');
 	buildin = 0;
-	if (!ft_memcmp(str, "env", ft_strlen(str)) \
-		|| !ft_memcmp(str, "exit", ft_strlen(str)) \
-		|| !ft_memcmp(str, "export", ft_strlen(str)) \
-		|| !ft_memcmp(str, "unset", ft_strlen(str)) \
-		|| !ft_memcmp(str, "echo", ft_strlen(str)) \
-		|| !ft_memcmp(str, "pwd", ft_strlen(str)) \
-		|| !ft_memcmp(str, "cd", ft_strlen(str)))
+	if (!ft_memcmp(str, "env", 4) \
+		|| !ft_memcmp(str, "exit", 5) \
+		|| !ft_memcmp(str, "export", 7) \
+		|| !ft_memcmp(str, "unset", 6) \
+		|| !ft_memcmp(str, "echo", 5) \
+		|| !ft_memcmp(str, "pwd", 4) \
+		|| !ft_memcmp(str, "cd", 3))
 		buildin = 1;
 	if (!ptr && buildin)
+	{
+		printf("---------is buildin\n");
 		return (1);
+	}
 	return (0);
 }
 
@@ -137,52 +140,49 @@ char	**ft_union_cmd_flg(char ***av)
 			i += k;
 		}
 		else if (ptr[i])
-			ret[j] = ft_strdup(ptr[i++]);
-		printf("%s\n", ret[j]);
+			ret[j] = ft_strdup(ptr[i++]);//lost
 		j++;
 	}
+	ret[j] = 0;
+	ptr = ft_spldup(ret);//lost
+	free(ret);
 	free((*av));
-	return (ret);
+	return (ptr);
 }
 
 char	**ft_union_cmd_file(char ***av)
 {
-	/*
-	1- this 2- func who check is this is file 3- ft_strjoinchar
-	copy av
-	while (av[i])
-	{
-		if (i > 0 && av[i + 1] is file)
-		{
-			ret[j] = ft_strjoin(av[i], av[i + 1]);
-			j++;
-			i += 2;
-
-		}
-	}
-	*/
 	int		i;
 	int		j;
 	char	**ret;
+	char	**ptr;
 
 	j = 0;
 	i = ft_spllen((*av));
-	ret = (char **)ft_malloc(sizeof(char *) * (i + 1));
+	if (i == 1)
+		return ((*av));
+	ptr = (*av);
+	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!ret)
 		return (NULL);
+	ret[i] = 0;
 	i = 0;
-	while (av[i])
+	while (ptr [i])
 	{
-		if (ft_iscinstr(av[i], '>'))
-			i++;
-		if (av[i] && i > 0 && av[i + 1] && ft_isfile(av[i + 1], NULL))
+		if ((!ft_iscinstr((const char *)(ptr[i]), '>')) \
+			&& ft_isfile(ptr[i + 1]))
 		{
-			ret[j] = ft_strjoinchar(av[i], av[i + 1], ' ');
+			ret[j] = ft_strjoinchar(ptr[i], ptr[i + 1], ' ');
 			i++;
 		}
 		else
-			ret[j] = ft_strdup(av[i]);
+			ret[j] = ft_strdup(ptr[i]);
+		i++;
 		j++;
-		i++;// f1 cat f2 [\0]
 	}
+	ret[j] = 0;
+	ptr = ft_spldup(ret);
+	free(ret);
+	free((*av));
+	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/12 14:41:35 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:35:36 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_heredoc(t_pipex **s, char *stop)
 	char	*line;
 
 	if (-1 == pipe(pipe_fd))
-		ft_errorer(s);
+		ft_errorer(s, "Pipe error [hd]");
 	pid = fork();
 	if (pid == 0)
 	{
@@ -27,9 +27,13 @@ void	ft_heredoc(t_pipex **s, char *stop)
 		while (ft_gnl_sh(&line, 10000, 0))
 		{
 			if (0 == ft_strncmp(line, stop, ft_strlen(stop)))
+			{
+				ft_freesher(s);
+				free(line);
 				exit(0);
+			}
 			write(pipe_fd[1], line, ft_strlen(line));
-			//maybe need free(&line);
+			free(line);
 		}
 	}
 	else
@@ -46,17 +50,17 @@ static void	ft_child(t_pipex **s, int i, char **envp)
 	int		pipe_fd[2];
 
 	if (-1 == pipe(pipe_fd))
-		ft_errorer(&(*s));
+		ft_errorer(&(*s), "Pipe error [ch]");
 	pid = fork();
 	if (-1 == pid)
-		ft_errorer(&(*s));
+		ft_errorer(&(*s), "Fork error [ch]");
 	if (pid == 0)
 	{
 		if (i)
 			close(pipe_fd[0]);
 		dup2(pipe_fd[1], 1);
 		if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
-			ft_errorer(&(*s));
+			ft_errorer(s, "Execve error [ch]");
 	}
 	else
 	{
@@ -75,11 +79,11 @@ static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
 		ft_heredoc(s, *(++argv));
 	else
 		dup2((*s)->fd0, 0);
-	while (i < (*s)->gnr - 1)
+	while (i > 0 && i < (*s)->gnr - 1)
 		ft_child(s, i++, envp);
 	dup2((*s)->fd1, 1);
 	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
-		ft_errorer(s);
+		ft_errorer(s, "Execve error [gt]");
 }
 
 static int	ft_init(t_pipex **s, int comc)
@@ -87,14 +91,16 @@ static int	ft_init(t_pipex **s, int comc)
 	int	i;
 
 	i = comc;
-	*s = (t_pipex *)malloc(sizeof(t_pipex));
+	*s = (t_pipex *)ft_calloc(1, sizeof(t_pipex));
 	if (!s)
 		return (0);
-	(*s)->path = (char **)malloc((1 + i) * sizeof(char *));
+	(*s)->path = NULL;
+	(*s)->cmd = NULL;
+	(*s)->path = (char **)ft_calloc((1 + i), sizeof(char *));
 	if (!(*s)->path)
 		return (0);
 	(*s)->path[i] = NULL;
-	(*s)->cmd = (char ***)malloc((1 + i) * sizeof(char **));
+	(*s)->cmd = (char ***)ft_calloc((1 + i), sizeof(char **));
 	if (!(*s)->cmd)
 		return (0);
 	(*s)->cmd[i] = NULL;
@@ -108,17 +114,27 @@ int	ft_pipex(int comc, char **argv, char **envp)
 {
 	pid_t	pid;
 	t_pipex	*s;
+	int		ret_code;
 
+	ret_code = 0;
+	ft_putendl_fd("------AV--------", 2);
+	ft_putspl_fd(argv, 2);
+	ft_putendl_fd("------AV--------", 2);
 	if (!ft_init(&s, comc))
-		ft_errorer(&s);
+		ft_errorer(&s, "Init pipex error");
 	if (!ft_check_arg_b(&s, envp, argv))
-		ft_errorer(&s);
+	{
+		ft_errorer(&s, "Command not found");
+		return (1);
+	}
 	pid = fork();
+	signal(SIGINT, ft_sig_handler_b);
+	signal(SIGQUIT, ft_sig_handler_b);
 	if (-1 == pid)
-		ft_errorer(&s);
+		ft_errorer(&s, "Fork error [mn]");
 	if (0 == pid)
 		ft_gate_pipex(&s, argv, envp);
-	waitpid(pid, NULL, 0);
-	//ft_freesher(&s);//mainproc dont die
-	return (0);
+	waitpid(pid, &ret_code, 0);
+	ft_freesher(&s);
+	return (ret_code);
 }

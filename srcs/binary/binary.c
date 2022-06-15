@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:28:38 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/12 14:53:15 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:39:25 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,23 @@ static char	**ft_gate_uns_expo(t_src *s)
 	return (s->envp);
 }
 
+static int	ft_exec_msh(t_src *s)
+{
+	// char	*path;
+	// char	**cmd;
+	// char	cwd[4097];
+	(void)(s);
+	return (0);
+}
+
 int	ft_gate_binary(t_src *s)
 {
 	char	cwd[4097];
+	char	*ptr;
 	int		i;
 
 	i = 0;
+	ptr = ft_strnstr(s->argv[0], "/minishell", ft_strlen(s->argv[0]));
 	if (!ft_memcmp(s->argv[0], "env", 4))
 		while (s->envp[i])
 			ft_putendl_fd(s->envp[i++], 1);
@@ -51,7 +62,9 @@ int	ft_gate_binary(t_src *s)
 		ft_putendl_fd(getcwd(cwd, 4096), 1);
 	else if (!ft_memcmp(s->argv[0], "cd", 3))
 		ft_exec_cd(s);
+	else if (ptr)
+		ft_exec_msh(s);
 	else
-		return (127);
+		s->ret = 127;
 	return (s->ret);
 }

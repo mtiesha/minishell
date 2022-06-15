@@ -6,24 +6,11 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/11 20:49:26 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:33:02 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	*ft_get_absolute_pth(char *file)
-{
-	char	cwd[4097];
-	char	*path;
-	char	*tmp;
-
-	getcwd(cwd, 4096);
-	path = ft_strjoin(cwd, "/");
-	tmp = ft_strjoin(path, file);
-	free(path);
-	return (tmp);
-}
 
 static void	ft_open_last_file(t_pipex **s, char **argv)
 {
@@ -32,32 +19,24 @@ static void	ft_open_last_file(t_pipex **s, char **argv)
 		printf("~fileend:%s\n", *(1 + argv));
 		(*s)->fd1 = open(*(++argv), O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if ((*s)->fd1 == -1)
-			ft_errorer(s);
+			ft_errorer(s, NULL);
 	}
 	else if (0 == ft_strncmp(">>", *(argv), 3))
 	{
 		(*s)->fd1 = open(*(++argv), O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if ((*s)->fd1 == -1)
-			ft_errorer(s);
+			ft_errorer(s, NULL);
 	}
 }
 
 static void	ft_open_first_file(t_pipex **s, char **argv)
 {
-	char	*path;
-
-	if (*(argv) && !(*(argv[0]) == '/' || *(argv[0]) == '.'))
-		path = ft_get_absolute_pth(*(argv));
-	else if (*(argv))
-		path = *(argv);
-	if (0 == access(path, F_OK))
+	if (ft_isfile((*argv)))
 	{
 		(*s)->fd0 = open(*(argv), O_RDONLY, 0777);
 		if (-1 == (*s)->fd0)
-			ft_errorer(s);
+			ft_errorer(s, NULL);
 	}
-	if (*(argv))
-		free(path);
 }
 
 int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
@@ -80,10 +59,14 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 		printf("cmd[%d]: %s\n", i, *(argv));
 		(*s)->cmd[i] = ft_split(*(argv++), ' ');
 		if (!(*s)->cmd[i])
-			ft_errorer(s);
+			return (0);
 		(*s)->path[i] = ft_get_env_cmd(envp, (*s)->cmd[i][0]);
 		if (!(*s)->path[i])
-			ft_errorer(s);
+		{
+			ft_putstr_fd((*s)->cmd[i][0], 2);
+			ft_putchar_fd(' ', 2);
+			return (0);
+		}
 		i++;
 	}
 	if (*(argv) && '>' == *(argv[0]))

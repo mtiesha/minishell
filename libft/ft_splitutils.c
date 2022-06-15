@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:40:58 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 11:54:35 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:03:56 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_splarrfree(char ***a_spl)
 		ft_splfree(a_spl[i]);
 		i++;
 	}
-	free (a_spl);
+	free(a_spl);
 	a_spl = NULL;
 }
 
