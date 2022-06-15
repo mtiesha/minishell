@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 13:33:02 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:39:08 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 	int	i;
 
 	i = 0;
-	ft_putendl_fd("-------argv------", 2);
-	ft_putspl_fd(argv, 2);
-	ft_putendl_fd("-------conec------", 2);
 	if (0 != ft_strncmp("here_doc", *(argv), 9))
 		ft_open_first_file(s, argv);
 	else

@@ -6,11 +6,35 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 17:35:36 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:41:34 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	ft_init(t_pipex **s, int comc)
+{
+	int	i;
+
+	i = comc;
+	*s = (t_pipex *)ft_calloc(1, sizeof(t_pipex));
+	if (!s)
+		return (0);
+	(*s)->path = NULL;
+	(*s)->cmd = NULL;
+	(*s)->path = (char **)ft_calloc((1 + i), sizeof(char *));
+	if (!(*s)->path)
+		return (0);
+	(*s)->path[i] = NULL;
+	(*s)->cmd = (char ***)ft_calloc((1 + i), sizeof(char **));
+	if (!(*s)->cmd)
+		return (0);
+	(*s)->cmd[i] = NULL;
+	(*s)->fd0 = 0;
+	(*s)->fd1 = 1;
+	(*s)->gnr = comc;
+	return (1);
+}
 
 void	ft_heredoc(t_pipex **s, char *stop)
 {
@@ -79,35 +103,11 @@ static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
 		ft_heredoc(s, *(++argv));
 	else
 		dup2((*s)->fd0, 0);
-	while (i > 0 && i < (*s)->gnr - 1)
+	while (i < (*s)->gnr - 1)
 		ft_child(s, i++, envp);
 	dup2((*s)->fd1, 1);
 	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
 		ft_errorer(s, "Execve error [gt]");
-}
-
-static int	ft_init(t_pipex **s, int comc)
-{
-	int	i;
-
-	i = comc;
-	*s = (t_pipex *)ft_calloc(1, sizeof(t_pipex));
-	if (!s)
-		return (0);
-	(*s)->path = NULL;
-	(*s)->cmd = NULL;
-	(*s)->path = (char **)ft_calloc((1 + i), sizeof(char *));
-	if (!(*s)->path)
-		return (0);
-	(*s)->path[i] = NULL;
-	(*s)->cmd = (char ***)ft_calloc((1 + i), sizeof(char **));
-	if (!(*s)->cmd)
-		return (0);
-	(*s)->cmd[i] = NULL;
-	(*s)->fd0 = 0;
-	(*s)->fd1 = 1;
-	(*s)->gnr = comc;
-	return (1);
 }
 
 int	ft_pipex(int comc, char **argv, char **envp)

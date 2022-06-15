@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:58:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 16:23:44 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:25:13 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 int	ft_isbuildin(char *str)
 {
 	char	*ptr;
+	char	*ptr2;
 	int		buildin;
 
 	ptr = ft_strchr(str, '|');
+	ptr2 = ft_strnstr(str, "/minishell", ft_strlen(str));
 	buildin = 0;
 	if (!ft_memcmp(str, "env", 4) \
 		|| !ft_memcmp(str, "exit", 5) \
@@ -25,7 +27,8 @@ int	ft_isbuildin(char *str)
 		|| !ft_memcmp(str, "unset", 6) \
 		|| !ft_memcmp(str, "echo", 5) \
 		|| !ft_memcmp(str, "pwd", 4) \
-		|| !ft_memcmp(str, "cd", 3))
+		|| !ft_memcmp(str, "cd", 3) \
+		|| ptr2)
 		buildin = 1;
 	if (!ptr && buildin)
 	{
@@ -39,8 +42,6 @@ int	ft_count_ac(const char **spl)
 {
 	int		ac;
 	int		i;
-	char	*path;
-	char	*tmp;
 
 	ac = 0;
 	i = 0;
@@ -48,12 +49,8 @@ int	ft_count_ac(const char **spl)
 		i += 2;
 	else
 	{
-		tmp = ft_strdup(spl[i]);
-		path = ft_get_absolute_pth(tmp);
-		if (0 == access(path, F_OK))//need func: try_open_file and del tmp && path
+		if (ft_isfile((char *)(spl[i])))
 			ac = -1;
-		free(path);
-		free(tmp);
 	}
 	while (spl[i])
 	{
@@ -94,7 +91,7 @@ char	*ft_delete_pipes(t_src *s, int k)
 	return (ptr);
 }
 
-char	**ft_union_cmd_flg(char ***av)
+char	**ft_union_cmd_flg(char **av)
 {
 	char	**ptr;
 	char	**ret;
@@ -105,14 +102,14 @@ char	**ft_union_cmd_flg(char ***av)
 
 	i = 0;
 	j = 0;
-	ptr = (*av);
+	ptr = av;
 	while (ptr[i])
 	{
 		if ('-' == ptr[i][0])
 			j++;
 		i++;
 	}
-	ret = (char **)ft_calloc(1 + ft_spllen((*av)) - j, sizeof(char *));
+	ret = (char **)ft_calloc(1 + ft_spllen(av) - j, sizeof(char *));
 	if (ret == NULL)
 		return (NULL);
 	i = 0;
@@ -140,17 +137,16 @@ char	**ft_union_cmd_flg(char ***av)
 			i += k;
 		}
 		else if (ptr[i])
-			ret[j] = ft_strdup(ptr[i++]);//lost
+			ret[j] = ft_strdup(ptr[i++]);
 		j++;
 	}
 	ret[j] = 0;
-	ptr = ft_spldup(ret);//lost
+	ptr = ft_spldup(ret);
 	free(ret);
-	free((*av));
 	return (ptr);
 }
 
-char	**ft_union_cmd_file(char ***av)
+char	**ft_union_cmd_file(char **av)
 {
 	int		i;
 	int		j;
@@ -158,10 +154,10 @@ char	**ft_union_cmd_file(char ***av)
 	char	**ptr;
 
 	j = 0;
-	i = ft_spllen((*av));
+	i = ft_spllen(av);
 	if (i == 1)
-		return ((*av));
-	ptr = (*av);
+		return (ft_spldup(av));
+	ptr = av;
 	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!ret)
 		return (NULL);
@@ -183,6 +179,5 @@ char	**ft_union_cmd_file(char ***av)
 	ret[j] = 0;
 	ptr = ft_spldup(ret);
 	free(ret);
-	free((*av));
 	return (ptr);
 }

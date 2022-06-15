@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:09 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:23:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int		ft_check_wrong_pipe(t_src *s);
 char	*ft_delete_pipes(t_src *s, int k);
 int		ft_count_ac(const char **spl);
 int		ft_isbuildin(char *str);
-char	**ft_union_cmd_flg(char ***av);
-char	**ft_union_cmd_file(char ***av);
+char	**ft_union_cmd_flg(char **av);
+char	**ft_union_cmd_file(char **av);
 /* MSHLVL */
 char	**ft_add_mshlvl(char **envp);
 void	ft_sig_handler_b(int sig);

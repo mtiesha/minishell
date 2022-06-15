@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:03:00 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/14 08:07:25 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:54:25 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	ft_isfile(char *file)
 	{
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd("   <---  file who check 1", 2);
+		free(path);
 		return (1);
 	}
 	if (file)
