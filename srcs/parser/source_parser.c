@@ -6,37 +6,11 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:58:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 18:25:13 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 18:45:58 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	ft_isbuildin(char *str)
-{
-	char	*ptr;
-	char	*ptr2;
-	int		buildin;
-
-	ptr = ft_strchr(str, '|');
-	ptr2 = ft_strnstr(str, "/minishell", ft_strlen(str));
-	buildin = 0;
-	if (!ft_memcmp(str, "env", 4) \
-		|| !ft_memcmp(str, "exit", 5) \
-		|| !ft_memcmp(str, "export", 7) \
-		|| !ft_memcmp(str, "unset", 6) \
-		|| !ft_memcmp(str, "echo", 5) \
-		|| !ft_memcmp(str, "pwd", 4) \
-		|| !ft_memcmp(str, "cd", 3) \
-		|| ptr2)
-		buildin = 1;
-	if (!ptr && buildin)
-	{
-		printf("---------is buildin\n");
-		return (1);
-	}
-	return (0);
-}
 
 int	ft_count_ac(const char **spl)
 {
@@ -47,16 +21,14 @@ int	ft_count_ac(const char **spl)
 	i = 0;
 	if (0 == ft_strncmp(spl[i], "here_doc", 9))
 		i += 2;
-	else
-	{
-		if (ft_isfile((char *)(spl[i])))
-			ac = -1;
-	}
+	else if (ft_isfile((char *)(spl[i])))
+		ac = -1;
 	while (spl[i])
 	{
+		printf("JOPA\n");
 		if (spl[i] && spl[i][0] != '>')
 			ac++;
-		if (spl[i][0] == '>')
+		if (spl[i] && spl[i][0] == '>')
 			ac--;
 		i++;
 	}

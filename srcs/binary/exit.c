@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:40:45 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/06 14:36:09 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:54:04 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_exit_norm(t_src **s)
 	exit(i);
 }
 
-void	ft_exec_exit(t_src *s)
+int	ft_exec_exit(t_src *s)
 {
 	if (s->argc <= 2)
 		ft_exit_norm(&s);
@@ -62,4 +62,5 @@ void	ft_exec_exit(t_src *s)
 		ft_putendl_fd("bash: exit: too many arguments", 2);
 		s->ret = 1;
 	}
+	return (s->ret);
 }

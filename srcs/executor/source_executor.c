@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:03:00 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 17:54:25 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 18:48:40 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,25 @@ char	*ft_get_absolute_pth(char *file)
 int	ft_isfile(char *file)
 {
 	char	*path;
+	int		free_flag;
 
+	free_flag = 1;
 	if (file && !(file[0] == '/' || file[0] == '.'))
 		path = ft_get_absolute_pth(file);
 	else if (file)
+	{
 		path = file;
+		free_flag = 0;
+	}
 	if (0 == access(path, F_OK))
 	{
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd("   <---  file who check 1", 2);
-		free(path);
+		if (free_flag)
+			free(path);
 		return (1);
 	}
-	if (file)
+	if (file && free_flag)
 		free(path);
 	ft_putendl_fd("   <---  file who check 0", 2);
 	return (0);

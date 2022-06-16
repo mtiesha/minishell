@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 18:23:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 19:01:22 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ char	**ft_add_mshlvl(char **envp);
 void	ft_sig_handler_b(int sig);
 /* /src/binary */
 int		ft_gate_binary(t_src *s);
-void	ft_exec_cd(t_src *s);
-void	ft_exec_echo(t_src *s, int fd);
-void	ft_exec_exit(t_src *s);
-void	ft_exec_pwd(int fd);
+int		ft_exec_cd(t_src *s);
+int		ft_exec_echo(t_src *s, int fd);
+int		ft_exec_exit(t_src *s);
+int		ft_exec_pwd(int fd);
 /* /src/binary/export_unset */
-void	ft_sort_env(char **envp);
-void	ft_export_add(t_src *s);
-void	ft_unset(t_src *s);
+int		ft_sort_env(char **envp);
+int		ft_export_add(t_src *s);
+int		ft_unset(t_src *s);
 void	ft_count_include_av(char **split, char **argv, int *argc);
 /* /src/executor */
 int		ft_pipex(int gnr, char **argv, char **envp);

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 18:41:34 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 06:33:48 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_heredoc(t_pipex **s, char *stop)
 	if (-1 == pipe(pipe_fd))
 		ft_errorer(s, "Pipe error [hd]");
 	pid = fork();
+	if (-1 == pid)
+		ft_errorer(&(*s), "Fork error [ch]");
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);

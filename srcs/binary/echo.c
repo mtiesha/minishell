@@ -6,13 +6,13 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/06 14:35:12 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:53:00 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_exec_echo(t_src *src, int fd)
+int	ft_exec_echo(t_src *src, int fd)
 {
 	int	i;
 	int	n_flag;
@@ -30,4 +30,5 @@ void	ft_exec_echo(t_src *src, int fd)
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", fd);
+	return (1);
 }

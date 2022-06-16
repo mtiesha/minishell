@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:10:31 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 13:46:15 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 19:06:22 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	ft_freesher(t_pipex **s)
 {
 	if (*s)
 	{
+		if ((*s)->fd0 != 0)
+			close((*s)->fd0);
+		if ((*s)->fd1 != 1)
+			close((*s)->fd1);
 		if ((*s)->path)
 			ft_splfree((*s)->path);
 		if ((*s)->cmd)

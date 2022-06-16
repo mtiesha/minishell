@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:56:14 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 12:33:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:36:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,21 @@ char	*ft_get_strnspl(char **spl, char *str, char c)
 		i++;
 	}
 	return (NULL);
+}
+
+int	ft_get_minmax(int a, int b, char *min_or_max)
+{
+	if ('i' == min_or_max[1])
+	{
+		if (a > b)
+			return (b);
+		return (a);
+	}
+	if (a < b)
+		return (b);
+	else if (a > b)
+		return (a);
+	if (a == b)
+		return (0);
+	return (-1);
 }

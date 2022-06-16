@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:24:24 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/04 19:53:51 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 14:17:50 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	ft_norm_export(t_src *s, char **ret)
 	s->export = ret;
 }
 
-void	ft_export_add(t_src *s)
+int	ft_export_add(t_src *s)
 {// need add check if is include
 	char	**ret;
 	int		i;
@@ -69,7 +69,7 @@ void	ft_export_add(t_src *s)
 			ft_putstr_fd("bash: export: `", 1);
 			ft_putstr_fd(s->argv[i], 1);
 			ft_putstr_fd("': not a valid identifier\n", 1);
-			return ;
+			return (1);
 		}
 		arg_count--;
 		i++;
@@ -79,4 +79,5 @@ void	ft_export_add(t_src *s)
 	i = (s->argc - 1 - arg_count) + ft_spllen(s->export); //new strings + all_export_string
 	ret = (char **)ft_calloc(sizeof(char *), i + 1);
 	ft_norm_export(s, &(*ret));
+	return (0);
 }

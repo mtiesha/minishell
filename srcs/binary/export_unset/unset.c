@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:26:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 13:17:08 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:47:49 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ static void	ft_gate_unset(t_src *s)
 	s->envp = ret;
 }
 
-void	ft_unset(t_src *s)
+int	ft_unset(t_src *s)
 {// copy envp and export, without argv[i]
 	int		i;
 	int		arg_count;
 
 	if (1 == s->argc)
-		return ;
+		return (1);
 	i = 1;// 0[export] 1[word1] 2[word2] 3[\0]
 	arg_count = (s->argc - 1);// -1 need to cut this ->1[export]<- 2[Ti ochen krasivaya] 3[another word]
 	while (arg_count)
@@ -97,10 +97,11 @@ void	ft_unset(t_src *s)
 			ft_putstr_fd("bash: unset: `", 2);
 			ft_putstr_fd(s->argv[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
-			return ;
+			return (1);
 		}
 		arg_count--;
 		i++;
 	}
 	ft_gate_unset(s);
+	return (0);
 }

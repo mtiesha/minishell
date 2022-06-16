@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 11:13:42 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/07 13:26:24 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:52:16 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_print_error(t_src *s)
 	}
 }
 
-static void	ft_change_envp(t_src *s, char *path)
+int	ft_change_envp(t_src *s, char *path)
 {
 	char	cwd[4097];
 	char	oldpwd[4097];
@@ -53,9 +53,10 @@ static void	ft_change_envp(t_src *s, char *path)
 	}
 	else
 		ft_print_error(s);
+	return (s->ret);
 }
 
-void	ft_exec_cd(t_src *s)
+int	ft_exec_cd(t_src *s)
 {// argc = [1] || [2] argv = [cd] || [cd] || [cd] [libft]
 	char	*path;
 
@@ -66,5 +67,6 @@ void	ft_exec_cd(t_src *s)
 	}
 	else
 		path = s->argv[1];
-	ft_change_envp(s, path);
+	s->ret = ft_change_envp(s, path);
+	return (s->ret);
 }

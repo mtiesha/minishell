@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 10:55:59 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/05/25 13:28:53 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:47:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ft_print_sorted(char **sorted)
 	ft_splfree(sorted);
 }
 
-void	ft_sort_env(char **export)
+int	ft_sort_env(char **export)
 {
 	int		n;
 	int		k;
@@ -60,4 +60,5 @@ void	ft_sort_env(char **export)
 		k--;
 	}
 	ft_print_sorted(sorted);
+	return (0);
 }
