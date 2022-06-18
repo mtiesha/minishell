@@ -4,6 +4,7 @@ SRCS =	srcs/main.c\
 		srcs/shlvl.c\
 		srcs/parser/checks.c\
 		srcs/parser/source_parser.c\
+		srcs/parser/union_func.c\
 		srcs/parser/cleaner.c\
 		srcs/parser/parser.c\
 		srcs/executor/check_arg_bonus.c\

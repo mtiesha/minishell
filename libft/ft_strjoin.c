@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/13 13:28:45 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 13:26:05 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,23 @@ char	*ft_strjoinchar(char const *str1, char const *str2, char c)
 	ptr = ft_strjoin(ret, str2);
 	free(ret);
 	return (ptr);
+}
+
+char	*ft_strjoinfree(char **str1, char **str2, int free_flag)
+{
+	char	*ret;
+
+	ret = ft_strjoin((*str1), (*str2));
+	if (!ret)
+		return (NULL);
+	if (0 == free_flag)
+		free(*str1);
+	else if (1 == free_flag)
+		free(*str2);
+	else if (2 == free_flag)
+	{
+		free(*str1);
+		free(*str2);
+	}
+	return (ret);
 }

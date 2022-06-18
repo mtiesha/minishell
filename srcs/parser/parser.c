@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:16:52 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/18 11:42:11 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:59:45 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static char	**ft_cast_av(t_src *src, int i, int buildin)
 	if (!buildin)
 	{
 		tmp = ft_union_cmd_flg(ptr);
-		free(ptr);
+		ft_splfree(ptr);
 		src->argv = ft_union_cmd_file(tmp);
-		free(tmp);
+		ft_splfree(tmp);
 	}
 	else
 		src->argv = ptr;
