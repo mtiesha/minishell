@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:58:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 18:45:58 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:46:09 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	ft_count_ac(const char **spl)
 		ac = -1;
 	while (spl[i])
 	{
-		printf("JOPA\n");
 		if (spl[i] && spl[i][0] != '>')
 			ac++;
 		if (spl[i] && spl[i][0] == '>')

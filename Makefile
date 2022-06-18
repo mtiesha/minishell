@@ -15,6 +15,7 @@ SRCS =	srcs/main.c\
 		srcs/binary/exit.c\
 		srcs/binary/cd.c\
 		srcs/binary/echo.c\
+		srcs/binary/bash.c\
 		srcs/binary/export_unset/sorting_export.c\
 		srcs/binary/export_unset/export.c\
 		srcs/binary/export_unset/unset.c

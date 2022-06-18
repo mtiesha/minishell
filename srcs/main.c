@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 14:48:19 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:43:55 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,18 @@ static char	*ft_get_prompt(char **envp)
 	char	cwd[4097];
 
 	home = ft_get_strnspl(envp, "HOME", '=');
-	home += 5;
 	getcwd(cwd, 4096);
-	if (ft_memcmp(cwd, home, ft_strlen(home)))
-		path = ft_strdup(cwd);
+	if (home)
+	{
+		home += 5;
+		if (ft_strncmp(cwd, home, ft_strlen(home)))
+			path = ft_strdup(cwd);
+		else
+			path = ft_strjoin("~", cwd + ft_strlen(home));
+		c_path = path;
+	}
 	else
-		path = ft_strjoin("~", cwd + ft_strlen(home));
-	c_path = path;
+		c_path = ft_strdup(cwd);
 	path = ft_strjoin("\033[32mGlina@minishell:\033[1;34m", c_path);
 	free(c_path);
 	c_path = path;
@@ -35,7 +40,7 @@ static char	*ft_get_prompt(char **envp)
 	return (path);
 }
 
-static void	ft_sig_handler(int sig)
+void	ft_sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -46,11 +51,25 @@ static void	ft_sig_handler(int sig)
 	}
 }
 
+void	ft_signal_cast(int switcher)
+{
+	if (1 == switcher)
+	{
+		signal(SIGINT, ft_sig_handler);
+		signal(SIGQUIT, ft_sig_handler);
+	}
+	else if (0 == switcher)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
+}
+
 static void	ft_init(t_src **src, char **envp)
 {
 	(*src) = (t_src *)malloc(sizeof(t_src));
 	(*src)->envp = NULL;
-	(*src)->envp = ft_add_mshlvl(envp);
+	(*src)->envp = ft_spldup(envp);
 	//if (!(*src)->envp)
 	//	ft_oshibochka_s_exitom();
 	(*src)->argv = NULL;
@@ -73,8 +92,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_init(&src, envp);
 	while (1)
 	{
-		signal(SIGINT, ft_sig_handler);
-		signal(SIGQUIT, ft_sig_handler);
+		ft_signal_cast(1);
 		promt = ft_get_prompt(envp);
 		src->str = readline(promt);
 		free(promt);

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 11:13:42 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 12:52:16 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/17 18:45:47 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	ft_print_error(t_src *s)
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
 		s->ret = 1;
-		errno = 0;
 	}
 }
 
@@ -60,9 +59,17 @@ int	ft_exec_cd(t_src *s)
 {// argc = [1] || [2] argv = [cd] || [cd] || [cd] [libft]
 	char	*path;
 
+	printf("__________CD____________\n");
+	printf("ac:%d av0:+%s+\n", s->argc, s->argv[0]);
 	if (1 == s->argc)
 	{
 		path = ft_get_strnspl(s->envp, "HOME", '=');
+		if (!path)
+		{
+			s->ret = 1;
+			ft_putendl_fd("cd: HOME not set", 2);
+			return (s->ret);
+		}
 		path += 5;
 	}
 	else

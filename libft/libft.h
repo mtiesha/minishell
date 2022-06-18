@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 12:18:45 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 07:09:31 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 int		ft_gnl_sh(char **line, int memory, int fd);
 /* get "min" or "max" value */
 int		ft_get_minmax(int a, int b, char *min_or_max);
+/* free undo 3ptr */
+void	ft_multifree(void *m1, void *m2, void *m3);
 /* find str in spl before c */
 char	*ft_get_strnspl(char **spl, char *str, char c);
 /* array an arrays function */

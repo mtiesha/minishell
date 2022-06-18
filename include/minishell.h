@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 19:01:22 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:43:33 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ typedef struct s_pipex {
 	int		gnr;
 }	t_pipex;
 
+/* signal */
+void	ft_sig_handler(int sig);
+void	ft_sig_handler_b(int sig);
+void	ft_signal_cast(int switcher);
 /* /src/parser/cleaner */
 char	*ft_cleaner(char **cmd);
 /* /src/parser */
@@ -58,13 +62,13 @@ char	**ft_union_cmd_flg(char **av);
 char	**ft_union_cmd_file(char **av);
 /* MSHLVL */
 char	**ft_add_mshlvl(char **envp);
-void	ft_sig_handler_b(int sig);
 /* /src/binary */
 int		ft_gate_binary(t_src *s);
 int		ft_exec_cd(t_src *s);
 int		ft_exec_echo(t_src *s, int fd);
 int		ft_exec_exit(t_src *s);
 int		ft_exec_pwd(int fd);
+int		ft_exec_bash(t_src *s, const char **str);
 /* /src/binary/export_unset */
 int		ft_sort_env(char **envp);
 int		ft_export_add(t_src *s);

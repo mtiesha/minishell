@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 06:33:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:43:05 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,15 @@ int	ft_pipex(int comc, char **argv, char **envp)
 		return (1);
 	}
 	pid = fork();
-	signal(SIGINT, ft_sig_handler_b);
-	signal(SIGQUIT, ft_sig_handler_b);
 	if (-1 == pid)
 		ft_errorer(&s, "Fork error [mn]");
 	if (0 == pid)
+	{
+		ft_signal_cast(0);
 		ft_gate_pipex(&s, argv, envp);
-	waitpid(pid, &ret_code, 0);
+	}
+	else if (-1 != pid && 0 != pid)
+		waitpid(pid, &ret_code, 0);
 	ft_freesher(&s);
 	return (ret_code);
 }

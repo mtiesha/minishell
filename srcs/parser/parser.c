@@ -6,13 +6,13 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:16:52 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 06:56:49 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:42:11 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	**ft_cast_av(t_src *src, int i)
+static char	**ft_cast_av(t_src *src, int i, int buildin)
 {
 	char	**ptr;
 	char	**tmp;
@@ -21,10 +21,15 @@ static char	**ft_cast_av(t_src *src, int i)
 	ft_putendl_fd("---cmds[i] split---", 2);
 	ft_putspl_fd(ptr, 2);
 	ft_putendl_fd("---cmds[i] split---", 2);
-	tmp = ft_union_cmd_flg(ptr);
-	free(ptr);
-	src->argv = ft_union_cmd_file(tmp);
-	free(tmp);
+	if (!buildin)
+	{
+		tmp = ft_union_cmd_flg(ptr);
+		free(ptr);
+		src->argv = ft_union_cmd_file(tmp);
+		free(tmp);
+	}
+	else
+		src->argv = ptr;
 	return (src->argv);
 }
 
@@ -42,7 +47,7 @@ static void	ft_parsing_logic(t_src *src)
 		printf("after delete pipes: +%s+\n", src->cmds[i]);
 		src->cmds[i] = ft_cleaner(&src->cmds[i]);
 		printf("after cleaner: +%s+\n", src->cmds[i]);
-		src->argv = ft_cast_av(src, i);
+		src->argv = ft_cast_av(src, i, buildin);
 		src->argc = ft_count_ac((const char **)(src->argv));
 		if (buildin)
 			src->ret = ft_gate_binary(src);

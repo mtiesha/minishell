@@ -6,7 +6,7 @@
 #    By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#              #
-#    Updated: 2022/06/05 17:53:58 by mtiesha          ###   ########.fr        #
+#    Updated: 2022/06/18 07:11:01 by mtiesha          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS = 	ft_atoi.c		ft_bzero.c		ft_calloc.c \
 		ft_toupper.c	ft_splitutils.c	ft_isutils.c \
 		ft_swap.c		ft_strndup.c	ft_itoa.c \
 		ft_get_next_line.c	ft_get_func.c	ft_double.c \
-		ft_char.c
+		ft_char.c		ft_free_func.c
 
 SRCS_B = ft_lstnew_bonus.c	ft_lstadd_front_bonus.c \
 		ft_lstsize_bonus.c	ft_lstlast_bonus.c
