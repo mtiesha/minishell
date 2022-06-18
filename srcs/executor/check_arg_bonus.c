@@ -6,11 +6,35 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 06:51:37 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 14:36:50 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	ft_init(t_pipex **s, int comc)
+{
+	int	i;
+
+	i = comc;
+	*s = (t_pipex *)ft_calloc(1, sizeof(t_pipex));
+	if (!s)
+		return (0);
+	(*s)->path = NULL;
+	(*s)->cmd = NULL;
+	(*s)->path = (char **)ft_calloc((1 + i), sizeof(char *));
+	if (!(*s)->path)
+		return (0);
+	(*s)->path[i] = NULL;
+	(*s)->cmd = (char ***)ft_calloc((1 + i), sizeof(char **));
+	if (!(*s)->cmd)
+		return (0);
+	(*s)->cmd[i] = NULL;
+	(*s)->fd0 = 0;
+	(*s)->fd1 = 1;
+	(*s)->gnr = comc;
+	return (1);
+}
 
 static void	ft_open_last_file(t_pipex **s, char **argv)
 {
@@ -61,7 +85,6 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 		if (!(*s)->path[i])
 		{
 			ft_putstr_fd((*s)->cmd[i][0], 2);
-			ft_putchar_fd(' ', 2);
 			return (0);
 		}
 		i++;

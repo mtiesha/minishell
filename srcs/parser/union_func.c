@@ -6,15 +6,22 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:03:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/18 14:25:33 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:06:14 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	ft_union_flg_logic(char ***ret, char ***ptr, int j, int i, int k)
+static void	ft_norm_cheat_u(char **tmp, char ***ret, int j)
+{
+	(*tmp) = ft_strdup(" ");
+	(*ret)[j] = ft_strjoinfree(&(*ret)[j], &(*tmp), 2);
+}
+
+static void	ft_union_flg_logic(char ***ret, char ***ptr, int j, int i)
 {
 	char	*tmp;
+	int		k;
 
 	while ((*ptr)[i])
 	{
@@ -26,10 +33,7 @@ static void	ft_union_flg_logic(char ***ret, char ***ptr, int j, int i, int k)
 				if (1 == k)
 					(*ret)[j] = ft_strjoin((*ptr)[i], " ");
 				else
-				{
-					tmp = ft_strdup(" ");
-					(*ret)[j] = ft_strjoinfree(&(*ret)[j], &tmp, 2);
-				}
+					ft_norm_cheat_u(&tmp, &(*ret), j);
 				(*ret)[j] = ft_strjoinfree(&(*ret)[j], &(*ptr)[i + k], 0);
 				k++;
 			}
@@ -45,7 +49,6 @@ char	**ft_union_cmd_flg(char **av)
 {
 	int		i;
 	int		j;
-	int		k;
 	char	**ptr;
 	char	**ret;
 
@@ -63,8 +66,7 @@ char	**ft_union_cmd_flg(char **av)
 		return (NULL);
 	j = 0;
 	i = 0;
-	k = 0;
-	ft_union_flg_logic(&ret, &ptr, j, i, k);
+	ft_union_flg_logic(&ret, &ptr, j, i);
 	ptr = ft_spldup(ret);
 	ft_splfree(ret);
 	return (ptr);
