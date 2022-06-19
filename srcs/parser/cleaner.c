@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 14:03:04 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/19 14:34:35 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ char	*ft_cleaner(char **cmd)
 	ptr = tmp;
 	tmp = ft_strjoin(ptr, end);
 	tmp = ft_deldoublec(&tmp, ' ');
-	free(ptr);
-	free(end);
-	free(file);
+	ft_multifree(ptr, end, file);
 	free((*cmd));
 	return (tmp);
 }
