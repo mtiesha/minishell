@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/18 14:47:06 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/19 13:10:35 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_pipex(int comc, char **argv, char **envp)
 	ft_putendl_fd("------AV--------", 2);
 	ft_putspl_fd(argv, 2);
 	ft_putendl_fd("------AV--------", 2);
-	if (!ft_init(&s, comc))
+	if (!ft_init_p(&s, comc))
 		ft_errorer(&s, "Init pipex error");
 	if (!ft_check_arg_b(&s, envp, argv))
 	{

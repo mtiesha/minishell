@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/18 14:36:45 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/19 14:04:09 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	ft_sig_handler_b(int sig);
 void	ft_signal_cast(int switcher);
 /* /src/parser/cleaner */
 char	*ft_cleaner(char **cmd);
+char	*ft_outfile(char **cmd);
+char	*ft_inpfile(char **cmd);
 /* /src/parser */
 void	parser(t_src *s);
 int		ft_check_wrong_pipe(t_src *s);
@@ -76,7 +78,7 @@ int		ft_unset(t_src *s);
 void	ft_count_include_av(char **split, char **argv, int *argc);
 /* /src/executor */
 int		ft_pipex(int gnr, char **argv, char **envp);
-int		ft_init(t_pipex **s, int comc);
+int		ft_init_p(t_pipex **s, int comc);
 int		ft_check_arg_b(t_pipex **s, char **envp, char **argv);
 char	*ft_get_env_cmd(char **envp, char *command);
 int		ft_isfile(char *file);

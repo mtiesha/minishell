@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:16:52 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/18 11:59:45 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/19 14:00:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void	ft_parsing_logic(t_src *src)
 	{
 		buildin = ft_isbuildin(src->cmds[i]);
 		printf("cmd[0] start: +%s+\n", src->cmds[i]);
-		src->cmds[i] = ft_delete_pipes(&(*src), i);
-		printf("after delete pipes: +%s+\n", src->cmds[i]);
 		src->cmds[i] = ft_cleaner(&src->cmds[i]);
 		printf("after cleaner: +%s+\n", src->cmds[i]);
+		src->cmds[i] = ft_delete_pipes(&(*src), i);
+		printf("after delete pipes: +%s+\n", src->cmds[i]);
 		src->argv = ft_cast_av(src, i, buildin);
 		src->argc = ft_count_ac((const char **)(src->argv));
 		if (buildin)

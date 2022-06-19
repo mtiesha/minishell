@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:10:31 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 19:06:22 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:07:09 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,4 @@ void	ft_errorer(t_pipex **s, char *code)
 	else
 		ft_putendl_fd(code, 2);
 	ft_freesher(&(*s));
-	//exit(1);
 }
