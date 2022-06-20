@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:16:52 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 14:00:21 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/19 17:40:14 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	ft_parsing_logic(t_src *src)
 	while (src->cmds[i])
 	{
 		buildin = ft_isbuildin(src->cmds[i]);
+		if (!buildin)
+			src->str = ft_deldoublec(&src->str, ' ');
 		printf("cmd[0] start: +%s+\n", src->cmds[i]);
 		src->cmds[i] = ft_cleaner(&src->cmds[i]);
 		printf("after cleaner: +%s+\n", src->cmds[i]);
@@ -49,7 +51,10 @@ static void	ft_parsing_logic(t_src *src)
 		printf("after delete pipes: +%s+\n", src->cmds[i]);
 		src->argv = ft_cast_av(src, i, buildin);
 		src->argc = ft_count_ac((const char **)(src->argv));
-		if (buildin)
+		if (buildin && ft_strnstr(src->cmds[i], \
+			"echo", ft_strlen(src->cmds[i])))
+			src->ret = ft_exec_echo(src, i);
+		else if (buildin)
 			src->ret = ft_gate_binary(src);
 		else
 		{
@@ -64,14 +69,9 @@ static void	ft_parsing_logic(t_src *src)
 
 void	parser(t_src *src)
 {
-	char	*ptr;
-
 	if (!ft_check_wrong_pipe(src))
 		return ;
-	src->str = ft_deldoublec(&src->str, ' ');
-	ptr = src->str;
 	src->str = ft_strtrim(src->str, ";| +-");
-	free(ptr);
 	src->cmds = ft_split(src->str, ';');
 	ft_parsing_logic(src);
 	free(src->str);

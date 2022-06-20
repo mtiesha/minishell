@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 13:44:30 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/20 10:52:52 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,29 @@ void	ft_signal_cast(int switcher)
 	}
 }
 
-static void	ft_init(t_src **src, char **envp)
+static int	ft_init(t_src **src, char **envp)
 {
 	(*src) = (t_src *)malloc(sizeof(t_src));
 	(*src)->envp = NULL;
 	(*src)->envp = ft_spldup(envp);
-	//if (!(*src)->envp)
-	//	ft_oshibochka_s_exitom();
+	if (!(*src)->envp)
+	{
+		free(*src);
+		return (0);
+	}
 	(*src)->argv = NULL;
 	(*src)->export = NULL;
 	(*src)->export = ft_spldup((*src)->envp);
-	//if (!(*src)->export)
-	//	ft_oshibochka_s_exitom();
+	if (!(*src)->export)
+	{
+		ft_splfree((*src)->envp);
+		free(*src);
+		return (0);
+	}
 	(*src)->str = NULL;
 	(*src)->ret = 0;
 	(*src)->child = 0;// maybe not use
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -89,11 +97,12 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)(argc);
 	(void)(argv);
-	ft_init(&src, envp);
+	if (!ft_init(&src, envp))
+		return (1 && ft_putendl_fd("Inicialization faild [mn]", 2));
 	while (1)
 	{
 		ft_signal_cast(1);
-		promt = ft_get_prompt(envp);
+		promt = ft_get_prompt(src->envp);
 		src->str = readline(promt);
 		free(promt);
 		if (NULL != src->str)
@@ -129,7 +138,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else if (NULL == src->str)
 		{
-			ft_putstr_fd("exit\n", 2);
+			ft_putendl_fd("exit", 2);
 			exit(src->ret);
 		}
 	}

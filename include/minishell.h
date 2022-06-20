@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 14:04:09 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/19 17:40:57 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**ft_add_mshlvl(char **envp);
 /* /src/binary */
 int		ft_gate_binary(t_src *s);
 int		ft_exec_cd(t_src *s);
-int		ft_exec_echo(t_src *s, int fd);
+int		ft_exec_echo(t_src *s, int k);
 int		ft_exec_exit(t_src *s);
 int		ft_exec_pwd(int fd);
 int		ft_exec_bash(t_src *s, const char **str);
