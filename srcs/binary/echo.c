@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/20 13:09:36 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/20 18:12:45 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,41 @@ static char	**ft_custom_countcharstr(const char *str)
 			i++;
 		len++;
 	}
-	printf("== FINALE===========+++=== len:%ld i:%ld str:%s+\n", len, i, str + i);
 	av = (char **)ft_calloc(len + 1 + 1, sizeof(char *));
-	wait(NULL);
 	return (av);
 }
 
-static char	**ft_cast_av_echo(const char *str)
+static void	ft_new_array_cast(const char *str, char ***av, int i, int j)
+{
+	char	q;
+	int		k;
+
+	while (str[i])
+	{
+		k = 0;
+		while (str[i] && ft_isspace((char)(str)[i]))
+			i++;
+		if (str[i] && ('\'' == str[i] || '"' == str[i]))
+		{
+			q = (char)(str)[i++];
+			k += ft_strnlen((char *)(str + i), q);
+
+		}
+		while (str[i + k] && !ft_isspace((char)(str)[i + k]))
+			k++;
+		(*av)[j++] = ft_strndup((char *)(str + i), k);
+		if (ft_strchr((*av)[j - 1], '"'))
+			(*av)[j - 1] = ft_chardel(&(*av)[j - 1], \
+				ft_strnlen((const char *)(*av)[j - 1], '"'));
+		i += k;
+	}
+}
+
+static char	**ft_cast_av_echo(const char *str, char **tmp)
 {
 	char	**av;
 	int		i;
 	int		j;
-	char	q;
-	int		k;
 
 	j = 1;
 	if (!ft_iscinstr(str, '"') && !ft_iscinstr(str, '\''))
@@ -54,20 +76,12 @@ static char	**ft_cast_av_echo(const char *str)
 		av = ft_split(str, ' ');
 		return (av);
 	}
-	av = ft_custom_countcharstr(str);
-	av[0] = ft_strndup((char *)(str), 4);
+	(*tmp) = ft_strtrim(str, " ");
+	av = ft_custom_countcharstr((const char *)(*tmp));
+	av[0] = ft_strndup((*tmp), 4);
 	i = 5;
-	while (str[i])
-	{
-		if ('\'' == str[i] || '"' == str[i])
-			q = str[i++];
-		else
-			q = ' ';
-		k = ft_strnlen(str + i, q);
-		printf("str\n");
-		av[j++] = ft_strndup((char *)(str + i), k);
-		i += k + 1 + ft_isspace(str[i + 1]);
-	}
+	ft_new_array_cast((const char *)(*tmp), &av, i, j);
+	free(*tmp);
 	return (av);
 }
 
@@ -77,28 +91,25 @@ int	ft_exec_echo(t_src *src, int k)
 	int		n_flag;
 	char	**av;
 	char	*tmp;
+	int		avlen;
 
-	ft_putendl_fd("EXO=========BUILD", 2);
-	(void)(k);
-	tmp = src->cmds[k];
-	src->cmds[k] = ft_strtrim(src->cmds[k], " ");
-	free(tmp);
-	av = ft_cast_av_echo("echo hello         world    \"+      probeli  +\"slovechko");//src->cmds[k]);
+	av = ft_cast_av_echo(src->cmds[k], &tmp);
 	if (!av)
-		return (0);
+		return (1);
+	avlen = ft_spllen(av);
 	n_flag = 0;
 	if (av[1] && !ft_strncmp(av[1], "-n", 3))
 		n_flag = 1;
-	i = 1 + n_flag;
-	while (i < src->argc)
+	i = n_flag + 1;
+	while (i < avlen)
 	{
 		ft_putstr_fd(av[i], 1);
-		if ((i + 1) < src->argc)
+		if ((i + 1) < avlen)
 			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", 1);
 	ft_splfree(av);
-	return (1);
+	return (0);
 }
