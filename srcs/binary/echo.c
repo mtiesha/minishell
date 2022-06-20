@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/20 18:12:45 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/20 18:15:04 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	ft_new_array_cast(const char *str, char ***av, int i, int j)
 		{
 			q = (char)(str)[i++];
 			k += ft_strnlen((char *)(str + i), q);
-
 		}
 		while (str[i + k] && !ft_isspace((char)(str)[i + k]))
 			k++;
