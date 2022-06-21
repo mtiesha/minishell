@@ -29,8 +29,6 @@ CC = gcc
 
 CFLAGS += -Wall -Werror -Wextra -ggdb -fsanitize=address -fno-omit-frame-pointer
 
-#CFLAGS += -g3 -fsanitize=address
-
 RM = rm -rf
 
 LIBFT = libft.a

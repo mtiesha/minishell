@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/20 19:12:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 17:36:26 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
 
 int	ft_pipex(int comc, char **argv, char **envp)
 {
-	pid_t	pid;
 	t_pipex	*s;
+	pid_t	pid;
 	int		ret_code;
 
-	ret_code = 0;
 	ft_putendl_fd("------AV--------", 2);
 	ft_putspl_fd(argv, 2);
 	ft_putendl_fd("------AV--------", 2);

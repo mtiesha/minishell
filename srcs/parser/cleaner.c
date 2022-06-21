@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 16:23:07 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 17:43:04 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char	**ft_cleaner_logic(char **start, char **end, char **tmp, char **cmd)
 	int		i;
 	char	*ptr;
 
+	(*cmd) = ft_deldoublec(&(*cmd), ' ');
 	set_pipes = ft_split((*cmd), '|');
 	if (!set_pipes)
 		return (NULL);
