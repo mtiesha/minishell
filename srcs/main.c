@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/20 10:52:52 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 11:35:58 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int argc, char **argv, char **envp)
 			else if (0 == ft_strncmp("d4", src->str, 3))
 			{
 				free(src->str);
-				src->str = ft_strdup("    cat < Makefile    |  cat | wc   -l |  wc >> f2   ");
+				src->str = ft_strdup("    cat < Makefile    | < f3 cat | < f4 wc   -l > f7 |  wc >> f2   ");
 			}
 			else if (0 == ft_strncmp("d3", src->str, 3))
 			{

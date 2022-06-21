@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:16:52 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 17:40:14 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 06:34:19 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parser(t_src *src)
 {
 	if (!ft_check_wrong_pipe(src))
 		return ;
-	src->str = ft_strtrim(src->str, ";| +-");
+	src->str = ft_strtrim(src->str, " ;| +-");
 	src->cmds = ft_split(src->str, ';');
 	ft_parsing_logic(src);
 	free(src->str);

@@ -12,6 +12,7 @@ SRCS =	srcs/main.c\
 		srcs/executor/source_executor.c\
 		srcs/executor/check_env_bonus.c\
 		srcs/executor/erroer_bonus.c\
+		srcs/executor/here_doc.c\
 		srcs/executor/pipex_bonus.c\
 		srcs/binary/binary.c\
 		srcs/binary/exit.c\

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 17:40:57 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 15:34:31 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	ft_sig_handler_b(int sig);
 void	ft_signal_cast(int switcher);
 /* /src/parser/cleaner */
 char	*ft_cleaner(char **cmd);
-char	*ft_outfile(char **cmd);
-char	*ft_inpfile(char **cmd);
+char	*ft_outfile(char **cmd, int dop_variable);
+char	*ft_inpfile(char **cmd, int npipe);
 /* /src/parser */
 void	parser(t_src *s);
 int		ft_check_wrong_pipe(t_src *s);
