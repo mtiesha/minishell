@@ -8,6 +8,7 @@ SRCS =	srcs/main.c\
 		srcs/parser/cleaner.c\
 		srcs/parser/redirect.c\
 		srcs/parser/parser.c\
+		srcs/executor/open_files.c\
 		srcs/executor/check_arg_bonus.c\
 		srcs/executor/source_executor.c\
 		srcs/executor/check_env_bonus.c\

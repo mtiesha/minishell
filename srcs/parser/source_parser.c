@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:58:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 14:09:27 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 17:57:49 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	ft_count_ac(const char **spl)
 		ac = -1;
 	while (spl[i])
 	{
-		if (spl[i] && spl[i][0] != '>')
+		if (spl[i] && (spl[i][0] != '>' || spl[i][0] != '<'))
 			ac++;
-		if (spl[i] && spl[i][0] == '>')
-			ac--;
+		if (spl[i] && (spl[i][0] == '>' || spl[i][0] == '<'))
+			ac -= 2;
 		i++;
 	}
 	printf("arg_count:%d\n", ac);

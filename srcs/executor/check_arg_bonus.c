@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 13:10:24 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 18:04:40 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,6 @@ int	ft_init_p(t_pipex **s, int comc)
 	(*s)->fd1 = 1;
 	(*s)->gnr = comc;
 	return (1);
-}
-
-static void	ft_open_last_file(t_pipex **s, char **argv)
-{
-	if (0 == ft_strncmp(">", *(argv), 2))
-	{
-		printf("~fileend:%s\n", *(1 + argv));
-		(*s)->fd1 = open(*(++argv), O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		if ((*s)->fd1 == -1)
-			ft_errorer(s, NULL);
-	}
-	else if (0 == ft_strncmp(">>", *(argv), 3))
-	{
-		(*s)->fd1 = open(*(++argv), O_WRONLY | O_APPEND | O_CREAT, 0777);
-		if ((*s)->fd1 == -1)
-			ft_errorer(s, NULL);
-	}
-}
-
-static void	ft_open_first_file(t_pipex **s, char **argv)
-{
-	if (ft_isfile((*argv)))
-	{
-		(*s)->fd0 = open(*(argv), O_RDONLY, 0777);
-		if (-1 == (*s)->fd0)
-			ft_errorer(s, NULL);
-	}
 }
 
 int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
