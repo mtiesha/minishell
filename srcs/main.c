@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 17:35:10 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 08:21:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static char	*ft_get_prompt(char **envp)
 	}
 	else
 		c_path = ft_strdup(cwd);
-	path = ft_strjoin("\033[32mGlina@minishell:\033[1;34m", c_path);
+	path = ft_strjoin("\001\033[2;92m\002Glina@minishell:\001\033[2;94m\002", c_path);
 	free(c_path);
 	c_path = path;
-	path = ft_strjoin(c_path, "\033[0;0m$ ");
+	path = ft_strjoin(c_path, "\001\033[2;97m\002$ ");
 	free(c_path);
 	return (path);
 }
@@ -132,7 +132,8 @@ int	main(int argc, char **argv, char **envp)
 				free(src->str);
 				src->str = ft_strdup("    ls -l    -a   |  cat | wc   -l    ");
 			}
-			if (!ft_strnstr(src->str, "<<", ft_strlen(src->str)))
+			if (' ' != src->str[0] && src->str[0] \
+				&& !ft_strnstr(src->str, "<<", ft_strlen(src->str)))
 				add_history(src->str);
 			parser(src);
 		}
