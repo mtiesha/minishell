@@ -6,11 +6,23 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 17:36:26 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 21:39:09 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	ft_grandson(int *pipe_fd, int i, t_pipex **s, char **envp)
+{
+	if (i)
+		close(pipe_fd[0]);
+	if (-1 == (*s)->red[i + i + 1])
+		dup2(pipe_fd[1], 1);
+	else
+		dup2((*s)->red[i + i + 1], 1);
+	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
+		ft_errorer(s, "Execve error [ch]");
+}
 
 static void	ft_child(t_pipex **s, int i, char **envp)
 {
@@ -23,17 +35,14 @@ static void	ft_child(t_pipex **s, int i, char **envp)
 	if (-1 == pid)
 		ft_errorer(&(*s), "Fork error [ch]");
 	if (pid == 0)
-	{
-		if (i)
-			close(pipe_fd[0]);
-		dup2(pipe_fd[1], 1);
-		if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
-			ft_errorer(s, "Execve error [ch]");
-	}
+		ft_grandson(pipe_fd, i, s, envp);
 	else
 	{
 		close(pipe_fd[1]);
-		dup2(pipe_fd[0], 0);
+		if (-1 == (*s)->red[i + i])
+			dup2(pipe_fd[0], 0);
+		else
+			dup2((*s)->red[i + i], 0);
 		waitpid(pid, NULL, 0);
 	}
 }
@@ -41,14 +50,21 @@ static void	ft_child(t_pipex **s, int i, char **envp)
 static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
 {
 	int	i;
+	int	shift;
 
 	i = 0;
+	shift = 0;
 	if (0 == ft_strncmp("here_doc", *argv, 9))
+	{
 		ft_heredoc(s, *(++argv));
+		shift = 2;
+	}
 	else
 		dup2((*s)->fd0, 0);
+	printf("@@@@@____CHILD_WORK_____@@@@@@\n");
 	while (i < (*s)->gnr - 1)
 		ft_child(s, i++, envp);
+	printf("@@@@@____CHILD_WORK_____@@@@@@\n");
 	dup2((*s)->fd1, 1);
 	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
 		ft_errorer(s, "Execve error [gt]");

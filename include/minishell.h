@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 18:03:54 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/21 21:19:26 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_pipex {
 	int		fd0;
 	int		fd1;
 	int		gnr;
+	int		*red;
 }	t_pipex;
 
 /* signal */
@@ -80,7 +81,7 @@ void	ft_count_include_av(char **split, char **argv, int *argc);
 int		ft_pipex(int gnr, char **argv, char **envp);
 int		ft_init_p(t_pipex **s, int comc);
 void	ft_open_first_file(t_pipex **s, char **argv);
-void	ft_open_last_file(t_pipex **s, char **argv);
+void	ft_open_last_file(t_pipex **s, char **argv, int j);
 int		ft_check_arg_b(t_pipex **s, char **envp, char **argv);
 char	*ft_get_env_cmd(char **envp, char *command);
 int		ft_isfile(char *file);

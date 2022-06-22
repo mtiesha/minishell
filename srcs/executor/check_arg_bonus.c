@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 18:04:40 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 06:35:09 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,63 @@ int	ft_init_p(t_pipex **s, int comc)
 	(*s)->fd0 = 0;
 	(*s)->fd1 = 1;
 	(*s)->gnr = comc;
+	(*s)->red = (int *)malloc((comc * 2) * sizeof(int));
+	if (!(*s)->red)
+		return (0);
+	return (1);
+}
+
+static int	ft_cast_cmd_path(t_pipex **s, char **envp, char **argv, int *i)
+{
+	(*s)->cmd[i[0]] = ft_split(argv[i[1]], ' ');
+	if (!(*s)->cmd[i[0]])
+		return (0);
+	(*s)->path[i[0]] = ft_get_env_cmd(envp, (*s)->cmd[i[0]][0]);
+	if (!(*s)->path[i[0]])
+	{
+		ft_putstr_fd((*s)->cmd[i[0]][0], 2);
+		return (0);
+	}
 	return (1);
 }
 
 int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 {
-	int	i;
+	int	i[2];
 
-	i = 0;
-	if (0 != ft_strncmp("here_doc", *(argv), 9))
+	i[0] = 0;//to i++ in the while
+	i[1] = 0;// to argv++
+	if (0 != ft_strncmp("here_doc", argv[i[1]], 9))
 		ft_open_first_file(s, argv);
 	else
-		argv += 2;
+		i[1] += 2;
 	if ((*s)->fd0 != 0)
-		argv++;
-	printf("~fd:%d %d\n", (*s)->fd0, (*s)->fd1);
-	while (i < (*s)->gnr)
+		i[1]++;
+	printf("~~~~~CHECK_ARG_B~~~~~fd:%d %d\n", (*s)->fd0, (*s)->fd1);
+	while (i[0] < (*s)->gnr)
 	{
-		printf("cmd[%d]: %s\n", i, *(argv));
-		(*s)->cmd[i] = ft_split(*(argv++), ' ');
-		if (!(*s)->cmd[i])
-			return (0);
-		(*s)->path[i] = ft_get_env_cmd(envp, (*s)->cmd[i][0]);
-		if (!(*s)->path[i])
+		if ('<' == *(argv[i[1]]) && i[0] != 0)
 		{
-			ft_putstr_fd((*s)->cmd[i][0], 2);
-			return (0);
+			printf("we find << file: [%s]\n", argv[i[1] + 1]);
+			(*s)->red[i[0] + i[0]] = ft_atoi(argv[i[1] + 1]);
+			i[1] += 2;
 		}
-		i++;
+		else
+			(*s)->red[i[0] + i[0]] = -1;
+		ft_cast_cmd_path(s, envp, argv, i);
+		printf("cmd[%d]: %s\n", i[0], argv[i[1]]);
+		if ('>' == *(argv[i[1]]) && i[0] < (*s)->gnr - 1)
+		{
+			printf("we find >> file: [%s]\n", argv[i[1] + 1]);
+			(*s)->red[i[0] + i[0] + 1] = ft_atoi(argv[i[1] + 1]);
+			i[1] += 2;
+		}
+		else
+			(*s)->red[i[0] + i[0] + 1] = -1;
+		i[0]++;
 	}
-	if (*(argv) && '>' == *(argv[0]))
-		ft_open_last_file(s, argv);
+
+	if (argv[i[1]] && '>' == argv[i[1]][0])
+		ft_open_last_file(s, argv, i[1]);
 	return (1);
 }
