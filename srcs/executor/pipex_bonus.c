@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 21:39:09 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 07:29:07 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,10 @@ static void	ft_child(t_pipex **s, int i, char **envp)
 static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
 {
 	int	i;
-	int	shift;
 
 	i = 0;
-	shift = 0;
 	if (0 == ft_strncmp("here_doc", *argv, 9))
-	{
 		ft_heredoc(s, *(++argv));
-		shift = 2;
-	}
 	else
 		dup2((*s)->fd0, 0);
 	printf("@@@@@____CHILD_WORK_____@@@@@@\n");
