@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/20 18:15:04 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/23 12:43:49 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	**ft_cast_av_echo(const char *str, char **tmp)
 	int		i;
 	int		j;
 
-	j = 1;
+	j = 1;//echo p"p  lol " BAG
 	if (!ft_iscinstr(str, '"') && !ft_iscinstr(str, '\''))
 	{
 		av = ft_split(str, ' ');
