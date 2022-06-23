@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:03:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/18 15:06:14 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:17:44 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,17 @@ static void	ft_union_cmd_file_logic(char ***ret, char ***ptr)
 	i = 0;
 	while ((*ptr)[i])
 	{
-		if (!ft_iscinstr((const char *)(*ptr)[i], '>') \
-			&& ft_isfile((*ptr)[i + 1]))
+		ft_source_bind(&i, &j, &(*ret), &(*ptr));
+		if ((*ptr)[i] && (!ft_iscinstr((const char *)(*ptr)[i], '>') \
+			&& ft_isfile((*ptr)[i + 1])))
 		{
 			(*ret)[j] = ft_strjoinchar((*ptr)[i], (*ptr)[i + 1], ' ');
 			i++;
 		}
-		else
+		else if ((*ptr)[i])
 			(*ret)[j] = ft_strdup((*ptr)[i]);
-		i++;
+		if ((*ptr)[i])
+			i++;
 		j++;
 	}
 }
@@ -100,6 +102,7 @@ char	**ft_union_cmd_file(char **av)
 	char	**ret;
 	char	**ptr;
 
+	printf("UNIONFILE-+++++++++++\n");
 	i = ft_spllen(av);
 	if (i == 1)
 		return (ft_spldup(av));
@@ -109,6 +112,9 @@ char	**ft_union_cmd_file(char **av)
 		return (NULL);
 	ft_union_cmd_file_logic(&ret, &ptr);
 	ptr = ft_spldup(ret);
+	ft_putendl_fd("masiv4ik na vihode:", 2);
+	ft_putspl_fd(ptr, 2);
 	ft_splfree(ret);
+	printf("UNIONFILE-+++++++++++\n");
 	return (ptr);
 }

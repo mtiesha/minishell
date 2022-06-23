@@ -2,6 +2,7 @@ NAME =	minishell
 
 SRCS =	srcs/main.c\
 		srcs/shlvl.c\
+		srcs/lexer/lexer.c\
 		srcs/parser/checks.c\
 		srcs/parser/source_parser.c\
 		srcs/parser/union_func.c\

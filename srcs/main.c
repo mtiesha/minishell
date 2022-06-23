@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/22 08:21:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 14:02:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,9 @@ int	main(int argc, char **argv, char **envp)
 			if (' ' != src->str[0] && src->str[0] \
 				&& !ft_strnstr(src->str, "<<", ft_strlen(src->str)))
 				add_history(src->str);
-			parser(src);
+			src->ret = ft_lexer(src);
+			if (0 == src->ret)
+				parser(src);
 		}
 		else if (NULL == src->str)
 		{

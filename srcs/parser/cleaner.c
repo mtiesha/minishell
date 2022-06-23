@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 17:43:04 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 15:28:13 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static char	**ft_cleaner_logic(char **start, char **end, char **tmp, char **cmd)
 	char	*ptr;
 
 	(*cmd) = ft_deldoublec(&(*cmd), ' ');
-	set_pipes = ft_split((*cmd), '|');
+	if (ft_strnstr((*cmd), "echo ", 5))
+		set_pipes = ft_split((*cmd), '|');
+	else
+		set_pipes = ft_split((*cmd), 0);
 	if (!set_pipes)
 		return (NULL);
 	i = 0;
@@ -76,12 +79,9 @@ char	*ft_cleaner(char **cmd)
 
 	if (!(*cmd))
 		return (NULL);
-	if (!ft_strchr((*cmd), '|'))
-	{
-		if (!ft_strnstr((*cmd), "echo ", 5))
-			(*cmd) = ft_deldoublec(&(*cmd), ' ');
+	if (ft_strnstr((*cmd), "echo ", 5))
 		return ((*cmd));
-	}
+	(*cmd) = ft_deldoublec(&(*cmd), ' ');
 	printf("=====+++PIPE ZONE+++======\n");
 	set_pipes = ft_cleaner_logic(&file, &end, &tmp, &(*cmd));
 	if (!set_pipes)

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/22 07:29:07 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 12:53:39 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
 	printf("@@@@@____CHILD_WORK_____@@@@@@\n");
 	dup2((*s)->fd1, 1);
 	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
-		ft_errorer(s, "Execve error [gt]");
+	{
+		ft_putstr_fd(strerror(errno), 2);
+		ft_errorer(s, ": Execve error [gt]");
+		exit(1);
+	}
 }
 
 int	ft_pipex(int comc, char **argv, char **envp)

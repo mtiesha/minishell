@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 21:19:26 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/22 19:53:15 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,21 @@ typedef struct s_pipex {
 void	ft_sig_handler(int sig);
 void	ft_sig_handler_b(int sig);
 void	ft_signal_cast(int switcher);
+/* /src/lexer */
+int		ft_lexer(t_src *s);
 /* /src/parser/cleaner */
 char	*ft_cleaner(char **cmd);
 char	*ft_outfile(char **cmd, int dop_variable);
 char	*ft_inpfile(char **cmd, int npipe);
 /* /src/parser */
 void	parser(t_src *s);
+// char	**ft_ressurection_spl_q(char **spl);
 int		ft_check_wrong_pipe(t_src *s);
-char	*ft_delete_pipes(t_src *s, int k);
+char	*ft_delete_pipes(t_src *s, int i);
 int		ft_count_ac(const char **spl);
 int		ft_isbuildin(char *str);
 char	**ft_union_cmd_flg(char **av);
+void	ft_source_bind(int *i, int *j, char ***ret, char ***ptr);
 char	**ft_union_cmd_file(char **av);
 /* MSHLVL */
 char	**ft_add_mshlvl(char **envp);
