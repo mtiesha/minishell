@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 14:16:41 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/23 21:04:39 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_sig_handler(int sig);
 void	ft_sig_handler_b(int sig);
 void	ft_signal_cast(int switcher);
 /* /src/lexer */
+char	*ft_redirecter(t_src *s);
 char	*ft_dollar_opener(t_src *s);
 int		ft_lexer(t_src *s);
 /* /src/parser/cleaner */

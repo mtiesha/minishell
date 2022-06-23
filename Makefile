@@ -2,6 +2,7 @@ NAME =	minishell
 
 SRCS =	srcs/main.c\
 		srcs/shlvl.c\
+		srcs/lexer/redirecter.c\
 		srcs/lexer/dollar_opener.c\
 		srcs/lexer/lexer.c\
 		srcs/parser/checks.c\

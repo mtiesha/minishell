@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:56:01 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 18:14:30 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/23 20:36:41 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*ft_dollar_opener(t_src *s)
 	if (!ft_dollar_syntax(str))
 	{
 		ft_multifree(str, s->str, NULL);
+		s->ret = 127;
 		return (NULL);
 	}
 	while (s->str[i])

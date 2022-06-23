@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 17:06:01 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/23 20:07:51 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 		free(promt);
 		if (NULL != src->str)
 		{
-			if (0 == ft_strncmp("rm -rf *", src->str, ft_strlen(src->str)))
+			if (0 == ft_strncmp("rm -rf *", src->str, 9))
 			{
 				ft_putendl_fd("Vse udaleno bezvozvratno", 2);
 				return (0);

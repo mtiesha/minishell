@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/22 08:32:45 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/23 20:07:23 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 			(*s)->red[i[0] + i[0]] = -1;
 			ft_putendl_fd("----<<-----1 cast", 2);
 		}
-		ft_cast_cmd_path(s, envp, argv, i);
+		if (!ft_cast_cmd_path(s, envp, argv, i))
+			return (0);
 		i[1] += 1;
 		printf("cmd[%d]: %s\n", i[0], argv[i[1 - 1]]);
 		if (argv[i[1]] && '>' == *(argv[i[1]]) && i[0] < (*s)->gnr - 1)
@@ -95,7 +96,6 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 		}
 		i[0]++;
 	}
-
 	if (argv[i[1]] && '>' == argv[i[1]][0])
 		ft_open_last_file(s, argv, i[1]);
 	return (1);

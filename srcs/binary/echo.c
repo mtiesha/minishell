@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 12:43:49 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/23 20:23:39 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,24 @@ static char	**ft_custom_countcharstr(const char *str)
 	size_t	i;
 	char	c;
 
-	i = 5;
+	i = 5;//echo p"p  lol " VOTETAPEREPISAT TUT HUYNYA
 	len = 0;
-	while (str[i])
+	while (i <= ft_strlen(str) && str[i])
 	{
-		while (str[i] && ft_isspace((char)(str)[i]))
-			i++;
-		if (str[i] && ('\'' == str[i] || '"' == str[i]))
+		if (str[i] && (' ' == str[i] || '\'' == str[i] \
+			|| '"' == str[i]))
 		{
 			c = (char)(str)[i++];
-			i += 1 + ft_strnlen((char *)(str + i), c);
+			while (str[i] && c != str[i])
+				i++;
 		}
-		while (str[i] && !ft_isspace((char)(str)[i]))
+		while (str[i] && '\'' != str[i] && '"' != str[i] \
+			&& ft_isspace((char)(str)[i]))
 			i++;
-		len++;
+		if (i <= ft_strlen(str))
+			len++;
 	}
+	printf("len%ld\n", len);
 	av = (char **)ft_calloc(len + 1 + 1, sizeof(char *));
 	return (av);
 }

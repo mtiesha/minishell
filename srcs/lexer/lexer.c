@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 17:04:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/23 20:36:18 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	ft_syntax_check(char *str)
 		{
 			if (str[i + 1])
 			{
-				printf("tut\n");
 				q = str[i++];
 				while (q != str[i] && str[i])
 					i++;
@@ -51,6 +50,15 @@ int	ft_lexer(t_src *s)
 	s->str = ft_dollar_opener(s);
 	if (!s->str)
 		return (1);
+	if (ft_iscinstr(s->str, '>') || ft_iscinstr(s->str, '<'))
+	{
+		s->str = ft_redirecter(s);
+		if (!s->str)
+		{
+			ft_putendl_fd("lexer error [<> redirect]", 2);
+			return (1);
+		}
+	}
 	printf("---------------LEXER---------------\n");
 	return (0);
 }
