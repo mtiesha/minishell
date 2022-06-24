@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 21:04:39 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 08:15:26 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_sig_handler_b(int sig);
 void	ft_signal_cast(int switcher);
 /* /src/lexer */
 char	*ft_redirecter(t_src *s);
+char	*ft_file_opener(t_src *s);
 char	*ft_dollar_opener(t_src *s);
 int		ft_lexer(t_src *s);
 /* /src/parser/cleaner */
@@ -91,6 +92,7 @@ void	ft_open_last_file(t_pipex **s, char **argv, int j);
 int		ft_check_arg_b(t_pipex **s, char **envp, char **argv);
 char	*ft_get_env_cmd(char **envp, char *command);
 int		ft_isfile(char *file);
+int		ft_try_open_file(char *file, int mask);
 char	*ft_get_absolute_pth(char *file);
 void	ft_freesher(t_pipex **s);
 void	ft_errorer(t_pipex **s, char *code);

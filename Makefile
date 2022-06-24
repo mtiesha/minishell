@@ -4,6 +4,7 @@ SRCS =	srcs/main.c\
 		srcs/shlvl.c\
 		srcs/lexer/redirecter.c\
 		srcs/lexer/dollar_opener.c\
+		srcs/lexer/file_opener.c\
 		srcs/lexer/lexer.c\
 		srcs/parser/checks.c\
 		srcs/parser/source_parser.c\

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:26:22 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 21:05:18 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 08:23:00 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	ft_redirecter_logic(t_src *s, char direct)
 	i = 0;
 	while (s->str[i])
 	{
+		printf("REDIR LOGIC");
 		if (i > 0 && direct == s->str[i])
 		{
 			if (' ' != s->str[i - 1] || ' ' != s->str[i + 1])
@@ -48,8 +49,10 @@ char	*ft_redirecter(t_src *s)
 		err = 1;
 	else
 	{
-		ft_redirecter_logic(s, '<');
-		ft_redirecter_logic(s, '>');
+		if (ft_iscinstr(s->str, '<'))
+			ft_redirecter_logic(s, '<');
+		if (ft_iscinstr(s->str, '>'))
+			ft_redirecter_logic(s, '>');
 	}
 	if (err)
 	{
