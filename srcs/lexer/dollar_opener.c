@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:56:01 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 08:07:36 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 18:14:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static void	ft_seek_and_destroy(int i, t_src *s, int quot)
 	k = 0;
 	if (s->str[i + 1] && '$' == s->str[i + 1])
 	{
-		printf("TUT MOJET BIT VASH PID\n");
+		s->str = ft_chardel(&s->str, i);
+		s->str = ft_chardel(&s->str, i);
 	}
 	else if (s->str[i + 1] && '?' == s->str[i + 1])
 	{

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 17:52:50 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 19:42:44 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,22 @@ static int	ft_gate_lexer(t_src *s)
 	s->str = ft_dollar_opener(s);
 	if (!s->str)
 		return (1);
-	s->str = ft_only_one_red(s);
 	s->str = ft_redirecter(s);
 	if (!s->str)
 	{
 		ft_putendl_fd("lexer error [<> redirect]", 2);
 		return (1);
 	}
+	s->str = ft_only_one_red(s);
 	s->str = ft_file_opener(s);
 	if (!s->str)
 		return (1);
-	// if (ft_iscinstr(s->str, '|'))
-	// {
-	// 	s->str = ft_path_ejecter(s);
-	// 	if (!s->str)
-	// 		return (1);
-	//}
+	if (ft_iscinstr(s->str, '|'))
+	{
+		ft_path_ejecter(s);
+		if (!s->str)
+			return (1);
+	}
 	return (0);
 }
 
