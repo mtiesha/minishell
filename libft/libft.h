@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 13:05:01 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:40:42 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n);
 char	*ft_charadd(char **str, int index, char c);
 /* delete char from string on index */
 char	*ft_chardel(char **str, int index);
+/* count how many char in str */
+size_t	ft_count_char(const char *str, char c);
 /* count char before c, revers */
 size_t	ft_strrnlen(const char *str, char c);
 size_t	ft_strnlen(const char *str, char c);

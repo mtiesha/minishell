@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:02:34 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/21 16:22:42 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 14:11:03 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ char	*ft_inpfile(char **cmd, int npipe)
 
 	printf("=====+++INPFILE+++======\n");
 	printf("cmd +%s+\n", (*cmd));
-	find = ft_strnstr((*cmd), "<", ft_strlen((*cmd)));
+	find = ft_strnstr((*cmd), "<", ft_strnlen((*cmd), '|'));
 	if (!find)
-		find = ft_strnstr((*cmd), "<<", ft_strlen((*cmd)));
+		find = ft_strnstr((*cmd), "<<", ft_strnlen((*cmd), '|'));
 	if (find)
 	{
 		printf("find: +%s+\n", find);
@@ -93,6 +93,7 @@ char	*ft_outfile(char **cmd, int dop_variable)
 	char	*out_part;
 	char	*cmd_part;
 
+	printf("++++++++++++OUT_FILE++++++++++++++++++\n");
 	find = ft_strrnstr((*cmd), ">> ", ft_strrnlen((*cmd), '|'));
 	if (!find)
 	{

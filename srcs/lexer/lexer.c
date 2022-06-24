@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 08:22:00 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:52:50 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	ft_gate_lexer(t_src *s)
 	s->str = ft_dollar_opener(s);
 	if (!s->str)
 		return (1);
+	s->str = ft_only_one_red(s);
 	s->str = ft_redirecter(s);
 	if (!s->str)
 	{

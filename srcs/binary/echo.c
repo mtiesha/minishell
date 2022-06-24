@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 08:28:02 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:49:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,21 @@ static char	**ft_custom_countcharstr(const char *str)
 
 static void	ft_new_array_cast(const char *str, char ***av, int i, int j)
 {
-	char	q;
-	int		k;
+	char	c;
 
-	while (str[i])
+	c = ' ';
+	while (i <= (int)(ft_strlen(str)))
 	{
-		k = 0;
-		while (str[i] && ft_isspace((char)(str)[i]))
-			i++;
-		if (str[i] && ('\'' == str[i] || '"' == str[i]))
+		if (c == ' ' && ('\'' == str[i] || '"' == str[i]))
+			c = str[i++];
+		if (c != ' ' && ('\'' == str[i] || '"' == str[i]))
 		{
-			q = (char)(str)[i++];
-			k += ft_strnlen((char *)(str + i), q);
+			c = ' ';
+			i++;
 		}
-		while (str[i + k] && !ft_isspace((char)(str)[i + k]))
-			k++;
-		(*av)[j++] = ft_strndup((char *)(str + i), k);
-		if (ft_strchr((*av)[j - 1], '"'))
-			(*av)[j - 1] = ft_chardel(&(*av)[j - 1], \
-				ft_strnlen((const char *)(*av)[j - 1], '"'));
-		i += k;
+		(*av)[j++] = ft_strndup((char *)str + i, \
+			ft_strnlen((char *)str + i, c));
+		i += 1 + ft_strnlen((char *)str + i, c);
 	}
 }
 
@@ -72,6 +67,7 @@ static char	**ft_cast_av_echo(const char *str, char **tmp)
 	int		j;
 
 	j = 1;//echo p"p  lol " BAG
+	i = 5;
 	if (!ft_iscinstr(str, '"') && !ft_iscinstr(str, '\''))
 	{
 		av = ft_split(str, ' ');
@@ -80,7 +76,6 @@ static char	**ft_cast_av_echo(const char *str, char **tmp)
 	(*tmp) = ft_strtrim(str, " ");
 	av = ft_custom_countcharstr((const char *)(*tmp));
 	av[0] = ft_strndup((*tmp), 4);
-	i = 5;
 	ft_new_array_cast((const char *)(*tmp), &av, i, j);
 	free(*tmp);
 	return (av);

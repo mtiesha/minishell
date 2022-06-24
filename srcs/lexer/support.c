@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   erroer_bonus.c                                     :+:      :+:    :+:   */
+/*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/04 11:10:31 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 14:26:56 by mtiesha          ###   ########.fr       */
+/*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
+/*   Updated: 2022/06/24 18:03:46 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_freesher(t_pipex **s)
+char	*ft_only_one_red(t_src *s)
 {
-	if (*s)
-	{
-		if ((*s)->fd0 != 0)
-			close((*s)->fd0);
-		if ((*s)->fd1 != 1)
-			close((*s)->fd1);
-		if ((*s)->path)
-			ft_splfree((*s)->path);
-		if ((*s)->cmd)
-			ft_splarrfree((*s)->cmd);
-		if ((*s)->red)
-			free((*s)->red);
-		free(*s);
-		*s = NULL;
-	}
-}
+	int		i;
+	char	c;
 
-void	ft_errorer(t_pipex **s, char *code)
-{
-	if (NULL == code)
-		perror("Error:");
-	else
-		ft_putendl_fd(code, 2);
-	ft_freesher(&(*s));
+	i = 0;
+	while (s->str[i])
+	{
+		if (i > 0 && s->str[i - 1] != ' ' && \
+			('"' == s->str[i] || '\'' == s->str[i]))
+		{
+			c = s->str[i];
+			s->str[i] = s->str[i - 1];
+			s->str[i - 1] = c;
+			i = 0;
+		}
+		i++;
+	}
+	return (s->str);
 }

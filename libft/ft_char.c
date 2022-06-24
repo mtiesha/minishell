@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 17:19:25 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 14:11:24 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:39:55 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,20 @@ char	*ft_charadd(char **str, int index, char c)
 	}
 	free(ptr);
 	return (ret);
+}
+
+size_t	ft_count_char(const char *str, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (c == str[i])
+			count++;
+		i++;
+	}
+	return (count);
 }
