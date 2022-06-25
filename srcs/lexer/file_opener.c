@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:31:15 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 13:58:18 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 11:24:42 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*ft_file_opener(t_src *s)
 
 	fd = -2;
 	c_pipes = ft_count_char(s->str, '|');
+	s->str = ft_strtrim(s->str, " ");
 	i = 1 + ft_strnlen(s->str, ' ');
 	while (i <= (int)(ft_strlen(s->str)) && s->str[i])
 	{

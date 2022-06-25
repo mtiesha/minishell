@@ -6,11 +6,20 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 19:42:44 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 11:21:10 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	ft_syntax_help(char c)
+{
+	if (';' == c)
+		return (1 && ft_putendl_fd("lexer error [semcl]", 2));
+	if ('\\' == c)
+		return (1 && ft_putendl_fd("lexer error [backslash]", 2));
+	return (0);
+}
 
 static int	ft_syntax_check(char *str)
 {
@@ -20,16 +29,14 @@ static int	ft_syntax_check(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (';' == str[i])
-			return (1 && ft_putendl_fd("lexer error [semcl]", 2));
-		if ('\\' == str[i])
-			return (1 && ft_putendl_fd("lexer error [backslash]", 2));
+		if (ft_syntax_help(str[i]))
+			return (1);
 		if ('"' == str[i] || '\'' == str[i])
 		{
 			if (str[i + 1])
 			{
 				q = str[i++];
-				while (q != str[i] && str[i])
+				while (str[i] && q != str[i])
 					i++;
 				if (!str[i])
 					return (1 && ft_putendl_fd("lexer error [quotes]", 2));
