@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/22 15:28:13 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:45:36 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,17 @@ static char	**ft_cleaner_logic(char **start, char **end, char **tmp, char **cmd)
 	char	*ptr;
 
 	(*cmd) = ft_deldoublec(&(*cmd), ' ');
-	if (ft_strnstr((*cmd), "echo ", 5))
+	printf("CMD:%s\n", (*cmd));
+	if (ft_strncmp((*cmd), "echo ", 5))
 		set_pipes = ft_split((*cmd), '|');
 	else
 		set_pipes = ft_split((*cmd), 0);
 	if (!set_pipes)
 		return (NULL);
 	i = 0;
+	ft_putendl_fd("SETPIPES+:", 2);
+	ft_putspl_fd(set_pipes, 2);
+	ft_putendl_fd("SETPIPES+:\n", 2);
 	while (set_pipes[i])
 	{
 		(*tmp) = set_pipes[i];

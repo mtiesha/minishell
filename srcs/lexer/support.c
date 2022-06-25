@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 11:20:25 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:52:57 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_path_ejecter(t_src *s)
 
 static void	ft_del_ptr(t_src *s, int *i, int *ptr, int *end)
 {
-	int	cut;
+	int		cut;
 
 	if (-1 == (*ptr))
 		(*ptr) = (*i);
@@ -53,12 +53,12 @@ static void	ft_del_ptr(t_src *s, int *i, int *ptr, int *end)
 		if ((*i) - cut)
 			(*i) -= 1 + cut;
 		(*end) -= cut;
+		// printf("I CUT this->:%s\n", s->str);
 		while (cut)
 		{
 			s->str = ft_chardel(&s->str, (*ptr));
 			cut--;
 		}
-		printf("I CUT this->:%s\n", s->str);
 		(*ptr) = -1;
 	}
 }
@@ -70,28 +70,29 @@ static void	ft_only_one_red_r(t_src *s, int i, int end)
 
 	ptr_l = -1;// ls -la > f2 | < f3 <f5 wc -l
 	ptr_r = -1;
-	printf("str+i:%s\n", s->str + i);
-	printf("~~+~~i:%d\n", i);
+	// printf("str+i:%s\n", s->str + i);
+	// printf("~~+~~i:%d\n", i);
 	end = end + ft_strnlen(s->str + i, '|');
-	printf("~~~~END:%d\n", end);
+	// printf("~~~~END:%d\n", end);
 	while (i <= end)
 	{
-		if (i < (int)(ft_strlen(s->str)))
-			printf("CUTTER=i%d=end%d=mem%d==:%s\n", i, end, ptr_l, s->str + i);
+		// if (i < (int)(ft_strlen(s->str)))
+		// 	printf("CUTTER=i%d=end%d=mem%d==:%s\n", i, end, ptr_l, s->str + i);
 		if (i < (int)(ft_strlen(s->str)) && '<' == s->str[i])
 			ft_del_ptr(s, &i, &ptr_l, &end);
-		if (i < (int)(ft_strlen(s->str)) && '>' == s->str[i])
+		if (i < (int)(ft_strlen(s->str)) && '>' == s->str[i] \
+			&& '>' != s->str[i + 1])
 			ft_del_ptr(s, &i, &ptr_r, &end);
 		i++;
 	}
-	printf("~~~~i:%d\n", i);
-	printf("str before recursy:+%s+\ni:%d\n", s->str, i);
+	// printf("~~~~i:%d\n", i);
+	// printf("str before recursy:+%s+\ni:%d\n", s->str, i);
 	if (i < (int)(ft_strlen(s->str)))
 		ft_only_one_red_r(s, i, end);
-	printf("str after recursy:%s\n", s->str);
+	// printf("str after recursy:%s\n", s->str);
 }
 
-char	*ft_only_one_red(t_src *s)
+void	ft_only_one_red(t_src *s)
 {
 	int		i;
 	char	c;
@@ -109,11 +110,10 @@ char	*ft_only_one_red(t_src *s)
 		}
 		i++;
 	}
+	s->str = ft_deldoublec(&s->str, ' ');
+	printf("++++++++END+++++++:\n+%s+\n+++++++++END+++++++\n", s->str);
 	if (ft_iscinstr(s->str, '|'))
-	{
-		s->str = ft_deldoublec(&s->str, ' ');
 		ft_only_one_red_r(s, 0, 0);
-		printf("++++++++END+++++++:\n+%s+\n+++++++++END+++++++", s->str);
-	}
-	return (s->str);
+	ft_putendl_fd(s->str, 2);
+	// exit (1);
 }

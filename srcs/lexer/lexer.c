@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 11:21:10 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:50:53 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static int	ft_syntax_check(char *str)
 
 static int	ft_gate_lexer(t_src *s)
 {
+	char	*tmp;
+
 	s->str = ft_dollar_opener(s);
 	if (!s->str)
 		return (1);
@@ -60,8 +62,13 @@ static int	ft_gate_lexer(t_src *s)
 		ft_putendl_fd("lexer error [<> redirect]", 2);
 		return (1);
 	}
-	s->str = ft_only_one_red(s);
+	ft_only_one_red(s);
+	ft_putendl_fd(s->str, 2);
+	// printf("COMMAND- med lexer: %s\n", s->str);//< f2 < f4 ls -la > f45 | wc -l >> f22
+	tmp = s->str;
+	s->str = ft_strtrim(s->str, " ");
 	s->str = ft_file_opener(s);
+	free(tmp);
 	if (!s->str)
 		return (1);
 	if (ft_iscinstr(s->str, '|'))
@@ -80,6 +87,7 @@ int	ft_lexer(t_src *s)
 		return (1);
 	if (ft_gate_lexer(s))
 		return (1);
+	printf("COMMAND-%s\n", s->str);
 	printf("---------------LEXER---------------\n");
 	return (0);
 }

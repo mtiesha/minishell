@@ -1,0 +1,17 @@
+total 356
+drwxrwxr-x  7 mtiesha mtiesha   4096 Jun 25 15:55 .
+drwxr-xr-x 12 mtiesha mtiesha   4096 Jun 15 17:45 ..
+-rwxrwxr-x  1 mtiesha mtiesha      2 Jun 25 15:53 f22
+-rwxrwxr-x  1 mtiesha mtiesha      3 Jun 25 15:54 f27
+-rw-rw-r--  1 mtiesha mtiesha      0 Jun 25 15:52 f4
+-rwxrwxr-x  1 mtiesha mtiesha      0 Jun 25 15:56 f45
+-rwxrwxr-x  1 mtiesha mtiesha      3 Jun 25 15:55 f8772
+drwxrwxr-x  8 mtiesha mtiesha   4096 Jun 25 11:25 .git
+-rwxrwxrwx  1 mtiesha mtiesha     27 Jun 22 06:41 .gitignore
+drwxrwxr-x  2 mtiesha mtiesha   4096 Jun 15 17:45 include
+drwxrwxr-x  2 mtiesha mtiesha   4096 Jun 25 14:15 libft
+-rw-rw-r--  1 mtiesha mtiesha   1988 Jun 24 17:53 Makefile
+-rwxrwxr-x  1 mtiesha mtiesha 310216 Jun 25 15:53 minishell
+drwxrwxr-x  2 mtiesha mtiesha   4096 Jun 15 17:45 readline
+-rw-rw-r--  1 mtiesha mtiesha     12 Jun 15 17:45 README.md
+drwxrwxr-x  6 mtiesha mtiesha   4096 Jun 23 20:07 srcs

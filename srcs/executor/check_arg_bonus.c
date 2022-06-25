@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 20:07:23 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:48:45 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 	printf("~~~~~CHECK_ARG_B~~~~~fd:%d %d\n", (*s)->fd0, (*s)->fd1);
 	while (i[0] < (*s)->gnr)
 	{
+		ft_putendl_fd("AV UP CYCLE", 2);
+		ft_putendl_fd(argv[i[1]], 2);
+		ft_putendl_fd("AV UP CYCLE", 2);
 		if (argv[i[1]] && '<' == *(argv[i[1]]) && i[0] != 0)
 		{
 			printf("we find << file: [%s]\n", argv[i[1] + 1]);

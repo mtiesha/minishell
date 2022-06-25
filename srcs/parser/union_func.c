@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:03:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/22 18:17:44 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:02:30 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,20 @@ static void	ft_union_cmd_file_logic(char ***ret, char ***ptr)
 	while ((*ptr)[i])
 	{
 		ft_source_bind(&i, &j, &(*ret), &(*ptr));
+		printf("s---tri:%s\n", (*ptr)[i]);
 		if ((*ptr)[i] && (!ft_iscinstr((const char *)(*ptr)[i], '>') \
-			&& ft_isfile((*ptr)[i + 1])))
+			&& ft_isfile((*ptr)[i + 1])) && \
+				(!ft_iscinstr((const char *)(*ptr)[i], '<')))
 		{
+			printf("JOIN\n");
 			(*ret)[j] = ft_strjoinchar((*ptr)[i], (*ptr)[i + 1], ' ');
 			i++;
 		}
 		else if ((*ptr)[i])
+		{
 			(*ret)[j] = ft_strdup((*ptr)[i]);
+			printf("NEJOIN\n");
+		}
 		if ((*ptr)[i])
 			i++;
 		j++;

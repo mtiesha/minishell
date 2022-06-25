@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 17:19:25 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 12:39:55 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:15:15 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,30 @@
 char	*ft_chardel(char **str, int index)
 {
 	char	*ret;
-	char	*ptr;
 
 	ret = NULL;
-	ptr = (*str);
-	ret = (char *)ft_calloc(ft_strlen(ptr), sizeof(char));
-	ret = (char *)ft_memcpy(ret, ptr, index);
-	while (ptr[++index])
-		ret[index - 1] = ptr[index];
-	free(ptr);
+	ret = (char *)ft_calloc(ft_strlen((*str)), sizeof(char));
+	ret = (char *)ft_memcpy(ret, (*str), index);
+	while ((*str)[++index])
+		ret[index - 1] = (*str)[index];
+	free(*str);
 	return (ret);
 }
 
 char	*ft_charadd(char **str, int index, char c)
 {
 	char	*ret;
-	char	*ptr;
 
 	ret = NULL;
-	ptr = (*str);
-	ret = (char *)ft_calloc(2 + ft_strlen(ptr), sizeof(char));
-	ret = (char *)ft_memcpy(ret, ptr, index);
+	ret = (char *)ft_calloc(2 + ft_strlen((*str)), sizeof(char));
+	ret = (char *)ft_memcpy(ret, (*str), index);
 	ret[index] = c;
-	while (ptr[index])
+	while ((*str)[index])
 	{
-		ret[index + 1] = ptr[index];
+		ret[index + 1] = (*str)[index];
 		index++;
 	}
-	free(ptr);
+	free(*str);
 	return (ret);
 }
 
