@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:31:15 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 14:21:08 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/25 19:44:33 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_set_mask(char const *str)
 	return (mask);
 }
 
-static int	ft_gate_try_open(t_src *s, char *ptr, int mask)
+static int	ft_gate_try_open(t_src *s, char *ptr, int mask, int free_str_flag)
 {
 	int	fd;
 
@@ -35,12 +35,14 @@ static int	ft_gate_try_open(t_src *s, char *ptr, int mask)
 	{
 		ft_putstr_fd("open file error [<> F]: ", 2);
 		ft_putendl_fd(ptr, 2);
-		ft_multifree(ptr, s->str, NULL);
+		free(ptr);
+		if (free_str_flag)
+			free(s->str);
 	}
 	return (fd);
 }
 
-static int	ft_open_onmask(t_src *s, int *i)
+int	ft_open_onmask(t_src *s, int *i, int free_str_flag)
 {
 	int		k;
 	int		mask;
@@ -54,7 +56,7 @@ static int	ft_open_onmask(t_src *s, int *i)
 		(*i)++;
 	(*i)++;
 	ptr = ft_strndup(s->str + (*i), ft_strnlen(s->str + (*i), ' '));
-	fd = ft_gate_try_open(s, ptr, mask);
+	fd = ft_gate_try_open(s, ptr, mask, free_str_flag);
 	if (-1 == fd)
 		return (fd);
 	while (s->str[(*i)] && ' ' != s->str[(*i)])
@@ -83,7 +85,7 @@ char	*ft_file_opener(t_src *s)
 				i++;
 			else
 			{
-				fd = ft_open_onmask(s, &i);
+				fd = ft_open_onmask(s, &i, 1);
 				if (-1 == fd)
 					return (NULL);
 			}
