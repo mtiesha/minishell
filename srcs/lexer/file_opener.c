@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:31:15 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/26 13:54:37 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 19:16:35 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ char	*ft_file_opener(t_src *s)
 		{
 			printf("c_pipes:%d\n", c_pipes);
 			if ('>' == s->str[i] && !c_pipes)
-			{
-				printf("I SUKA ++\n");
 				i++;
-			}
 			else
 			{
 				printf("do open_mask:%s\n", s->str + i);

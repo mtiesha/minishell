@@ -6,11 +6,20 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 17:41:35 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 19:32:59 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	ft_set_red(t_pipex **s)
+{
+	int	k;
+
+	k = 0;
+	while (k <= ((*s)->gnr * 2) - 1)
+		(*s)->red[k++] = -1;
+}
 
 int	ft_init_p(t_pipex **s, int comc)
 {
@@ -32,10 +41,12 @@ int	ft_init_p(t_pipex **s, int comc)
 	(*s)->cmd[i] = NULL;
 	(*s)->fd0 = 0;
 	(*s)->fd1 = 1;
+	(*s)->ret_code = 0;
 	(*s)->gnr = comc;
 	(*s)->red = (int *)malloc((comc * 2) * sizeof(int));
 	if (!(*s)->red)
 		return (0);
+	ft_set_red(s);
 	return (1);
 }
 
@@ -80,7 +91,7 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 			ft_putendl_fd("----<<-----1 cast", 2);
 		}
 		if (!ft_cast_cmd_path(s, envp, argv, i))
-			return (0);
+			return (127);
 		i[1] += 1;
 		printf("cmd[%d]: %s\n", i[0], argv[i[1 - 1]]);
 		if (argv[i[1]] && '>' == *(argv[i[1]]) && i[0] < (*s)->gnr - 1)

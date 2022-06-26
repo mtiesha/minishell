@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:56:01 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 07:00:33 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 21:16:33 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,12 @@ static void	ft_seek_and_destroy(int i, t_src *s, int quot)
 	{
 		s->str = ft_chardel(&s->str, i);
 		s->str = ft_chardel(&s->str, i);
+		printf("RETURN:%d\n", s->ret);
+		s->ret = s->ret >> 8 & 0x000000ff;
+		printf("AFTER_RETURN:%d\n", s->ret);
 		ret_val = ft_itoa(s->ret);
 		while (ret_val[k])
-			s->str = ft_charadd(&s->str, i, ret_val[k++]);
+			s->str = ft_charadd(&s->str, i++, ret_val[k++]);
 		free(ret_val);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 19:43:29 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 17:54:53 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_pipex {
 	int		fd0;
 	int		fd1;
 	int		gnr;
+	int		ret_code;
 	int		*red;
 }	t_pipex;
 
@@ -65,7 +66,6 @@ char	*ft_outfile(char **cmd, int dop_variable);
 char	*ft_inpfile(char **cmd, int npipe);
 /* /src/parser */
 void	parser(t_src *s);
-// char	**ft_ressurection_spl_q(char **spl);
 int		ft_check_wrong_pipe(t_src *s);
 char	*ft_delete_pipes(t_src *s, int i);
 int		ft_count_ac(const char **spl);
@@ -98,7 +98,7 @@ int		ft_isfile(char *file);
 int		ft_try_open_file(char *file, int mask);
 char	*ft_get_absolute_pth(char *file);
 void	ft_freesher(t_pipex **s);
-void	ft_errorer(t_pipex **s, char *code);
+int		ft_errorer(t_pipex **s, char *code);
 void	ft_heredoc(t_pipex **s, char *stop);
 
 #endif

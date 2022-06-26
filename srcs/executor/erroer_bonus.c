@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:10:31 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 14:26:56 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 17:54:23 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,20 @@
 
 void	ft_freesher(t_pipex **s)
 {
+	int	k;
+
+	k = 0;
 	if (*s)
 	{
+		if ((*s)->red)
+		{
+			while (k <= ((*s)->gnr * 2) - 1)
+			{
+				if (-1 != (*s)->red[k++])
+					close((*s)->red[k - 1]);
+			}
+			free((*s)->red);
+		}
 		if ((*s)->fd0 != 0)
 			close((*s)->fd0);
 		if ((*s)->fd1 != 1)
@@ -24,18 +36,20 @@ void	ft_freesher(t_pipex **s)
 			ft_splfree((*s)->path);
 		if ((*s)->cmd)
 			ft_splarrfree((*s)->cmd);
-		if ((*s)->red)
-			free((*s)->red);
 		free(*s);
 		*s = NULL;
 	}
 }
 
-void	ft_errorer(t_pipex **s, char *code)
+int	ft_errorer(t_pipex **s, char *code)
 {
+	int	ret;
+
+	ret = (*s)->ret_code;
 	if (NULL == code)
 		perror("Error:");
 	else
 		ft_putendl_fd(code, 2);
 	ft_freesher(&(*s));
+	return (ret);
 }
