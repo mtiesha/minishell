@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/22 12:53:39 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 16:21:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static void	ft_grandson(int *pipe_fd, int i, t_pipex **s, char **envp)
 	if (-1 == (*s)->red[i + i + 1])
 		dup2(pipe_fd[1], 1);
 	else
+	{
+		printf("GS DUP in to file [%d]\n", (*s)->red[i + i + 1]);
 		dup2((*s)->red[i + i + 1], 1);
+	}
 	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
 		ft_errorer(s, "Execve error [ch]");
 }
@@ -28,7 +31,9 @@ static void	ft_child(t_pipex **s, int i, char **envp)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
+	int		k;
 
+	k = 0;
 	if (-1 == pipe(pipe_fd))
 		ft_errorer(&(*s), "Pipe error [ch]");
 	pid = fork();
@@ -39,10 +44,16 @@ static void	ft_child(t_pipex **s, int i, char **envp)
 	else
 	{
 		close(pipe_fd[1]);
-		if (-1 == (*s)->red[i + i])
+		if (-1 == (*s)->red[i + i + 2])
 			dup2(pipe_fd[0], 0);
 		else
-			dup2((*s)->red[i + i], 0);
+		{
+			printf("CHILD DUP in to file [%d]\n", (*s)->red[i + i + 2]);
+			dup2((*s)->red[i + i + 2], 0);
+		}
+		while (k <= ((*s)->gnr * 2) - 1)
+			printf("REDMASS:%d\n", (*s)->red[k++]);
+		printf("I:%d\n", i);
 		waitpid(pid, NULL, 0);
 	}
 }

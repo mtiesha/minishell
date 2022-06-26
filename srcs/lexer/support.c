@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/26 12:42:53 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 16:36:55 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 	ptr_r = -1;
 	// printf("str+i:%s\n", s->str + i);
 	// printf("~~+~~i:%d\n", i);
-	end = end + ft_strnlen(s->str + i, '|');
-	// printf("~~~~END:%d\n", end);
+	end = end + ft_strnlen(s->str + i, '|') + 1;
+	printf("~~~~END:%d\n", end);
 	while (i <= end)
 	{
 		if (i < (int)(ft_strlen(s->str)))
@@ -105,19 +105,18 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 				return (s->ret);
 		}
 		printf("i <= end ptr_l:%d str+%s+\n\n\n", ptr_l, s->str);
-		// if (i > 15)
-		// 	exit(0);
 		i++;
+		// if (i > 35)
+		// 	exit(0);
 	}
 	// printf("~~~~i:%d\n", i);
-	printf("str before recursy:+%s+\ni:%d end:%d\n", s->str, i, end);
+	// printf("str before recursy:+%s+\ni:%d end:%d\n", s->str, i, end);
 	if (i < (int)(ft_strlen(s->str)))
 	{
-		printf("INTORECURSY\n");
+		// printf("INTORECURSY\n");
 		s->ret = ft_only_one_red_r(s, i, end);
 	}
 	printf("str after recursy:%s\n", s->str);
-	// exit(0);
 	return (s->ret);
 }
 
