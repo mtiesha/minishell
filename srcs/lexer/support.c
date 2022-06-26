@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 19:42:18 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 12:42:53 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,33 @@ static int	ft_del_ptr(t_src *s, int *i, int *ptr, int *end)
 	int	cut;
 	int	fd;
 
-	if (-1 == (*ptr))
+	if (-1 == (*ptr))// < f2 < f4 <f5 <f53 ls -la > f21 >f22 > f23 >f24 >f54 | <f21 < f222 < f49 < f55 wc -l > f7 > f8 >f9 > f56
 		(*ptr) = (*i);
 	else if (-1 != (*ptr) && s->str[(*ptr)] == s->str[(*i)])
 	{
+		printf("\n\nVIREZAEM\n");
+		printf("cmd_part:%s+\n", s->str + (*i));
 		cut = 1 + ft_strnlen(s->str + (*ptr), ' ');
 		cut += 1 + ft_strnlen(s->str + (*ptr) + cut, ' ');
+		printf("I:%d cut:%d\n", (*i), cut);
 		if ((*i) - cut)
-			(*i) -= 1 + cut;
+			(*i) -= cut + 1;// < f2 < f4
 		(*end) -= cut;
-		printf("DELPTR {} s->str{ptr}+%s+\nCCUut:%d\n", s->str + (*ptr), cut);
+		printf("\n\nDELPTR {} s->str{ptr}+%s+\nCCUut:%d\n", s->str + (*ptr), cut);
+		printf("_ptr_%d\n", (*ptr));
 		fd = ft_open_onmask(s, ptr, 0);
 		if (-1 == fd)
 			return (1);
-		(*ptr) -= cut - 1;
+		printf("_ptr_%d\n", (*ptr));
+		printf("111111_OTKRITO:+%s+\n\n", s->str + (*ptr));
 		while (cut)
 		{
 			s->str = ft_chardel(&s->str, (*ptr));
+			printf("DEL+%s+\n %d\n", s->str + (*ptr), cut);
 			cut--;
 		}
 		(*ptr) = -1;
+		printf("VIREZAEM\n\n");
 	}
 	return (0);
 }
@@ -82,8 +89,8 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 	// printf("~~~~END:%d\n", end);
 	while (i <= end)
 	{
-		// if (i < (int)(ft_strlen(s->str)))
-		// 	printf("CUTTER=i%d=end%d=mem%d==:%s\n", i, end, ptr_l, s->str + i);
+		if (i < (int)(ft_strlen(s->str)))
+			printf("CUTTER=i%d=end%d=mem%d==:%s\n", i, end, ptr_l, s->str + i);
 		if (i < (int)(ft_strlen(s->str)) && '<' == s->str[i])
 		{
 			s->ret = ft_del_ptr(s, &i, &ptr_l, &end);
@@ -97,13 +104,20 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 			if (1 == s->ret)
 				return (s->ret);
 		}
+		printf("i <= end ptr_l:%d str+%s+\n\n\n", ptr_l, s->str);
+		// if (i > 15)
+		// 	exit(0);
 		i++;
 	}
 	// printf("~~~~i:%d\n", i);
-	// printf("str before recursy:+%s+\ni:%d\n", s->str, i);
+	printf("str before recursy:+%s+\ni:%d end:%d\n", s->str, i, end);
 	if (i < (int)(ft_strlen(s->str)))
+	{
+		printf("INTORECURSY\n");
 		s->ret = ft_only_one_red_r(s, i, end);
-	// printf("str after recursy:%s\n", s->str);
+	}
+	printf("str after recursy:%s\n", s->str);
+	// exit(0);
 	return (s->ret);
 }
 
@@ -127,9 +141,8 @@ int	ft_only_one_red(t_src *s)
 		i++;
 	}
 	s->str = ft_deldoublec(&s->str, ' ');
-	printf("++++++++END+++++++:\n+%s+\n+++++++++END+++++++\n", s->str);
 	if (ft_iscinstr(s->str, '|'))
 		s->ret = ft_only_one_red_r(s, 0, 0);
-	ft_putendl_fd(s->str, 2);
+	printf("++++++++END+++++++:\n+%s+\n+++++++++END+++++++\n", s->str);
 	return (s->ret);
 }

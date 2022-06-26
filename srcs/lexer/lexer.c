@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 19:42:28 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 13:55:16 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static int	ft_gate_lexer(t_src *s)
 	// printf("COMMAND- med lexer: %s\n", s->str);//< f2 < f4 ls -la > f45 | wc -l >> f22
 	tmp = s->str;
 	s->str = ft_strtrim(s->str, " ");
-	s->str = ft_file_opener(s);
 	free(tmp);
+	s->str = ft_file_opener(s);
 	if (!s->str)
 		return (1);
 	if (ft_iscinstr(s->str, '|'))

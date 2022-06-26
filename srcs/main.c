@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/23 20:07:51 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 12:58:54 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,11 @@ int	main(int argc, char **argv, char **envp)
 			{
 				free(src->str);
 				src->str = ft_strdup("    ls -l    -a   |  cat | wc   -l    ");
+			}
+			else if (0 == ft_strncmp("r1", src->str, 3))
+			{
+				free(src->str);
+				src->str = ft_strdup(" < f2 < f4 <f5   <f53 ls   -la > f21 >f22 > f23 >f24    >f54   |    <f21 < f222 < f49 < f55 wc -l > f7 > f8 >f9 > f56 ");
 			}
 			if (' ' != src->str[0] && src->str[0] \
 				&& !ft_strnstr(src->str, "<<", ft_strlen(src->str)))

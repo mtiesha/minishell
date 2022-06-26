@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 15:45:36 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/26 14:03:27 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*ft_ressurection_spl(char **set_pipes)
 	while (set_pipes[i])
 	{
 		tmp = ret;
-		ret = ft_strjoin(ret, set_pipes[i]);
+		ret = ft_strjoinchar(ret, set_pipes[i], ' ');
 		free(tmp);
 		i++;
 	}
