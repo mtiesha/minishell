@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:40:45 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 12:54:04 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:15:17 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,20 @@ static void	ft_exit_norm(t_src **s)
 	{
 		while (ft_isdigit((*s)->argv[1][i]))
 			i++;
-		if ((*s)->argv[1][i])// if ![\0]
+		if ((*s)->argv[1][i])
 		{
 			ft_putstr_fd("bash: exit: ", 2);
 			ft_putstr_fd((*s)->argv[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			(*s)->ret = 2;
-			i = 2;
+			(*s)->ret = 128;
+			i = 128;
 		}
 		else
 			i = ft_atoi((*s)->argv[1]);
 	}
 	ft_free_src((*s));
+	if (i > 255)
+		i = 128;
 	exit(i);
 }
 
@@ -60,7 +62,7 @@ int	ft_exec_exit(t_src *s)
 	{
 		ft_putendl_fd("exit", 2);
 		ft_putendl_fd("bash: exit: too many arguments", 2);
-		s->ret = 1;
+		s->ret = 128;
 	}
 	return (s->ret);
 }

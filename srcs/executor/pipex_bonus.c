@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 06:48:38 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:27:36 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	ft_pipex(int comc, char **argv, char **envp)
 	ft_putendl_fd("------AV--------", 2);
 	if (!ft_init_p(&s, comc))
 		return (ft_errorer(&s, "Init pipex error"));
-	if (!ft_check_arg_b(&s, envp, argv))
+	if (ft_check_arg_b(&s, envp, argv))
 		return (ft_errorer(&s, " Command not found"));
 	pid = fork();
 	if (0 == pid)

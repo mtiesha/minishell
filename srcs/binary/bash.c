@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:38:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/18 11:42:41 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:34:23 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_exit_error(char *str, char **av, char *path)
 		perror(": ");
 		ft_splfree(av);
 		free(path);
-		exit (127);
+		exit (126);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/26 19:32:59 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:31:37 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	ft_cast_cmd_path(t_pipex **s, char **envp, char **argv, int *i)
 	if (!(*s)->path[i[0]])
 	{
 		ft_putstr_fd((*s)->cmd[i[0]][0], 2);
+		(*s)->ret_code = 127;
 		return (0);
 	}
 	return (1);
@@ -91,7 +92,7 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 			ft_putendl_fd("----<<-----1 cast", 2);
 		}
 		if (!ft_cast_cmd_path(s, envp, argv, i))
-			return (127);
+			return (1);
 		i[1] += 1;
 		printf("cmd[%d]: %s\n", i[0], argv[i[1 - 1]]);
 		if (argv[i[1]] && '>' == *(argv[i[1]]) && i[0] < (*s)->gnr - 1)
@@ -109,5 +110,5 @@ int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 	}
 	if (argv[i[1]] && '>' == argv[i[1]][0])
 		ft_open_last_file(s, argv, i[1]);
-	return (1);
+	return (0);
 }

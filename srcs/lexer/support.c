@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 07:29:05 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 10:44:15 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,26 +122,27 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 
 int	ft_only_one_red(t_src *s)
 {
-	int		i;
-	char	c;
+	// int		i;
+	// char	c;
 
 	s->ret = 0;
-	i = 0;
-	while (s->str[i])
-	{
-		if (i > 0 && s->str[i - 1] != ' ' && \
-			('"' == s->str[i] || '\'' == s->str[i]))
-		{
-			c = s->str[i];
-			s->str[i] = s->str[i - 1];
-			s->str[i - 1] = c;
-			i = 0;
-		}
-		i++;
-	}
-	s->str = ft_deldoublec(&s->str, ' ');
+	// i = 0;
+	// while (s->str[i])
+	// {
+	// 	if (i > 0 && s->str[i - 1] != ' ' &&
+	// 		('"' == s->str[i] || '\'' == s->str[i]))
+	// 	{
+	// 		c = s->str[i];
+	// 		s->str[i] = s->str[i - 1];
+	// 		s->str[i - 1] = c;
+	// 		i = 0;
+	// 	}
+	// 	i++;
+	// 	printf("tuta\n");
+	// }
 	if (ft_iscinstr(s->str, '|'))
 	{
+		s->str = ft_deldoublec(&s->str, ' ');
 		s->ret = ft_only_one_red_r(s, 0, 0);
 		s->str = ft_cleaner(&s->str);//maybe delpipe
 

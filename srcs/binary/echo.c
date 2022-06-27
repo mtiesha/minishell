@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 20:16:21 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 10:52:40 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	**ft_custom_countcharstr(const char *str)
 		i++;
 	}
 	len++;
+	printf("LEN CUSTOM CCH:%ld\n", len);
 	av = (char **)ft_calloc(len + 1 + 1, sizeof(char *));
 	return (av);
 }
