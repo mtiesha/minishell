@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:58:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/22 19:57:29 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 13:05:08 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_source_bind(int *i, int *j, char ***ret, char ***ptr)
 		&& (!ft_strncmp((*ptr)[(*i)], "echo", 4) \
 		|| !ft_strncmp((*ptr)[(*i)], "mkdir", 5) \
 		|| !ft_strncmp((*ptr)[(*i)], "touch", 5) \
-		|| !ft_strncmp((*ptr)[(*i)], "grep", 4)))
+		|| !ft_strncmp((*ptr)[(*i)], "grep", 4) \
+		|| !ft_strncmp((*ptr)[(*i)], "chmod", 5)))
 	{
 		printf("i:%d j:%d ptr1:%s+ ptr1+1:%s+\n", (*i), (*j), (*ptr)[(*i)], (*ptr)[(*i) + 1]);
 		(*ret)[(*j)] = ft_strjoinchar((*ptr)[(*i)], (*ptr)[(*i) + 1], ' ');

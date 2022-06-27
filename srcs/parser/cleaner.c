@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 10:29:52 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:51:47 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static char	*ft_ressurection_spl(char **set_pipes)
 	int		i;
 	char	*tmp;
 	char	*ret;
+	char	*ptr;
 
 	i = 0;
 	ft_putendl_fd("PROVEROCHKA----+++++_---------", 2);
@@ -27,10 +28,18 @@ static char	*ft_ressurection_spl(char **set_pipes)
 	while (set_pipes[i])
 	{
 		tmp = ret;
-		ret = ft_strjoinchar(ret, set_pipes[i], ' ');
+		if ('|' != set_pipes[i][0])
+		{
+			ptr = ft_strjoin(tmp, " | ");
+			ret = ft_strjoin(ptr, set_pipes[i]);
+			free(ptr);
+		}
+		else
+			ret = ft_strjoinchar(ret, set_pipes[i], ' ');
 		free(tmp);
 		i++;
 	}
+	printf("POSLE RESURRECTION SPL IN CLEANER: %s\n", ret);
 	return (ret);
 }
 
@@ -54,9 +63,10 @@ static char	**ft_cleaner_logic(char **start, char **end, char **tmp, char **cmd)
 	i = 0;
 	ft_putendl_fd("SETPIPES cl logic+:", 2);
 	ft_putspl_fd(set_pipes, 2);
-	ft_putendl_fd("SETPIPES+:\n", 2);
+	ft_putendl_fd("SETPIPES+\n", 2);
 	while (set_pipes[i])
 	{
+		printf("I into Cleaner: %d\n", i);
 		(*tmp) = set_pipes[i];
 		if (0 == i)
 			set_pipes[i] = ft_strjoin(" ", set_pipes[i]);
@@ -79,7 +89,7 @@ static char	**ft_cleaner_logic(char **start, char **end, char **tmp, char **cmd)
 	printf("3! DONE array: \n");
 	ft_putspl_fd(set_pipes, 2);
 	ft_putendl_fd("=======end logic=======", 2);
-	ft_putendl_fd((*cmd), 2);
+	// ft_putendl_fd((*cmd), 2);
 	return (set_pipes);
 }
 
@@ -95,7 +105,7 @@ char	*ft_cleaner(char **cmd)
 	if (ft_strnstr((*cmd), "echo ", 5))
 		return ((*cmd));
 	(*cmd) = ft_deldoublec(&(*cmd), ' ');
-	printf("=====+++PIPE ZONE+++======\n");
+	printf("cleaner] =====+++PIPE ZONE+++======\n");
 	set_pipes = ft_cleaner_logic(&file, &end, &tmp, &(*cmd));
 	if (!set_pipes)
 		return (NULL);
@@ -104,6 +114,6 @@ char	*ft_cleaner(char **cmd)
 	if (!ft_strnstr(tmp, "echo ", 5))
 		tmp = ft_deldoublec(&tmp, ' ');
 	ft_multifree((*cmd), NULL, NULL);
-	printf("=====+++PIPE ZONE+++======\n");
+	printf("end cleaner] =====+++PIPE ZONE+++======\n");
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 10:44:15 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 17:12:57 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static int	ft_del_ptr(t_src *s, int *i, int *ptr, int *end)
 		cut += 1 + ft_strnlen(s->str + (*ptr) + cut, ' ');
 		printf("I:%d cut:%d\n", (*i), cut);
 		if ((*i) - cut)
-			(*i) -= cut + 1;// < f2 < f4
+			(*i) -= cut + 1;
 		(*end) -= cut;
 		printf("\n\nDELPTR {} s->str{ptr}+%s+\nCCUut:%d\n", s->str + (*ptr), cut);
 		printf("_ptr_%d\n", (*ptr));
 		fd = ft_open_onmask(s, ptr, 0);
 		if (-1 == fd)
-			return (1);
+			return (126);
 		printf("_ptr_%d\n", (*ptr));
 		printf("111111_OTKRITO:+%s+\n\n", s->str + (*ptr));
 		while (cut)
@@ -94,24 +94,27 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 		if (i < (int)(ft_strlen(s->str)) && '<' == s->str[i])
 		{
 			s->ret = ft_del_ptr(s, &i, &ptr_l, &end);
-			if (1 == s->ret)
+			if (0 != s->ret)
 				return (s->ret);
 		}
-		if (i < (int)(ft_strlen(s->str)) && '>' == s->str[i] \
-			&& '>' != s->str[i + 1])
+		if (i < (int)(ft_strlen(s->str)) && '>' == s->str[i])
+		//	&& '>' != s->str[i + 1])
 		{
 			s->ret = ft_del_ptr(s, &i, &ptr_r, &end);
-			if (1 == s->ret)
+			if (0 != s->ret)
 				return (s->ret);
 		}
 		printf("i <= end ptr_l:%d str+%s+\n\n\n", ptr_l, s->str);
 		i++;
+		if (i > 1 && i < (int)(ft_strlen(s->str))
+			&& ('<' == s->str[i - 1] || '>' == s->str[i - 1]))
+			i++;
 		// if (i > 35)
 		// 	exit(0);
 	}
 	// printf("~~~~i:%d\n", i);
 	// printf("str before recursy:+%s+\ni:%d end:%d\n", s->str, i, end);
-	if (i < (int)(ft_strlen(s->str)))
+	if (0 == s->ret && i < (int)(ft_strlen(s->str)))
 	{
 		// printf("INTORECURSY\n");
 		s->ret = ft_only_one_red_r(s, i, end);
@@ -144,8 +147,12 @@ int	ft_only_one_red(t_src *s)
 	{
 		s->str = ft_deldoublec(&s->str, ' ');
 		s->ret = ft_only_one_red_r(s, 0, 0);
+		if (s->ret)
+		{
+			free(s->str);
+			return (s->ret);
+		}
 		s->str = ft_cleaner(&s->str);//maybe delpipe
-
 	}
 	return (s->ret);
 }

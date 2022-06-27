@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 11:10:35 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 13:06:00 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,6 @@ int	main(int argc, char **argv, char **envp)
 			src->ret = ft_lexer(src);
 			if (0 == src->ret)
 				parser(src);
-			else
-			{
-				if (src->str)
-					free(src->str);
-			}
 		}
 		else if (NULL == src->str)
 		{

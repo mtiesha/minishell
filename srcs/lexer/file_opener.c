@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:31:15 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/26 19:16:35 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 13:42:48 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	ft_gate_try_open(t_src *s, char *ptr, int mask, int free_str_flag)
 		ft_putstr_fd("open file error [<> F]: ", 2);
 		ft_putendl_fd(ptr, 2);
 		free(ptr);
+		s->ret = 126;
 		if (free_str_flag)
 			free(s->str);
 	}
