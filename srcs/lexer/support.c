@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 17:12:57 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:20:37 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	ft_del_ptr(t_src *s, int *i, int *ptr, int *end)
 	int	cut;
 	int	fd;
 
-	if (-1 == (*ptr))// < f2 < f4 <f5 <f53 ls -la > f21 >f22 > f23 >f24 >f54 | <f21 < f222 < f49 < f55 wc -l > f7 > f8 >f9 > f56
+	if (-1 == (*ptr))
 		(*ptr) = (*i);
 	else if (-1 != (*ptr) && s->str[(*ptr)] == s->str[(*i)])
 	{

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 10:52:40 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:02:41 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ static char	**ft_cast_av_echo(const char *str, char **tmp)
 
 	j = 1;
 	i = 5;
+	while (' ' == *str)
+		str++;
+	if (0 == ft_strncmp(str, "/", 1) || 0 == ft_strncmp(str, "./", 2) \
+		|| 0 == ft_strncmp(str, "../", 3))
+	{
+		while (ft_strncmp(str, "echo", 4))
+			str++;
+	}
+	printf("STRPOSLE++:%s\n", str);
 	if (!ft_iscinstr(str, '"') && !ft_iscinstr(str, '\''))
 	{
 		av = ft_split(str, ' ');

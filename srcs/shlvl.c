@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:09:49 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/15 12:15:46 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:12:54 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char	**ft_add_mshlvl(char **envp)
 
 void	ft_sig_handler_b(int sig)
 {
-	(void)(sig);
+	if (sig == SIGINT)
+		ft_putchar_fd('\n', 1);
 }

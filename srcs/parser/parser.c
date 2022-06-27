@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:16:52 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 13:50:46 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 18:47:16 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ static char	**ft_cast_av(t_src *src, int i, int buildin)
 	char	**ptr;
 	char	**tmp;
 	char	*ptr2[2];
+	char	*tmp2;
 
 	if (!ft_strchr(src->cmds[i], '\"') && !ft_strrchr(src->cmds[i], '\"'))
 		ptr = ft_split(src->cmds[i], ' ');
 	else
 	{
 		ptr2[0] = ft_strdup(src->cmds[i]);
+		tmp2 = ptr2[0];
+		ptr2[0] = ft_strtrim(tmp2, " ");
+		free(tmp2);
 		ptr2[1] = 0;
 		ptr = ft_spldup(ptr2);
 		free(ptr2[0]);

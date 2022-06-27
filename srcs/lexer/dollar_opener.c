@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:56:01 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 18:11:51 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 18:27:15 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static int	ft_replase_dollar_var(t_src *s, int quot)
 			printf("START:%s\n", start);
 			printf("TEST + 1:+%s+\n", s->str + i);
 			printf("LENTEST:%d\n", shift);
-			printf("STRLEN:%d\n", (int)(ft_strlen(s->str)));
-			if ((int)(i + shift) >= (int)(ft_strlen(s->str) - 5))
+			printf("STRLEN:%d I:%ld\n", (int)(ft_strlen(s->str)), i);
+			if ((int)(i + shift) > (int)(ft_strlen(s->str) - 5))
 				end = NULL;
 			else
 				end = ft_strndup(s->str + i + shift, ft_strlen(s->str + i + shift));
