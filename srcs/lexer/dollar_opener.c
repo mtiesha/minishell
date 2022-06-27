@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:56:01 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 11:28:52 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 18:11:51 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,23 @@ static int	ft_replase_dollar_var(t_src *s, int quot)
 		{
 			val = ft_get_strnspl(s->envp, s->str + i + 1, '=');
 			if (!val)
+			{
+				printf("!VAR\n");
 				shift = 1 + ft_strnlen(s->str + i, ' ');
+			}
 			else
 				shift = 1 + ft_strnlen(val, '=');
 			printf("VAAAAAAAAAAAAAAAAAAAAAL:%s\n", val);
+			printf("str:%s\n", s->str);
 			start = ft_strndup(s->str, i);
 			printf("START:%s\n", start);
-			printf("TEST:+%s+\n", s->str + i);
+			printf("TEST + 1:+%s+\n", s->str + i);
 			printf("LENTEST:%d\n", shift);
-			end = ft_strndup(s->str + i + shift, ft_strlen(s->str + i + shift));
+			printf("STRLEN:%d\n", (int)(ft_strlen(s->str)));
+			if ((int)(i + shift) >= (int)(ft_strlen(s->str) - 5))
+				end = NULL;
+			else
+				end = ft_strndup(s->str + i + shift, ft_strlen(s->str + i + shift));
 			printf("START:+%s+ END:+%s+\n", start, end);
 			free(s->str);
 			if (val)
@@ -114,7 +122,7 @@ char	*ft_dollar_opener(t_src *s)
 		s->ret = 127;
 		return (NULL);
 	}
-	while (s->str[i])
+	while (i < (int)(ft_strlen(s->str)))
 	{
 		if ('\'' == s->str[i] && 0 == quot && ft_iscinstr(s->str + i + 1, '\''))
 			quot = 1;
