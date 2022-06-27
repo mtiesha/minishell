@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/26 19:09:04 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 06:48:38 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_grandson(int *pipe_fd, int i, t_pipex **s, char **envp)
 	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
 	{
 		ft_putstr_fd(strerror(errno), 2);
-		ft_errorer(s, " : Execve error [ch]");
+		ft_errorer(s, " : Execve error [gs]");
 		exit(127);
 	}
 }
@@ -60,7 +60,7 @@ static int	ft_child(t_pipex **s, int i, char **envp)
 		printf("I:%d\n", i);
 		waitpid(pid, &(*s)->ret_code, 0);
 	}
-	return (0);
+	return ((*s)->ret_code);
 }
 
 static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
@@ -73,11 +73,13 @@ static void	ft_gate_pipex(t_pipex **s, char **argv, char **envp)
 	else
 		dup2((*s)->fd0, 0);
 	printf("@@@@@____CHILD_WORK_____@@@@@@\n");
-	while (i < (*s)->gnr - 1)
+	while (i < (*s)->gnr - 1 && 0 == (*s)->ret_code)
 		(*s)->ret_code = ft_child(s, i++, envp);
 	printf("@@@@@____CHILD_WORK_____@@@@@@\n");
 	dup2((*s)->fd1, 1);
-	if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
+	if (0 != (*s)->ret_code)
+		exit (((*s)->ret_code >> 8) & 0x000000ff);
+	else if (-1 == execve((*s)->path[i], (*s)->cmd[i], envp))
 	{
 		ft_putstr_fd(strerror(errno), 2);
 		ft_errorer(s, ": Execve error [gt]");
@@ -105,10 +107,8 @@ int	ft_pipex(int comc, char **argv, char **envp)
 		ft_gate_pipex(&s, argv, envp);
 	}
 	else if (-1 != pid && 0 != pid)
-	{
 		waitpid(pid, &s->ret_code, 0);
-		printf("RET_CODE:%d\n", s->ret_code);
-	}
+	printf("RETCODE:%d\n", s->ret_code);
 	ret_code_l = s->ret_code;
 	ft_freesher(&s);
 	return (ret_code_l);

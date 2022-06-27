@@ -33,7 +33,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS += -Wall -Werror -Wextra -ggdb -fsanitize=address -fno-omit-frame-pointer
+CFLAGS += -Wall -Werror -Wextra -ggdb -fsanitize=address -fsanitize=leak -fno-omit-frame-pointer
 
 RM = rm -rf
 

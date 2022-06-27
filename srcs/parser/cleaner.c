@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/26 14:03:27 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 07:28:26 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static char	*ft_ressurection_spl(char **set_pipes)
 	char	*ret;
 
 	i = 0;
+	ft_putendl_fd("PROVEROCHKA----+++++_---------", 2);
+	ft_putspl_fd(set_pipes, 2);
+	ft_putendl_fd("PROVEROCHKA----+++++_---------", 2);
 	ret = ft_strdup(set_pipes[i]);
 	i++;
 	while (set_pipes[i])
@@ -40,19 +43,25 @@ static char	**ft_cleaner_logic(char **start, char **end, char **tmp, char **cmd)
 	(*cmd) = ft_deldoublec(&(*cmd), ' ');
 	printf("CMD:%s\n", (*cmd));
 	if (ft_strncmp((*cmd), "echo ", 5))
+	{
 		set_pipes = ft_split((*cmd), '|');
+
+	}
 	else
 		set_pipes = ft_split((*cmd), 0);
 	if (!set_pipes)
 		return (NULL);
 	i = 0;
-	ft_putendl_fd("SETPIPES+:", 2);
+	ft_putendl_fd("SETPIPES cl logic+:", 2);
 	ft_putspl_fd(set_pipes, 2);
 	ft_putendl_fd("SETPIPES+:\n", 2);
 	while (set_pipes[i])
 	{
 		(*tmp) = set_pipes[i];
-		set_pipes[i] = ft_strjoin("| ", set_pipes[i]);
+		if (0 == i)
+			set_pipes[i] = ft_strjoin(" ", set_pipes[i]);
+		else
+			set_pipes[i] = ft_strjoin("| ", set_pipes[i]);
 		free(*tmp);
 		(*start) = ft_inpfile(&set_pipes[i], i);
 		printf("1! after INFILE: +%s+\n", (*start));

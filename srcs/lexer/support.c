@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/26 16:42:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 07:29:05 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,10 @@ int	ft_only_one_red(t_src *s)
 	}
 	s->str = ft_deldoublec(&s->str, ' ');
 	if (ft_iscinstr(s->str, '|'))
+	{
 		s->ret = ft_only_one_red_r(s, 0, 0);
-	printf("++++++++END+++++++:\n+%s+\n+++++++++END+++++++\n", s->str);
+		s->str = ft_cleaner(&s->str);//maybe delpipe
+
+	}
 	return (s->ret);
 }

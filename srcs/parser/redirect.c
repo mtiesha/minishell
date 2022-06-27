@@ -6,13 +6,13 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:02:34 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/25 15:51:39 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/27 08:04:13 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*ft_left_right_part(char *cmd, char *find)
+static char	*ft_left_right_part(char *cmd, char *find, char *tmp)
 {
 	int		step;
 	char	c;
@@ -27,7 +27,14 @@ static char	*ft_left_right_part(char *cmd, char *find)
 	left = ft_strndup(cmd, ft_strnlen(cmd, c));
 	find += step + ft_strnlen(find + step, ' ');
 	right = ft_strdup(find);
+	if (ft_iscinstr(left, '|'))
+	{
+		tmp = left;
+		left = ft_strdup(left + 1);
+		free(tmp);
+	}
 	ret = ft_strjoin(left, right);
+	printf("LEFT=%s+\nRIGHT=%s+\n", left, right);
 	ft_multifree(left, right, NULL);
 	return (ret);
 }
@@ -37,10 +44,12 @@ static void	ft_cust_file(char *cmd, char **cmd_p, char **inp_p, int npipe)
 	char	*find;
 	char	*tmp;
 
+	tmp = NULL;
 	find = ft_strnstr(cmd, "<", ft_strlen(cmd));
 	if (!find)
 		find = ft_strnstr(cmd, "<<", ft_strlen(cmd));
-	(*cmd_p) = ft_left_right_part(cmd, find);
+	(*cmd_p) = ft_left_right_part(cmd, find, tmp);
+	printf("CMD_P%s+\n", (*cmd_p));
 	if ('<' == *(find + 1))
 	{
 		find += 3;
@@ -55,8 +64,13 @@ static void	ft_cust_file(char *cmd, char **cmd_p, char **inp_p, int npipe)
 		else
 			npipe = 2;
 		(*inp_p) = ft_strndup(find, npipe + ft_strnlen(find + npipe, ' '));
+		if (npipe)
+		{
+			tmp = (*inp_p);
+			(*inp_p) = ft_strjoin("| ", (*inp_p));
+			free(tmp);
+		}
 	}
-	//printf("POSLEGOVNA:\ncmd_p:+%s+\ninp_p:+%s+\n----------\n", (*cmd_p), (*inp_p));
 }
 
 char	*ft_inpfile(char **cmd, int npipe)
@@ -92,7 +106,9 @@ char	*ft_outfile(char **cmd, int dop_variable)
 	char	*find;
 	char	*out_part;
 	char	*cmd_part;
+	char	*tmp;
 
+	tmp = NULL;
 	printf("++++++++++++OUT_FILE++++++++++++++++++\n");
 	find = ft_strrnstr((*cmd), ">> ", ft_strrnlen((*cmd), '|'));
 	if (!find)
@@ -104,7 +120,7 @@ char	*ft_outfile(char **cmd, int dop_variable)
 	{
 		out_part = ft_strndup(find, 2 + dop_variable + \
 			ft_strnlen(find + 2 + dop_variable, ' '));
-		cmd_part = ft_left_right_part((*cmd), find);
+		cmd_part = ft_left_right_part((*cmd), find, tmp);
 		free((*cmd));
 		(*cmd) = cmd_part;
 		ft_putendl_fd("-----SYSTEM---------", 2);
