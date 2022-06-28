@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 08:34:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 12:27:11 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,9 @@ static int	ft_syntax_check(char *str)
 
 static int	ft_gate_lexer(t_src *s)
 {
-	// char	*tmp;
-
 	s->str = ft_dollar_opener(s);
 	if (!s->str)
 		return (1);
-	printf("9999999999999999999999999999\nSTR+%s\n99999999999999999999\n", s->str);
 	s->str = ft_redirecter(s);
 	if (!s->str)
 	{
@@ -65,10 +62,6 @@ static int	ft_gate_lexer(t_src *s)
 	}
 	if (ft_only_one_red(s))
 		return (1);
-	// printf("COMMAND- med lexer: %s\n", s->str);//< f2 < f4 ls -la > f45 | wc -l >> f22
-	// tmp = s->str;
-	// s->str = ft_strtrim(s->str, " ");
-	// free(tmp);
 	s->str = ft_file_opener(s);
 	if (!s->str)
 		return (1);
@@ -84,6 +77,7 @@ static int	ft_gate_lexer(t_src *s)
 int	ft_lexer(t_src *s)
 {
 	printf("---------------LEXER---------------\n");
+	printf("STR IN GATE LEXER:%s\n", s->str);
 	if (ft_syntax_check(s->str))
 		return (1);
 	if (ft_gate_lexer(s))

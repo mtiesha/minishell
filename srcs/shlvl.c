@@ -6,30 +6,39 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:09:49 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 19:12:54 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 12:29:58 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**ft_add_mshlvl(char **envp)
+void	ft_signal_cast(int switcher)
 {
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	tmp = (char **)ft_calloc(2 + ft_spllen(envp), sizeof(char *));
-	while (envp[i])
+	if (1 == switcher)
 	{
-		tmp[i] = ft_strdup(envp[i]);
-		i++;
+		signal(SIGINT, ft_sig_handler);
+		signal(SIGQUIT, ft_sig_handler);
 	}
-	tmp[i] = ft_strdup("MSHLVL=0");
-	return (tmp);
+	else if (0 == switcher)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }
 
 void	ft_sig_handler_b(int sig)
 {
 	if (sig == SIGINT)
 		ft_putchar_fd('\n', 1);
+}
+
+void	ft_sig_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		ft_putstr_fd("\n", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }

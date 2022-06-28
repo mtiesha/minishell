@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 19:16:22 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 12:29:51 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,6 @@ static char	*ft_get_prompt(char **envp)
 	return (path);
 }
 
-void	ft_sig_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		rl_on_new_line();
-		ft_putstr_fd("\n", 1);
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
-void	ft_signal_cast(int switcher)
-{
-	if (1 == switcher)
-	{
-		signal(SIGINT, ft_sig_handler);
-		signal(SIGQUIT, ft_sig_handler);
-	}
-	else if (0 == switcher)
-	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-	}
-}
-
 static int	ft_init(t_src **src, char **envp)
 {
 	(*src) = (t_src *)malloc(sizeof(t_src));
@@ -87,6 +62,19 @@ static int	ft_init(t_src **src, char **envp)
 	(*src)->str = NULL;
 	(*src)->ret = 0;
 	return (1);
+}
+
+static void	ft_gate_main(t_src *src)
+{
+	if (' ' != src->str[0] && src->str[0] \
+		&& !ft_strnstr(src->str, "<<", ft_strlen(src->str)))
+		add_history(src->str);
+	if (src->str[0])
+	{
+		src->ret = ft_lexer(src);
+		if (0 == src->ret)
+			parser(src);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -141,12 +129,7 @@ int	main(int argc, char **argv, char **envp)
 				free(src->str);
 				src->str = ft_strdup(" < f2 < f4 <f5   <f53 ls   -la > f21 >f22 > f23 >f24    >f54   | <f21 < f222 < f49 < f55 wc -l > f7 > f8 >f9 > f56 ");
 			}
-			if (' ' != src->str[0] && src->str[0] \
-				&& !ft_strnstr(src->str, "<<", ft_strlen(src->str)))
-				add_history(src->str);
-			src->ret = ft_lexer(src);
-			if (0 == src->ret)
-				parser(src);
+			ft_gate_main(src);
 		}
 		else if (NULL == src->str)
 		{
