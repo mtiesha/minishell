@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:02:34 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 10:31:54 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 06:59:48 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	*ft_outfile(char **cmd, int dop_variable)
 	char	*tmp;
 
 	tmp = NULL;
+	find = NULL;
 	printf("++++++++++++OUT_FILE++++++++++++++++++\n");
 	find = ft_strrnstr((*cmd), ">> ", ft_strrnlen((*cmd), '|'));
 	if (!find)
@@ -118,6 +119,7 @@ char	*ft_outfile(char **cmd, int dop_variable)
 	}
 	if (find)
 	{
+		printf("ERROR- FIND is find cmd:%s find:%s+\n", (*cmd), find);
 		out_part = ft_strndup(find, 2 + dop_variable + \
 			ft_strnlen(find + 2 + dop_variable, ' '));
 		cmd_part = ft_left_right_part((*cmd), find, tmp);

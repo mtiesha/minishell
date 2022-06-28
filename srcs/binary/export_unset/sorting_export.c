@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 10:55:59 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 12:47:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 07:15:58 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_print_sorted(char **sorted)
 	int	len;
 
 	i = 0;
-	while (sorted[i])
+	while (i < ft_spllen(sorted))
 	{
 		len = ft_strnlen(sorted[i], '=');
 		ft_putstr_fd("declare -x ", 1);
@@ -43,17 +43,15 @@ int	ft_sort_env(char **export)
 	int		len;
 	char	**sorted;
 
-	len = 0;
+	len = ft_spllen(export);
 	sorted = ft_spldup(export);
-	while (export[len])
-		len++;
 	k = len - 1;
 	while (k)
 	{
 		n = 0;
 		while (n < len - 1)
 		{
-			if (ft_memcmp(sorted[n], sorted[n + 1], ft_strlen(sorted[n])) > 0)
+			if (ft_strncmp(sorted[n], sorted[n + 1], ft_strlen(sorted[n])) > 0)
 				ft_swap_ptr(&sorted[n], &sorted[n + 1]);
 			n++;
 		}

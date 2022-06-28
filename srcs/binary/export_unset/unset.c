@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:26:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/16 12:47:49 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 07:09:36 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	ft_count_include_av(char **split, char **argv, int *argc)
 	int	k;
 
 	k = 1;
-	while (argv[k])
+	while (k < ft_spllen(argv))
 	{
 		i = 0;
-		while (split[i])
+		while (i < ft_spllen(split))
 		{
-			if (!ft_memcmp(argv[k], split[i], ft_strlen(argv[k])))
+			if (!ft_strncmp(argv[k], split[i], ft_strlen(argv[k])))
 				(*argc)++;
 			i++;
 		}

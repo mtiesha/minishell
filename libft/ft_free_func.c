@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 07:04:53 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/19 14:33:41 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 08:25:45 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,18 @@
 void	ft_multifree(void *m1, void *m2, void *m3)
 {
 	if (m1 != NULL)
+	{
 		free(m1);
+		m1 = NULL;
+	}
 	if (m2 != NULL)
+	{
 		free(m2);
+		m2 = NULL;
+	}
 	if (m3 != NULL)
+	{
 		free(m3);
+		m3 = NULL;
+	}
 }
