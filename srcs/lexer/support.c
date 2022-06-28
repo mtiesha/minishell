@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 08:56:53 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:50:01 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,20 @@ static int	ft_del_ptr(t_src *s, int *i, int *ptr, int *end)
 		(*ptr) = (*i);
 	else if (-1 != (*ptr) && s->str[(*ptr)] == s->str[(*i)])
 	{
-		printf("\n\nVIREZAEM\n");
-		printf("cmd_part:%s+\n", s->str + (*i));
 		cut = 1 + ft_strnlen(s->str + (*ptr), ' ');
 		cut += 1 + ft_strnlen(s->str + (*ptr) + cut, ' ');
-		printf("I:%d cut:%d\n", (*i), cut);
 		if ((*i) - cut)
 			(*i) -= cut + 1;
 		(*end) -= cut;
-		printf("\n\nDELPTR {} s->str{ptr}+%s+\nCCUut:%d\n", s->str + (*ptr), cut);
-		printf("_ptr_%d\n", (*ptr));
 		fd = ft_open_onmask(s, ptr, 0);
 		if (-1 == fd)
 			return (126);
-		printf("_ptr_%d\n", (*ptr));
-		printf("111111_fd:%d OTKRITO:+%s+\n\n", fd, s->str + (*ptr));
 		while (cut)
 		{
 			s->str = ft_chardel(&s->str, (*ptr));
-			printf("DEL+%s+\n %d\n", s->str + (*ptr), cut);
 			cut--;
 		}
-		// close(fd); hz ne pashet
 		(*ptr) = -1;
-		printf("VIREZAEM\n\n");
 	}
 	return (0);
 }
@@ -82,16 +72,11 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 	int		ptr_l;
 	int		ptr_r;
 
-	ptr_l = -1;// ls -la > f2 | < f3 <f5 wc -l
+	ptr_l = -1;
 	ptr_r = -1;
-	// printf("str+i:%s\n", s->str + i);
-	// printf("~~+~~i:%d\n", i);
 	end = end + ft_strnlen(s->str + i, '|') + 1;
-	printf("~~~~END:%d\n", end);
 	while (i <= end)
 	{
-		if (i < (int)(ft_strlen(s->str)))
-			printf("CUTTER=i%d=end%d=mem%d==:%s\n", i, end, ptr_l, s->str + i);
 		if (i < (int)(ft_strlen(s->str)) && '<' == s->str[i])
 		{
 			s->ret = ft_del_ptr(s, &i, &ptr_l, &end);
@@ -99,53 +84,24 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 				return (s->ret);
 		}
 		if (i < (int)(ft_strlen(s->str)) && '>' == s->str[i])
-		//	&& '>' != s->str[i + 1])
 		{
 			s->ret = ft_del_ptr(s, &i, &ptr_r, &end);
 			if (0 != s->ret)
 				return (s->ret);
 		}
-		printf("i <= end ptr_l:%d str+%s+\n\n\n", ptr_l, s->str);
 		i++;
 		if (i > 1 && i < (int)(ft_strlen(s->str))
 			&& ('<' == s->str[i - 1] || '>' == s->str[i - 1]))
 			i++;
-		// if (i > 35)
-		// 	exit(0);
 	}
-	// printf("~~~~i:%d\n", i);
-	// printf("str before recursy:+%s+\ni:%d end:%d\n", s->str, i, end);
 	if (0 == s->ret && i < (int)(ft_strlen(s->str)))
-	{
-		// printf("INTORECURSY\n");
 		s->ret = ft_only_one_red_r(s, i, end);
-	}
-	printf("str after recursy:%s\n", s->str);
 	return (s->ret);
 }
 
 int	ft_only_one_red(t_src *s)
 {
-	// int		i;
-	// char	c;
-
 	s->ret = 0;
-	// i = 0;
-	// while (s->str[i])
-	// {
-	// 	if (i > 0 && s->str[i - 1] != ' ' &&
-	// 		('"' == s->str[i] || '\'' == s->str[i]))
-	// 	{
-	// 		c = s->str[i];
-	// 		s->str[i] = s->str[i - 1];
-	// 		s->str[i - 1] = c;
-	// 		i = 0;
-	// 	}
-	// 	i++;
-	// 	printf("tuta\n");
-	// }
-
-	printf("------------\nSTROKA IN ONLY ONE RED:%s\n", s->str);
 	if (ft_strncmp(s->str, "echo ", 5))
 		s->str = ft_deldoublec(&s->str, ' ');
 	s->ret = ft_only_one_red_r(s, 0, 0);
@@ -154,7 +110,6 @@ int	ft_only_one_red(t_src *s)
 		free(s->str);
 		return (s->ret);
 	}
-	s->str = ft_cleaner(&s->str);//maybe delpipe
-	// }
+	s->str = ft_cleaner(&s->str);
 	return (s->ret);
 }

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:03:00 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/24 13:25:18 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:30:40 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 char	*ft_get_absolute_pth(char *file)
 {
-	char	cwd[4097];
+	char	cwd[4242];
 	char	*path;
 	char	*tmp;
 
-	getcwd(cwd, 4096);
+	getcwd(cwd, 4221);
 	path = ft_strjoin(cwd, "/");
 	tmp = ft_strjoin(path, file);
 	free(path);
@@ -33,10 +33,7 @@ static int	ft_if_open(char *path, int mask)
 	if (0 == mask)
 	{
 		if (ft_isfile(path))
-		{
 			fd = open(path, O_RDONLY, 0777);
-			printf("OPEN < \n");
-		}
 		else
 			return (fd);
 	}
@@ -54,7 +51,6 @@ int	ft_try_open_file(char *file, int mask)
 	int		fd;
 
 	free_flag = 1;
-	printf("FILE:%s\n", file);
 	if (file && !(file[0] == '/' || file[0] == '.'))
 		path = ft_get_absolute_pth(file);
 	else if (file)
@@ -89,15 +85,11 @@ int	ft_isfile(char *file)
 	}
 	if (0 == access(path, F_OK))
 	{
-		ft_putstr_fd(path, 2);
-		ft_putendl_fd("   <---  file who check 1", 2);
 		if (free_flag)
 			free(path);
 		return (1);
 	}
 	if (file && free_flag)
 		free(path);
-	ft_putstr_fd(file, 2);
-	ft_putendl_fd("   <---  file who check 0", 2);
 	return (0);
 }

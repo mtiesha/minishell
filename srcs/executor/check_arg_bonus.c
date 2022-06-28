@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:46:26 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 13:45:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:27:52 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,50 +65,56 @@ static int	ft_cast_cmd_path(t_pipex **s, char **envp, char **argv, int *i)
 	return (1);
 }
 
+static void	ft_set_dir(t_pipex **s, char ***argv, int *i, int *j)
+{
+	if ((*argv)[(*j)] && '<' == *((*argv)[(*j)]))
+	{
+		if ((*argv)[(*j)] && '<' == *((*argv)[(*j)]) && (*i) != 0)
+		{
+			(*s)->red[(*i) + (*i)] = ft_atoi((*argv)[(*j) + 1]);
+			(*j) += 2;
+		}
+		else
+			(*s)->red[(*i) + (*i)] = -1;
+	}
+	if ((*argv)[(*j)] && '>' == *((*argv)[(*j)]))
+	{
+		if ((*argv)[(*j)] && '>' == *((*argv)[(*j)]) \
+			&& (*i) < (*s)->gnr - 1)
+		{
+			(*s)->red[(*i) + (*i) + 1] = ft_atoi((*argv)[(*j) + 1]);
+			(*j) += 2;
+		}
+		else
+			(*s)->red[(*i) + (*i) + 1] = -1;
+	}
+}
+
 int	ft_check_arg_b(t_pipex **s, char **envp, char **argv)
 {
-	int	i[2];
+	int	*i;
 
-	i[0] = 0;//to i++ in the while
-	i[1] = 0;// to argv++
+	i = (int *)ft_calloc(2, sizeof(int));
 	if (0 != ft_strncmp("here_doc", argv[i[1]], 9))
 		ft_open_first_file(s, argv);
 	else
 		i[1] += 2;
 	if ((*s)->fd0 != 0)
 		i[1] += 1;
-	printf("~~~~~CHECK_ARG_B~~~~~fd:%d %d\n", (*s)->fd0, (*s)->fd1);
 	while (i[0] < (*s)->gnr)
 	{
-		if (argv[i[1]] && '<' == *(argv[i[1]]) && i[0] != 0)
-		{
-			printf("we find << file: [%s]\n", argv[i[1] + 1]);
-			(*s)->red[i[0] + i[0]] = ft_atoi(argv[i[1] + 1]);
-			i[1] += 2;
-		}
-		else
-		{
-			(*s)->red[i[0] + i[0]] = -1;
-			ft_putendl_fd("----<<-----1 cast", 2);
-		}
+		ft_set_dir(s, &argv, &i[0], &i[1]);
 		if (!ft_cast_cmd_path(s, envp, argv, i))
+		{
+			free(i);
 			return (1);
+		}
 		i[1] += 1;
-		printf("cmd[%d]: %s\n", i[0], argv[i[1 - 1]]);
-		if (argv[i[1]] && '>' == *(argv[i[1]]) && i[0] < (*s)->gnr - 1)
-		{
-			printf("we find >> file: [%s]\n", argv[i[1] + 1]);
-			(*s)->red[i[0] + i[0] + 1] = ft_atoi(argv[i[1] + 1]);
-			i[1] += 2;
-		}
-		else
-		{
-			(*s)->red[i[0] + i[0] + 1] = -1;
-			ft_putendl_fd("----->>----1 cast", 2);
-		}
+		ft_set_dir(s, &argv, &i[0], &i[1]);
 		i[0]++;
 	}
 	if (argv[i[1]] && '>' == argv[i[1]][0])
 		ft_open_last_file(s, argv, i[1]);
+	free(i);
 	return (0);
 }

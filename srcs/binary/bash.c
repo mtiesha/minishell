@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:38:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 19:43:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:34:33 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	ft_exec_bash(t_src *s, const char **str)
 	int		status;
 	pid_t	pid;
 
-	printf("-=-=-=- EXEX BASH\n");
 	av = ft_spldup((char **)(str));
 	path = getcwd(tmp, 4221);
 	ft_gate_change_path((*av), &path);

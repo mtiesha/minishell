@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:31:15 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 13:42:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:57:32 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	ft_gate_try_open(t_src *s, char *ptr, int mask, int free_str_flag)
 {
 	int	fd;
 
-	printf("Tak EBAT: %s\n", ptr);
 	fd = ft_try_open_file(ptr, mask);
 	if (-1 == fd)
 	{
@@ -42,6 +41,19 @@ static int	ft_gate_try_open(t_src *s, char *ptr, int mask, int free_str_flag)
 			free(s->str);
 	}
 	return (fd);
+}
+
+static void	ft_free_part(int *i, int k, char)
+{
+	(*i) += k - (*i);
+	k = 0;
+	while (s->str[(*i)] && ' ' != s->str[(*i)])
+		s->str = ft_chardel(&s->str, (*i));
+	val = ft_itoa(fd);
+	while (val[k])
+		s->str = ft_charadd(&s->str, (*i)++, val[k++]);
+	(*i) -= k;
+	free(val);
 }
 
 int	ft_open_onmask(t_src *s, int *i, int free_str_flag)
@@ -57,24 +69,12 @@ int	ft_open_onmask(t_src *s, int *i, int free_str_flag)
 	while (' ' != s->str[k])
 		k++;
 	k++;
-	printf("2222222:%s\n", s->str + k);
 	ptr = ft_strndup(s->str + k, ft_strnlen(s->str + k, ' '));
 	fd = ft_gate_try_open(s, ptr, mask, free_str_flag);
 	if (-1 == fd)
 		return (fd);
 	if (free_str_flag)
-	{
-		(*i) += k - (*i);
-		printf("3333333:%s\n", s->str);
-		k = 0;
-		while (s->str[(*i)] && ' ' != s->str[(*i)])
-			s->str = ft_chardel(&s->str, (*i));
-		val = ft_itoa(fd);
-		while (val[k])
-			s->str = ft_charadd(&s->str, (*i)++, val[k++]);
-		(*i) -= k;
-		free(val);
-	}
+		ft_free_part(ne hvataet argumenta chtob vvesti);
 	free(ptr);
 	return (fd);
 }
@@ -86,33 +86,24 @@ char	*ft_file_opener(t_src *s)
 	int		c_pipes;
 
 	fd = -2;
-	printf("++++++++++++FILEOPENER+++++++++\n");
 	c_pipes = ft_count_char(s->str, '|');
-	printf("c_pipes START : %d\n", c_pipes);
 	i = 1 + ft_strnlen(s->str, ' ');
 	while (i <= (int)(ft_strlen(s->str)) && s->str[i])
 	{
-		printf("s->str + i:ST+%s+\n", s->str + i);
 		if (s->str[i] && ('<' == s->str[i] || '>' == s->str[i]))
 		{
-			printf("c_pipes:%d\n", c_pipes);
 			if ('>' == s->str[i] && !c_pipes)
 				i++;
 			else
 			{
-				printf("do open_mask:%s\n", s->str + i);
 				fd = ft_open_onmask(s, &i, 1);
 				if (-1 == fd)
 					return (NULL);
-				printf("posle open_mask:%s\n", s->str + i);
 			}
 		}
-		printf("i:%d  strlen:%d\n", i, (int)(ft_strlen(s->str)));
-		printf("s->str + i:END+%s+\n", s->str + i);
 		if ('|' == s->str[i])
 			c_pipes--;
 		i++;
 	}
-	printf("++++++++++++FILEOPENER+++++++++\n");
 	return (s->str);
 }

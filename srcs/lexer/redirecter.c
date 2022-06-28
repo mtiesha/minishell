@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:26:22 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 15:16:29 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:30:43 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ft_redirecter_logic(t_src *s, char direct)
 	}
 }
 
-char	*ft_redirecter(t_src *s)// rename to spaceadd_red
+char	*ft_redirecter(t_src *s)
 {
 	int		err;
 	char	*ptr;

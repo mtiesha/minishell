@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:26:20 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 07:09:36 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:34:11 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	ft_count_include_av(char **split, char **argv, int *argc)
 		}
 		k++;
 	}
-}//   argv == 5, real_argv_inside_export\envp == 3  [len]++[huy]++[priv]-[chel]-[kek]++ == 3
+}
 
 static void	ft_deleter_unset(char **av, char **split, char **ret)
-{// if str is delete -> not strdup
+{
 	int	i;
 	int	j;
 	int	k;
@@ -54,7 +54,7 @@ static void	ft_deleter_unset(char **av, char **split, char **ret)
 			j++;
 		}
 		i++;
-	}//[life][kek][jojo][koko][\0] av[koko][\0] || av[jojo][\0]
+	}
 	ft_splfree(split);
 }
 
@@ -68,31 +68,31 @@ static void	ft_gate_unset(t_src *s)
 	minus_strs = 0;
 	len_array = ft_spllen(s->export);
 	ft_count_include_av(s->export, s->argv, &minus_strs);
-	real_len = len_array - minus_strs; //new strings - all_unset_string
+	real_len = len_array - minus_strs;
 	ret = (char **)ft_calloc(sizeof(char *), real_len + 1);
 	ft_deleter_unset(s->argv, s->export, &(*ret));
 	s->export = ret;
 	minus_strs = 0;
 	len_array = ft_spllen(s->envp);
 	ft_count_include_av(s->envp, s->argv, &minus_strs);
-	real_len = len_array - minus_strs; //new strings - all_unset_string
+	real_len = len_array - minus_strs;
 	ret = (char **)ft_calloc(sizeof(char *), real_len + 1);
 	ft_deleter_unset(s->argv, s->envp, &(*ret));
 	s->envp = ret;
 }
 
 int	ft_unset(t_src *s)
-{// copy envp and export, without argv[i]
+{
 	int		i;
 	int		arg_count;
 
 	if (1 == s->argc)
 		return (1);
-	i = 1;// 0[export] 1[word1] 2[word2] 3[\0]
-	arg_count = (s->argc - 1);// -1 need to cut this ->1[export]<- 2[Ti ochen krasivaya] 3[another word]
+	i = 1;
+	arg_count = (s->argc - 1);
 	while (arg_count)
 	{
-		if (!ft_isalpha(s->argv[i][0]))// if argv == [987SLOVO]
+		if (!ft_isalpha(s->argv[i][0]))
 		{
 			ft_putstr_fd("bash: unset: `", 2);
 			ft_putstr_fd(s->argv[i], 2);

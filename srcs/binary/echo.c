@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:50:17 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 19:02:41 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:57:20 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static char	**ft_custom_countcharstr(const char *str)
 		i++;
 	}
 	len++;
-	printf("LEN CUSTOM CCH:%ld\n", len);
 	av = (char **)ft_calloc(len + 1 + 1, sizeof(char *));
 	return (av);
 }
@@ -77,7 +76,6 @@ static char	**ft_cast_av_echo(const char *str, char **tmp)
 		while (ft_strncmp(str, "echo", 4))
 			str++;
 	}
-	printf("STRPOSLE++:%s\n", str);
 	if (!ft_iscinstr(str, '"') && !ft_iscinstr(str, '\''))
 	{
 		av = ft_split(str, ' ');

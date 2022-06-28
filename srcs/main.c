@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:05:11 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 12:29:51 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:56:07 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static char	*ft_get_prompt(char **envp)
 	char	*home;
 	char	*path;
 	char	*c_path;
-	char	cwd[4097];
+	char	cwd[4242];
 
 	home = ft_get_strnspl(envp, "HOME", '=');
-	getcwd(cwd, 4096);
+	getcwd(cwd, 4221);
 	if (home)
 	{
 		home += 5;

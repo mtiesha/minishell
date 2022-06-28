@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:09:49 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 12:39:01 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:56:12 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ void	ft_signal_cast(int switcher)
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
-}
-
-void	ft_sig_handler_b(int sig)
-{
-	if (sig == SIGINT)
-		ft_putchar_fd('\n', 1);
 }
 
 void	ft_sig_handler(int sig)

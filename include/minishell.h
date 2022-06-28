@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:29:39 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 12:30:14 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:31:30 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_pipex {
 
 /* signal */
 void	ft_sig_handler(int sig);
-void	ft_sig_handler_b(int sig);
 void	ft_signal_cast(int switcher);
 /* /src/lexer */
 int		ft_open_onmask(t_src *s, int *i, int free_str_flag);

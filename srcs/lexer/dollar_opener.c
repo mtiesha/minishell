@@ -6,13 +6,13 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:56:01 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 18:27:15 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:47:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	ft_replase_dollar_var(t_src *s, int quot)
+static int	ft_replase_dollar_var(t_src *s, int quot)// vashe hz
 {
 	size_t	i;
 	char	*val;
@@ -28,24 +28,15 @@ static int	ft_replase_dollar_var(t_src *s, int quot)
 		{
 			val = ft_get_strnspl(s->envp, s->str + i + 1, '=');
 			if (!val)
-			{
-				printf("!VAR\n");
 				shift = 1 + ft_strnlen(s->str + i, ' ');
-			}
 			else
 				shift = 1 + ft_strnlen(val, '=');
-			printf("VAAAAAAAAAAAAAAAAAAAAAL:%s\n", val);
-			printf("str:%s\n", s->str);
 			start = ft_strndup(s->str, i);
-			printf("START:%s\n", start);
-			printf("TEST + 1:+%s+\n", s->str + i);
-			printf("LENTEST:%d\n", shift);
-			printf("STRLEN:%d I:%ld\n", (int)(ft_strlen(s->str)), i);
 			if ((int)(i + shift) > (int)(ft_strlen(s->str) - 5))
 				end = NULL;
 			else
-				end = ft_strndup(s->str + i + shift, ft_strlen(s->str + i + shift));
-			printf("START:+%s+ END:+%s+\n", start, end);
+				end = ft_strndup(s->str + i + shift, \
+					ft_strlen(s->str + i + shift));
 			free(s->str);
 			if (val)
 				val += shift;
@@ -53,7 +44,6 @@ static int	ft_replase_dollar_var(t_src *s, int quot)
 			ft_multifree(start, NULL, NULL);
 			start = s->str;
 			s->str = ft_strjoin(s->str, end);
-			printf("V KONCE=+%s+\n", s->str);
 			ft_multifree(start, end, NULL);
 		}
 		i++;
@@ -76,10 +66,8 @@ static void	ft_seek_and_destroy(int i, t_src *s, int quot)
 	{
 		s->str = ft_chardel(&s->str, i);
 		s->str = ft_chardel(&s->str, i);
-		printf("RETURN:%d\n", s->ret);
 		if (s->ret > 127)
 			s->ret = s->ret >> 8 & 0x000000ff;
-		printf("AFTER_RETURN:%d\n", s->ret);
 		ret_val = ft_itoa(s->ret);
 		while (ret_val[k])
 			s->str = ft_charadd(&s->str, i++, ret_val[k++]);

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 12:27:11 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:47:46 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,9 @@ static int	ft_gate_lexer(t_src *s)
 
 int	ft_lexer(t_src *s)
 {
-	printf("---------------LEXER---------------\n");
-	printf("STR IN GATE LEXER:%s\n", s->str);
 	if (ft_syntax_check(s->str))
 		return (1);
 	if (ft_gate_lexer(s))
 		return (1);
-	printf("COMMAND-%s\n", s->str);
-	printf("---------------LEXER---------------\n");
 	return (0);
 }

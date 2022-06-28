@@ -6,14 +6,9 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 10:27:57 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/11 11:59:38 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:28:06 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-* this functions, take path of envirement and get it back
-* or return (NULL), if is not correct
-*/
 
 #include "../../include/minishell.h"
 

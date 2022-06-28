@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:02:34 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 06:59:48 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:53:20 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static char	*ft_left_right_part(char *cmd, char *find, char *tmp)
 		free(tmp);
 	}
 	ret = ft_strjoin(left, right);
-	printf("LEFT=%s+\nRIGHT=%s+\n", left, right);
 	ft_multifree(left, right, NULL);
 	return (ret);
 }
@@ -49,7 +48,6 @@ static void	ft_cust_file(char *cmd, char **cmd_p, char **inp_p, int npipe)
 	if (!find)
 		find = ft_strnstr(cmd, "<<", ft_strlen(cmd));
 	(*cmd_p) = ft_left_right_part(cmd, find, tmp);
-	printf("CMD_P%s+\n", (*cmd_p));
 	if ('<' == *(find + 1))
 	{
 		find += 3;
@@ -79,23 +77,14 @@ char	*ft_inpfile(char **cmd, int npipe)
 	char	*inp_part;
 	char	*cmd_part;
 
-	printf("=====+++INPFILE+++======\n");
-	printf("cmd +%s+\n", (*cmd));
 	find = ft_strnstr((*cmd), "<", ft_strnlen((*cmd) + 1, '|'));
 	if (!find)
 		find = ft_strnstr((*cmd), "<<", ft_strnlen((*cmd) + 1, '|'));
 	if (find)
 	{
-		printf("find: +%s+\n", find);
 		ft_cust_file((*cmd), &cmd_part, &inp_part, npipe);
 		free((*cmd));
 		(*cmd) = cmd_part;
-		printf("cmdCHECK:+%s+\n", (*cmd));
-		ft_putendl_fd("-----SYSTEM---------", 2);
-		ft_putstr_fd("redirect part:(", 2);
-		ft_putstr_fd(inp_part, 2);
-		ft_putendl_fd(") from inpfile", 2);
-		ft_putendl_fd("---------SY---------", 2);
 		return (inp_part);
 	}
 	return (NULL);
@@ -110,7 +99,6 @@ char	*ft_outfile(char **cmd, int dop_variable)
 
 	tmp = NULL;
 	find = NULL;
-	printf("++++++++++++OUT_FILE++++++++++++++++++\n");
 	find = ft_strrnstr((*cmd), ">> ", ft_strrnlen((*cmd), '|'));
 	if (!find)
 	{
@@ -119,17 +107,11 @@ char	*ft_outfile(char **cmd, int dop_variable)
 	}
 	if (find)
 	{
-		printf("ERROR- FIND is find cmd:%s find:%s+\n", (*cmd), find);
 		out_part = ft_strndup(find, 2 + dop_variable + \
 			ft_strnlen(find + 2 + dop_variable, ' '));
 		cmd_part = ft_left_right_part((*cmd), find, tmp);
 		free((*cmd));
 		(*cmd) = cmd_part;
-		ft_putendl_fd("-----SYSTEM---------", 2);
-		ft_putstr_fd("redirect part:(", 2);
-		ft_putstr_fd(out_part, 2);
-		ft_putendl_fd(") from outpfile", 2);
-		ft_putendl_fd("---------SY---------", 2);
 		return (out_part);
 	}
 	return (NULL);

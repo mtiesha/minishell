@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:28:38 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 18:44:03 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:34:52 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,9 @@ int	ft_isbuildin(char *str)
 	if (!pipe && buildin)
 	{
 		free(ptr);
-		printf("----------IS_BUILDIN\n");
 		return (1);
 	}
 	free(ptr);
-	printf("----------NOT_BUILDIN\n");
 	return (0);
 }
 
@@ -64,7 +62,6 @@ int	ft_gate_binary(t_src *s)
 
 	i = 0;
 	bash = ft_get_minmax(('.' == s->argv[0][0]), ('/' == s->argv[0][0]), "max");
-	printf("====get_min_max: %d\n", bash);
 	if (!ft_memcmp(s->argv[0], "env", 3))
 		while (s->envp[i])
 			ft_putendl_fd(s->envp[i++], 1);
