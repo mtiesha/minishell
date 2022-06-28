@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 08:09:43 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 08:56:53 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ static int	ft_del_ptr(t_src *s, int *i, int *ptr, int *end)
 		if (-1 == fd)
 			return (126);
 		printf("_ptr_%d\n", (*ptr));
-		printf("111111_OTKRITO:+%s+\n\n", s->str + (*ptr));
+		printf("111111_fd:%d OTKRITO:+%s+\n\n", fd, s->str + (*ptr));
 		while (cut)
 		{
 			s->str = ft_chardel(&s->str, (*ptr));
 			printf("DEL+%s+\n %d\n", s->str + (*ptr), cut);
 			cut--;
 		}
+		// close(fd); hz ne pashet
 		(*ptr) = -1;
 		printf("VIREZAEM\n\n");
 	}
@@ -143,16 +144,17 @@ int	ft_only_one_red(t_src *s)
 	// 	i++;
 	// 	printf("tuta\n");
 	// }
-	if (ft_iscinstr(s->str, '|'))
-	{
+
+	printf("------------\nSTROKA IN ONLY ONE RED:%s\n", s->str);
+	if (ft_strncmp(s->str, "echo ", 5))
 		s->str = ft_deldoublec(&s->str, ' ');
-		s->ret = ft_only_one_red_r(s, 0, 0);
-		if (s->ret)
-		{
-			free(s->str);
-			return (s->ret);
-		}
-		s->str = ft_cleaner(&s->str);//maybe delpipe
+	s->ret = ft_only_one_red_r(s, 0, 0);
+	if (s->ret)
+	{
+		free(s->str);
+		return (s->ret);
 	}
+	s->str = ft_cleaner(&s->str);//maybe delpipe
+	// }
 	return (s->ret);
 }

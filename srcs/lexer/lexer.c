@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:58:46 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/27 13:43:43 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 08:34:48 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ static int	ft_gate_lexer(t_src *s)
 	}
 	if (ft_only_one_red(s))
 		return (1);
-	ft_putendl_fd("here", 2);
-	ft_putendl_fd(s->str, 2);
 	// printf("COMMAND- med lexer: %s\n", s->str);//< f2 < f4 ls -la > f45 | wc -l >> f22
 	// tmp = s->str;
 	// s->str = ft_strtrim(s->str, " ");
