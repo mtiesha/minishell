@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:23:47 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:29:49 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/29 06:44:02 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static int	ft_child(t_pipex **s, int i, char **envp)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
-	int		k;
 
-	k = 0;
 	if (-1 == pipe(pipe_fd))
 		return (ft_errorer(&(*s), "Pipe error [ch]"));
 	pid = fork();

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:52:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:50:01 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:17:28 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,12 @@ static int	ft_only_one_red_r(t_src *s, int i, int end)
 	end = end + ft_strnlen(s->str + i, '|') + 1;
 	while (i <= end)
 	{
-		if (i < (int)(ft_strlen(s->str)) && '<' == s->str[i])
-		{
+		if (0 == s->ret && i < (int)(ft_strlen(s->str)) && '<' == s->str[i])
 			s->ret = ft_del_ptr(s, &i, &ptr_l, &end);
-			if (0 != s->ret)
-				return (s->ret);
-		}
-		if (i < (int)(ft_strlen(s->str)) && '>' == s->str[i])
-		{
+		if (0 == s->ret && i < (int)(ft_strlen(s->str)) && '>' == s->str[i])
 			s->ret = ft_del_ptr(s, &i, &ptr_r, &end);
-			if (0 != s->ret)
-				return (s->ret);
-		}
 		i++;
-		if (i > 1 && i < (int)(ft_strlen(s->str))
+		if (0 == s->ret && i > 1 && i < (int)(ft_strlen(s->str))
 			&& ('<' == s->str[i - 1] || '>' == s->str[i - 1]))
 			i++;
 	}

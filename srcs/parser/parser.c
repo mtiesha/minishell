@@ -6,16 +6,26 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:16:52 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:52:07 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/29 06:43:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static void	ft_not_build(t_src *src, char ***ptr)
+{
+	char	**tmp;
+
+	tmp = NULL;
+	tmp = ft_union_cmd_flg((*ptr));
+	ft_splfree((*ptr));
+	src->argv = ft_union_cmd_file(tmp);
+	ft_splfree(tmp);
+}
+
 static char	**ft_cast_av(t_src *src, int i, int buildin)
 {
 	char	**ptr;
-	char	**tmp;
 	char	*ptr2[2];
 	char	*tmp2;
 
@@ -32,12 +42,7 @@ static char	**ft_cast_av(t_src *src, int i, int buildin)
 		free(ptr2[0]);
 	}
 	if (!buildin)
-	{
-		tmp = ft_union_cmd_flg(ptr);
-		ft_splfree(ptr);
-		src->argv = ft_union_cmd_file(tmp);
-		ft_splfree(tmp);
-	}
+		ft_not_build(src, &ptr);
 	else
 		src->argv = ptr;
 	return (src->argv);

@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:33:08 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:57:36 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/29 06:41:21 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,41 @@ static char	*ft_ressurection_spl(char **set_pipes)
 	return (ret);
 }
 
+static int	ft_support_cleaner(char **cmd, char ***set_pipes)
+{
+	(*set_pipes) = NULL;
+	(*cmd) = ft_deldoublec(&(*cmd), ' ');
+	if (ft_strncmp((*cmd), "echo ", 5))
+		(*set_pipes) = ft_split((*cmd), '|');
+	else
+		(*set_pipes) = ft_split((*cmd), 0);
+	if (!(*set_pipes))
+		return (1);
+	return (0);
+}
+
+static void	ft_norm_cleaner(char **tmp, char ***set_pipes, int i)
+{
+	(*tmp) = (*set_pipes)[i];
+	if (0 == i)
+		(*set_pipes)[i] = ft_strjoin(" ", (*set_pipes)[i]);
+	else
+		(*set_pipes)[i] = ft_strjoin("| ", (*set_pipes)[i]);
+	free(*tmp);
+}
+
 static char	**ft_cleaner_logic(char **start, char **end, char **tmp, char **cmd)
 {
 	char	**set_pipes;
 	int		i;
 	char	*ptr;
 
-	(*cmd) = ft_deldoublec(&(*cmd), ' ');
-	if (ft_strncmp((*cmd), "echo ", 5))
-		set_pipes = ft_split((*cmd), '|');
-	else
-		set_pipes = ft_split((*cmd), 0);
-	if (!set_pipes)
+	i = ft_support_cleaner(cmd, &set_pipes);
+	if (1 == i)
 		return (NULL);
-	i = 0;
 	while (set_pipes[i])
 	{
-		(*tmp) = set_pipes[i];
-		if (0 == i)
-			set_pipes[i] = ft_strjoin(" ", set_pipes[i]);
-		else
-			set_pipes[i] = ft_strjoin("| ", set_pipes[i]);
-		free(*tmp);
+		ft_norm_cleaner(tmp, &set_pipes, i);
 		(*start) = ft_inpfile(&set_pipes[i], i);
 		(*end) = ft_outfile(&set_pipes[i], 1);
 		(*tmp) = ft_strjoin((*start), set_pipes[i]);

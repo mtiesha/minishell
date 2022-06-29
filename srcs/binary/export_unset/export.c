@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:24:24 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 13:31:43 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/29 06:48:37 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	ft_alpha_add_dir_sec(t_src *s, char **sorted, char **strs, int i)
 	k = 0;
 	(*sorted) = ft_strndup(ft_get_strnspl(s->argv, s->export[i], '='), \
 		1 + ft_strnlen(ft_get_strnspl(s->argv, s->export[i], '='), '='));
-	printf("first str: %s\n", (*sorted));
 	while (k < ft_spllen(strs))
 	{
 		ptr = (*sorted);
@@ -49,7 +48,6 @@ static void	ft_alpha_add_dir(t_src *s, char ***ret, int i)
 	{
 		k = 1 + ft_strnlen(tmp, '=');
 		strs = ft_split(tmp + k, ':');
-		ft_putspl_fd(strs, 2);
 		k = 0;
 		while (k < ft_spllen(strs))
 		{

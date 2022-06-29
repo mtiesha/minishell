@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 06:31:15 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:57:32 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/29 06:38:26 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,13 @@ static int	ft_gate_try_open(t_src *s, char *ptr, int mask, int free_str_flag)
 	return (fd);
 }
 
-static void	ft_free_part(int *i, int k, char)
+static void	ft_mask_support(int i, int *k, int *mask, t_src *s)
 {
-	(*i) += k - (*i);
-	k = 0;
-	while (s->str[(*i)] && ' ' != s->str[(*i)])
-		s->str = ft_chardel(&s->str, (*i));
-	val = ft_itoa(fd);
-	while (val[k])
-		s->str = ft_charadd(&s->str, (*i)++, val[k++]);
-	(*i) -= k;
-	free(val);
+	(*k) = i;
+	(*mask) = ft_set_mask((char const *)(s->str + (*k)));
+	while (' ' != s->str[(*k)])
+		(*k)++;
+	(*k)++;
 }
 
 int	ft_open_onmask(t_src *s, int *i, int free_str_flag)
@@ -64,17 +60,23 @@ int	ft_open_onmask(t_src *s, int *i, int free_str_flag)
 	char	*val;
 	int		fd;
 
-	k = (*i);
-	mask = ft_set_mask((char const *)(s->str + k));
-	while (' ' != s->str[k])
-		k++;
-	k++;
+	ft_mask_support((*i), &k, &mask, s);
 	ptr = ft_strndup(s->str + k, ft_strnlen(s->str + k, ' '));
 	fd = ft_gate_try_open(s, ptr, mask, free_str_flag);
 	if (-1 == fd)
 		return (fd);
 	if (free_str_flag)
-		ft_free_part(ne hvataet argumenta chtob vvesti);
+	{
+		(*i) += k - (*i);
+		k = 0;
+		while (s->str[(*i)] && ' ' != s->str[(*i)])
+			s->str = ft_chardel(&s->str, (*i));
+		val = ft_itoa(fd);
+		while (val[k])
+			s->str = ft_charadd(&s->str, (*i)++, val[k++]);
+		(*i) -= k;
+		free(val);
+	}
 	free(ptr);
 	return (fd);
 }

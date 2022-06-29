@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 10:27:57 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:28:06 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/29 06:46:38 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	*ft_get_env_cmd(char **envp, char *command)
 		if (0 == access(str, F_OK))
 		{
 			ft_splfree(first);
-			printf("~command: %s\n", str);
 			return (str);
 		}
 		free(str);

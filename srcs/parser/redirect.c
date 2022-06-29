@@ -6,7 +6,7 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:02:34 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:53:20 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:25:31 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ static char	*ft_left_right_part(char *cmd, char *find, char *tmp)
 	return (ret);
 }
 
+static void	ft_source_cust(int npipe, char **inp_p, char *find, char *tmp)
+{
+	if (0 == npipe)
+		find += 2;
+	else
+		npipe = 2;
+	(*inp_p) = ft_strndup(find, npipe + ft_strnlen(find + npipe, ' '));
+	if (npipe)
+	{
+		tmp = (*inp_p);
+		(*inp_p) = ft_strjoin("| ", (*inp_p));
+		free(tmp);
+	}
+}
+
 static void	ft_cust_file(char *cmd, char **cmd_p, char **inp_p, int npipe)
 {
 	char	*find;
@@ -56,19 +71,7 @@ static void	ft_cust_file(char *cmd, char **cmd_p, char **inp_p, int npipe)
 		free(tmp);
 	}
 	else
-	{
-		if (0 == npipe)
-			find += 2;
-		else
-			npipe = 2;
-		(*inp_p) = ft_strndup(find, npipe + ft_strnlen(find + npipe, ' '));
-		if (npipe)
-		{
-			tmp = (*inp_p);
-			(*inp_p) = ft_strjoin("| ", (*inp_p));
-			free(tmp);
-		}
-	}
+		ft_source_cust(npipe, inp_p, find, tmp);
 }
 
 char	*ft_inpfile(char **cmd, int npipe)

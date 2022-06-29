@@ -6,41 +6,47 @@
 /*   By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:56:01 by mtiesha           #+#    #+#             */
-/*   Updated: 2022/06/28 17:47:21 by mtiesha          ###   ########.fr       */
+/*   Updated: 2022/06/29 06:36:50 by mtiesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	ft_replase_dollar_var(t_src *s, int quot)// vashe hz
+static void	ft_source(t_src *s, char **end, char **start, size_t i)
 {
-	size_t	i;
 	char	*val;
-	char	*start;
-	char	*end;
 	int		shift;
 
-	i = 0;
+	val = NULL;
+	val = ft_get_strnspl(s->envp, s->str + i + 1, '=');
+	if (!val)
+		shift = 1 + ft_strnlen(s->str + i, ' ');
+	else
+		shift = 1 + ft_strnlen(val, '=');
+	(*start) = ft_strndup(s->str, i);
+	if ((int)(i + shift) > (int)(ft_strlen(s->str) \
+		- (1 + ft_strnlen(s->str, ' '))))
+		(*end) = NULL;
+	else
+		(*end) = ft_strndup(s->str + i + shift, \
+	ft_strlen(s->str + i + shift));
+	free(s->str);
+	if (val)
+		val += shift;
+	s->str = ft_strjoin((*start), val);
+}
+
+static int	ft_replase_dollar_var(t_src *s, int quot, size_t i)
+{
+	char	*start;
+	char	*end;
+
 	while (i <= ft_strlen(s->str) && s->str[i])
 	{
 		if (i != 0 && '$' == s->str[i] && !quot \
 			&& s->str[i + 1] && ft_isalpha(s->str[i + 1]))
 		{
-			val = ft_get_strnspl(s->envp, s->str + i + 1, '=');
-			if (!val)
-				shift = 1 + ft_strnlen(s->str + i, ' ');
-			else
-				shift = 1 + ft_strnlen(val, '=');
-			start = ft_strndup(s->str, i);
-			if ((int)(i + shift) > (int)(ft_strlen(s->str) - 5))
-				end = NULL;
-			else
-				end = ft_strndup(s->str + i + shift, \
-					ft_strlen(s->str + i + shift));
-			free(s->str);
-			if (val)
-				val += shift;
-			s->str = ft_strjoin(start, val);
+			ft_source(s, &end, &start, i);
 			ft_multifree(start, NULL, NULL);
 			start = s->str;
 			s->str = ft_strjoin(s->str, end);
@@ -74,7 +80,7 @@ static void	ft_seek_and_destroy(int i, t_src *s, int quot)
 		free(ret_val);
 	}
 	else
-		ft_replase_dollar_var(s, quot);
+		ft_replase_dollar_var(s, quot, 0);
 }
 
 static int	ft_dollar_syntax(char *str)
