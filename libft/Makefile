@@ -6,7 +6,7 @@
 #    By: mtiesha < mtiesha@student.21-school.ru>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/10 12:54:23 by mtiesha           #+#    #+#              #
-#    Updated: 2022/06/18 07:11:01 by mtiesha          ###   ########.fr        #
+#    Updated: 2022/06/29 10:12:49 by mtiesha          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,22 +46,25 @@ CC = gcc
 all : ${NAME}
 
 ${NAME} : ${OBJ} Makefile libft.h
-	${LIB} ${NAME} ${OBJ}
+	@${LIB} ${NAME} ${OBJ}
+	@echo "\033[1;36mlibft.a created"
 
 ${OBJ} : ${SRCS} Makefile libft.h
-	${CC} ${CFLAGS} ${SRCS} -c -I.
+	@${CC} ${CFLAGS} ${SRCS} -c -I.
 
 bonus : ${OBJ_B} Makefile libft.h
-	${LIB} ${NAME} ${OBJ_B}
+	@${LIB} ${NAME} ${OBJ_B}
 
 ${OBJ_B} : ${SRCS_B} Makefile libft.h
-	${CC} ${CFLAGS} ${SRCS_B} -c -I.
+	@${CC} ${CFLAGS} ${SRCS_B} -c -I.
 
 clean :
-	${RM} ${OBJ} ${OBJ_B}
+	@${RM} ${OBJ} ${OBJ_B}
+	@echo "\033[1;36mlibft Clean"
 
 fclean : clean
-	${RM} ${NAME}
+	@${RM} ${NAME}
+	@echo "\033[1;36mlibft Fclean"
 
 re : fclean all
 
