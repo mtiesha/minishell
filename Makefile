@@ -45,11 +45,12 @@ all : $(NAME)
 
 $(NAME) : $(OBJS) ${LIBFT}
 	@$(CC) $(CFLAGS) -o $@ $(OBJS) -I./include -lreadline $(LINKLIB)
-	@echo "Compiled"
+	@echo ""
+	@echo "\033[1;32mCompiled"
 
 %.o : %.c ${LIBFT} Makefile ./include/minishell.h
 	@$(CC) -c $(CFLAGS) -o $@ $<
-	@echo -n "\033[1;32m♥"
+	@echo -n "\033[1;35m♥"
 
 ${LIBFT} : ./libft/Makefile ./libft/libft.h ./libft/*.c
 	@$(MAKE) all -C libft/
